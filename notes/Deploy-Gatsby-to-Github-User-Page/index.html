@@ -54,4 +54,45 @@
   <span class="token property">"scripts"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
     <span class="token property">"deploy"</span><span class="token operator">:</span> <span class="token string">"gatsby build &amp;&amp; gh-pages -d public -b master"</span>
   <span class="token punctuation">}</span>
-<span class="token punctuation">}</span></code></pre></div></div></div></main><div style="padding-top:3em;padding-bottom:3em;text-align:center"><p class="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-alignCenter">Copyright © <!-- -->Yuan Tian<!-- --> <!-- -->2020<!-- -->.</p></div></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/notes/Deploy-Gatsby-to-Github-User-Page";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app-38bdaf9a6a585992bb62.js"],"component---src-pages-404-js":["/component---src-pages-404-js-852bd3a5faea7629c57d.js"],"component---src-pages-index-js":["/component---src-pages-index-js-2e1f531f36ed1af168c2.js"],"component---src-pages-page-2-js":["/component---src-pages-page-2-js-ef8c063115e3c48e159a.js"],"component---src-pages-using-typescript-tsx":["/component---src-pages-using-typescript-tsx-ccc63956d1d6da3ec2a1.js"],"component---src-templates-note-template-js":["/component---src-templates-note-template-js-33fb00c344072d37cb22.js"]};/*]]>*/</script><script src="/component---src-templates-note-template-js-33fb00c344072d37cb22.js" async=""></script><script src="/commons-eefef7637d60b0671954.js" async=""></script><script src="/app-38bdaf9a6a585992bb62.js" async=""></script><script src="/styles-fa79fef4936efa84b233.js" async=""></script><script src="/framework-8dcecaaefd71e2213eb2.js" async=""></script><script src="/webpack-runtime-39f32a5c29bc99e8879b.js" async=""></script></body></html>
+<span class="token punctuation">}</span></code></pre></div>
+<p>Then in theory, if I type <code class="language-text">npm run deploy</code>, it should work, then I tried... it's not working, why? It shows a Gatsby default README file. After searching intensively online, someome mentioned that if randomly select a theme for Github page, it would work. I tried, like below page, and...incredably it works.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 800px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/606b1ff85d16998b0b59c3bb151c7997/00d43/fig2.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 40.5%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAYAAAD5nd/tAAAACXBIWXMAAAsSAAALEgHS3X78AAABG0lEQVQoz5WS2U7DMBBF+/8fBwh4gVZQJVFpFu9LYieZi+2WqqL0gURHGY/ko9GdbIgInDG0xyO6rse/Hrplk4WDHtFKjz6JjbWwLmENjNHprFNtIZWCNqaQaz+O6T5hpfVCdhVhtfZ49Xu8qC2e5Rue9B6PusaDqgrvscFurgvbTKywWxp80uHCR8LThE2evLU9GnUAixJDEOiDKnRn2KzAFw22pEnJQsNBIdemnE8YRJpPQmcc2MChhIJMCCYKPvWDnzA5D+8j7JhiWq/y+yPPIsy5faWlCCkxTlPJJ39DCIjzgrD83KfTS7+46hWhUhpV3SRpC84FGOel572DGwPstGJZz0q6s/BrYZxncCHTBi3ozv9xM9UdvgHfFG4LkaIB+wAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
+  ></span>
+  <img
+        class="gatsby-resp-image-image"
+        alt="Change Github Theme"
+        title="Change Github Theme"
+        src="/static/606b1ff85d16998b0b59c3bb151c7997/5a190/fig2.png"
+        srcset="/static/606b1ff85d16998b0b59c3bb151c7997/772e8/fig2.png 200w,
+/static/606b1ff85d16998b0b59c3bb151c7997/e17e5/fig2.png 400w,
+/static/606b1ff85d16998b0b59c3bb151c7997/5a190/fig2.png 800w,
+/static/606b1ff85d16998b0b59c3bb151c7997/00d43/fig2.png 1000w"
+        sizes="(max-width: 800px) 100vw, 800px"
+        style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+        loading="lazy"
+      />
+  </a>
+    </span></p>
+<p>Then after about 10 seconds, the website is online, perfectly. With all the fonts, style, assets, url, image included. It looks good, much better than my last time next.js development experience.</p>
+<p>For now, the first milestone has reached. In the future I can constantly update this blog, learn how to improve SEO, how to add features, how to created css animation, etc.</p>
+<hr>
+<p>In the future, the steps to update notes are:</p>
+<ol>
+<li>Open the project with vscode, run <code class="language-text">gatsby develop</code></li>
+<li>I can review the result on localhost:8000</li>
+<li>After writing, run <code class="language-text">npm run develop</code></li>
+<li>Push the code to github, run 'git add .', <code class="language-text">git commit -m &quot;Update&quot;</code>, and <code class="language-text">git push origin source</code></li>
+</ol></div></div></main><div style="padding-top:3em;padding-bottom:3em;text-align:center"><p class="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-alignCenter">Copyright © <!-- -->Yuan Tian<!-- --> <!-- -->2020<!-- -->.</p></div></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/notes/Deploy-Gatsby-to-Github-User-Page";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app-38bdaf9a6a585992bb62.js"],"component---src-pages-404-js":["/component---src-pages-404-js-852bd3a5faea7629c57d.js"],"component---src-pages-index-js":["/component---src-pages-index-js-2e1f531f36ed1af168c2.js"],"component---src-pages-page-2-js":["/component---src-pages-page-2-js-ef8c063115e3c48e159a.js"],"component---src-pages-using-typescript-tsx":["/component---src-pages-using-typescript-tsx-ccc63956d1d6da3ec2a1.js"],"component---src-templates-note-template-js":["/component---src-templates-note-template-js-33fb00c344072d37cb22.js"]};/*]]>*/</script><script src="/component---src-templates-note-template-js-33fb00c344072d37cb22.js" async=""></script><script src="/commons-eefef7637d60b0671954.js" async=""></script><script src="/app-38bdaf9a6a585992bb62.js" async=""></script><script src="/styles-fa79fef4936efa84b233.js" async=""></script><script src="/framework-8dcecaaefd71e2213eb2.js" async=""></script><script src="/webpack-runtime-39f32a5c29bc99e8879b.js" async=""></script></body></html>
