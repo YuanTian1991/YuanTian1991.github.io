@@ -31,3 +31,8 @@ git remote add origin https://github.com/YuanTian1991/YuanTian1991.github.io.git
 git push origin master
 ```
 
+According to Gatsby's suggestion, I created a new branch `source`, then put all my Gatsby files into it.
+
+```bash
+git checkout -b source master
+```
