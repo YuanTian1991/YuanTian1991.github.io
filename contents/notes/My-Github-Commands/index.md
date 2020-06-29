@@ -1,6 +1,6 @@
 ---
 slug: "/notes/My-Github-Commands"
-date: "2020-06-28"
+date: "2020-06-29"
 title: "My Github Commands"
 tags: ['github']
 abstract: "For many years, I merely only use commands like git add, git commit, git push .etc. Now I am colaborating with more and more professional people on Github. So I want to record a bit my commands learned here. It's not systemic, but maybe a quick cheatsheet."
@@ -35,3 +35,27 @@ git checkout -b FEATURE
 ```
 
 ---
+
+### Keep the feature branch up to date
+
+This happens when I am developing a new feature/bug in a feature branch, but I see the main branch has been updated by others. So I need to firstly checkout to main branch, update the main branch, then merge the new-updated main branch to my current-feature branch.
+
+
+Below is a solution I found online, which works fine, but the merge step cause some conflict for me to solve. And those conflict seems happen on files I did not touched...
+
+```bash
+git checkout dev-live
+git fetch
+git pull --rebase
+git checkout myfeature
+
+git merge dev-live 
+
+# Above step cause some conflict on my feature branch.
+# After solve those conflict
+
+git add .
+git commit -m "Merged Updated Conflict from new dev-live"
+```
+
+Then I can continue the Feature/Bug development.
