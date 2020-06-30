@@ -59,3 +59,14 @@ git commit -m "Merged Updated Conflict from new dev-live"
 ```
 
 Then I can continue the Feature/Bug development.
+
+---
+## Discard changes to one file
+
+This happens somtimes I modified a lot of files, but eventually found some file is totally unneccesary to be modified. So I want to revoke what I have done to certain one file.
+
+```bash
+git checkout -- file
+```
+
+---
