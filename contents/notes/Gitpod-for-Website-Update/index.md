@@ -30,5 +30,9 @@ npm install -g gatsby-cli
 
 ```
 
+
+This is quite convinient that I can even do it with my ipad, but apparently it's harder to select, put figure, or even simple copy-paste. Aboove paragraph was typed in, deployed and pushed up with iPAD.
+
 ---
+
 I think I will try use other feature for Gitpod.
