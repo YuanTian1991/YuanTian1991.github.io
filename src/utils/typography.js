@@ -5,6 +5,12 @@ ParnassusTheme.overrideThemeStyles = ({ rhythm }, options) => ({
   "h1,h2,h3,h4,h5,h6": {
     marginTop: rhythm(1 / 3),
     marginBottom: rhythm(1 / 2),
+  },
+  "img": {
+      borderRadius: '6px',
+  },
+  "pre": {
+      border: '1px solid lightgrey',
   }
 });
 
