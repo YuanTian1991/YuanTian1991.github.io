@@ -11,7 +11,13 @@ ParnassusTheme.overrideThemeStyles = ({ rhythm }, options) => ({
   },
   "pre": {
       border: '1px solid lightgrey',
-  }
+  },
+  "a": { 
+    color: 'rgba(185, 0, 4)'
+  },
+  "strong": {
+    backgroundColor: 'rgba(254, 217, 10, 0.7)'
+}
 });
 
 const typography = new Typography(

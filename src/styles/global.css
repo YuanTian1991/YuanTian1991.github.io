@@ -2,3 +2,7 @@ html {
   background-image: url("../assets/image/extra_clean_paper.png");
   background-color: whitesmoke;
 }
+
+*::selection {
+background: rgba(254, 217, 10, 0.7);
+}
