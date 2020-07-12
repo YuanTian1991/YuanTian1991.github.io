@@ -24,3 +24,19 @@ ggplot(DEG, aes(x=pvalue)) + geom_histogram() + theme_minimal() + labs(title="p 
 ```
 
 ![P value Histogram](./fig1.png)
+
+### PCA plot
+
+The [ggfortify](https://cran.r-project.org/web/packages/ggfortify/vignettes/plot_pca.html) is a easy to use and beautiful tool for PCA visualisation. However, it seems the origin data must be data.frame format.
+
+```r
+library(ggfortify)
+
+# TPM must be a data frame.
+df <- TPM[,1:(ncol(TPM)-1)]
+pca_res <- prcomp(df, scale. = TRUE)
+
+autoplot(pca_res, data = TPM, colour = 'Mutation', size=5, main="PCA for Transcripts Per Kilobase Million (TPM Matrix)")
+```
+
+![PCA plot](./fig2.png)
