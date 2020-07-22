@@ -27,35 +27,35 @@ class Layout extends React.Component {
     const url = typeof window !== 'undefined' ? window.location.pathname : '';
 
     return (
-      <Container maxWidth="md">
+      <Container maxWidth="lg">
         <Box my={5} >
           <Toolbar className={classes.toolbarSecondary}>
             {
-              url === '/' ? (
+              url !== '/' ? (
                 <div className={classes.root}>
                   <Paper elevation={0} className={classes.verticalAlign} style={{ paddingTop: '1em' }}>
-                    <img alt="Tian" className={classes.TitleIcon} src={require("../assets/image/Tian.jpg")} />
+                    <img alt="Tian" className={classes.smallTitleIcon} src={require("../assets/image/Tian.jpg")} />
                   </Paper>
                   <Link
                     to='/'
                     className={classes.Link}
                   >
                     <Paper elevation={0} className={classes.verticalAlign}>
-                      <h2>Yuan Tian</h2>
+                      <h4>Yuan Tian</h4>
                     </Paper>
                   </Link>
                 </div>
               ) : (
                   <div className={classes.root}>
                     <Paper elevation={0} className={classes.verticalAlign} style={{ paddingTop: '1em' }}>
-                      <img alt="Tian" className={classes.smallTitleIcon} src={require("../assets/image/Tian.jpg")} />
+                      <img alt="Tian" className={classes.TitleIcon} src={require("../assets/image/Tian.jpg")} />
                     </Paper>
                     <Link
                       to='/'
                       className={classes.Link}
                     >
                       <Paper elevation={0} className={classes.verticalAlign}>
-                        <h4>Yuan Tian</h4>
+                        <h2>Yuan Tian</h2>
                       </Paper>
                     </Link>
                   </div>
@@ -81,10 +81,12 @@ class Layout extends React.Component {
           </Toolbar>
         </Box>
 
+        <Container maxWidth="md">
         <main>{this.props.children}</main>
+        </Container>
         {/* <Copyright /> */}
         <StickyFooter />
-      </Container >
+      </Container>
     );
   }
 }

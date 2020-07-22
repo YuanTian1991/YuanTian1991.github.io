@@ -3,7 +3,7 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
 
-import { Paper } from '@material-ui/core';
+import { Paper, Container, Divider, Typography } from '@material-ui/core';
 
 export default function Template({
   data, // this prop will be injected by the GraphQL query below.
@@ -14,9 +14,19 @@ export default function Template({
   return (
     <div className="blog-post-container">
       <Layout>
-        <Paper elevation={5} style={{ padding: '3em', backgroundColor: 'rgba(245, 245, 245, 0.4)' }}>
+        <Paper elevation={5} style={{ padding: '3em', backgroundColor: 'rgba(245, 245, 245, 1)' }}>
+          <p style={{ marginBottom: '2em', fontWeight: '100' }}>{frontmatter.date}</p>
           <h1 style={{ fontWeight: '900' }}>{frontmatter.title}</h1>
-          <h4>{frontmatter.date}</h4>
+          <Container style={{padding: '1.5em'}}>
+              <Container style={{padding: '1em',
+                                 backgroundColor: 'rgba(0, 0, 0, 0.06)', 
+                                }}>
+                    <Typography variant="body1" style={{fontWeight: '100'}}>
+                        {frontmatter.abstract}
+                    </Typography>
+            </Container>
+            <Divider style={{marginTop: '1em', marginBottom: '1em'}}/>
+          </Container>
           <div
             className="blog-post-content"
             dangerouslySetInnerHTML={{ __html: html }}
@@ -34,6 +44,7 @@ export const pageQuery = graphql`
         date(formatString: "MMMM DD, YYYY")
         slug
         title
+        abstract
       }
     }
   }
