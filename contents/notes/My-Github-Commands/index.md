@@ -70,3 +70,11 @@ git checkout -- file
 ```
 
 ---
+
+## Rename a Local branch
+
+This happens when I created a branch, but later I don't like the name. In most case, it's because I fixed many issues in it.
+
+```bash
+git branch -m currentBranchName newBranchName
+```
