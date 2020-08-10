@@ -24,3 +24,11 @@ chmod 755 FEM_13/
 ```
 
 **This is a bad implementation, as `777` opens the folder to everyone, I should find a better way some day.**
+
+##  Change File Ownership
+
+This happens when I take back the fold access, and want to get all file modified by my another account.
+
+```bash
+sudo chown -R regmtyu Polish_Cohort_11/
+```
