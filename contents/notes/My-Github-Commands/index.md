@@ -78,3 +78,14 @@ This happens when I created a branch, but later I don't like the name. In most c
 ```bash
 git branch -m currentBranchName newBranchName
 ```
+
+---
+
+## Replace a Branch completelyl with Another
+
+This happens when I pushed and merged a branch, say `SolveIssues`, to master. Then I want to continue solve more issues, then I want to also use the same name `SolveIssues`. However, if I blindly merge, sometimes conflict would happen. So the best way here is to directly rewrite SolveIssues Branch with the master branch, then continue developing.
+
+```bash
+git checkout SolveIssues
+git reset --hard maste
+```
