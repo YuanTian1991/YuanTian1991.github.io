@@ -74,8 +74,9 @@ IndexPage.propTypes = {
 const styles = theme => ({
   root: {
     // minWidth: 275,
-    padding: '2em',
-    margin: '2em',
+    padding: '1em',
+    margin: '0.5em',
+    marginBottom: '2em',
     cursor: 'pointer',
     backgroundColor: 'rgba(255, 0, 0, 0)',
     "&:hover": {
