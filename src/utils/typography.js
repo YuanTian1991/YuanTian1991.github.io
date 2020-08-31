@@ -3,14 +3,18 @@ import ParnassusTheme from 'typography-theme-parnassus'
 
 ParnassusTheme.overrideThemeStyles = ({ rhythm }, options) => ({
   "h1,h2,h3,h4,h5,h6": {
-    marginTop: rhythm(1 / 3),
-    marginBottom: rhythm(1 / 2),
+    marginTop: rhythm(1 / 4),
+    marginBottom: rhythm(1 / 4),
+    color: '#4f4f4f'
   },
   "img": {
       borderRadius: '6px',
   },
   "pre": {
-      border: '1px solid lightgrey',
+      border: '0.5px solid lightgrey',
+  },
+  "p": {
+      color: '#4f4f4f'
   },
   "a": { 
     color: 'rgba(185, 0, 4)'

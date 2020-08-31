@@ -80,11 +80,11 @@ const styles = theme => ({
     cursor: 'pointer',
     backgroundColor: 'rgba(255, 0, 0, 0)',
     "&:hover": {
-      backgroundColor: 'rgba(0, 0, 0, 0.2)',
+      backgroundColor: 'rgba(0, 0, 0, 0.07)',
       // backgroundColor: 'whitesmoke',
-      "-webkit-transition": "background-color 500ms linear",
-      "-ms-transition": "background-color 500ms linear",
-      "transition": "background-color 500ms linear",
+      "-webkit-transition": "background-color 100ms linear",
+      "-ms-transition": "background-color 100ms linear",
+      "transition": "background-color 100ms linear",
     }
   },
   tag: {
