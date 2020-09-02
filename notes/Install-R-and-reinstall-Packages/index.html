@@ -36,7 +36,6 @@ bin  include  lib  share</code></pre></div>
 <div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">TMP = &quot;/Data/Tian/myTMP&quot;
 R_LIBS_USER=/Data/Tian/Software/install/R_4.0.2/lib64/R/library</code></pre></div>
 <p>The first line indicates if R is about to create some tmp, where should it download it. <strong>The second line indicates where to install packages</strong>. I don't want to put everything in my Home Directory.</p>
-<hr>
 <h2>Install Packages</h2>
 <p>Then, I think I need a script to install all packages. So the steps are simply: 1, get package names from old installed R, 2, install in new R.</p>
 <div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>requireNamespace<span class="token punctuation">(</span><span class="token string">"BiocManager"</span><span class="token punctuation">,</span> quietly <span class="token operator">=</span> <span class="token boolean">TRUE</span><span class="token punctuation">)</span><span class="token punctuation">)</span>

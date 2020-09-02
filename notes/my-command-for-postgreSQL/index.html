@@ -5,17 +5,14 @@ psql <span class="token punctuation">(</span><span class="token number">12.2</sp
 Type <span class="token string">"help"</span> <span class="token keyword">for</span> help.
 
 <span class="token assign-left variable">macos</span><span class="token operator">=</span><span class="token comment">#</span></code></pre></div>
-<hr>
 <h3>Create New User with Password</h3>
 <p>Use below command to create a user <strong>with</strong> password</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token assign-left variable">macos</span><span class="token operator">=</span><span class="token comment"># CREATE USER demo WITH PASSWORD 'demo123';</span>
 CREATE ROLE</code></pre></div>
-<hr>
 <h3>Create New Databse for Certain User</h3>
 <p>Below command works.</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token assign-left variable">macos</span><span class="token operator">=</span><span class="token comment"># CREATE DATABASE phenopolis_db_demo OWNER demo;</span>
 CREATE DATABASE</code></pre></div>
-<hr>
 <h3>Check all Database</h3>
 <p>User <code class="language-text">\list</code></p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token assign-left variable">macos</span><span class="token operator">=</span><span class="token comment"># \list</span>
@@ -32,7 +29,6 @@ CREATE DATABASE</code></pre></div>
  template1          <span class="token operator">|</span> postgres <span class="token operator">|</span> UTF8     <span class="token operator">|</span> en_US.UTF-8 <span class="token operator">|</span> en_US.UTF-8 <span class="token operator">|</span> <span class="token operator">=</span>c/postgres          +
                     <span class="token operator">|</span>          <span class="token operator">|</span>          <span class="token operator">|</span>             <span class="token operator">|</span>             <span class="token operator">|</span> <span class="token assign-left variable">postgres</span><span class="token operator">=</span>CTc/postgres
 <span class="token punctuation">(</span><span class="token number">7</span> rows<span class="token punctuation">)</span></code></pre></div>
-<hr>
 <h3>Remove Database</h3>
 <p>Here I search a bit, <strong>If the database name contains upper-case letter, the databse name need to be put in ""</strong>.</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token assign-left variable">macos</span><span class="token operator">=</span><span class="token comment"># DROP DATABASE  "MGQdb";</span>
