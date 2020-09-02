@@ -8,7 +8,7 @@ abstract: "I am maitaining the GCGR website. So I think it's a good idea to cons
 
 The problem I am facing is I want my GCGR website database get backup regularly. And sadly I am only good at R language.
 
-## How to run some R code regularly?
+### How to run some R code regularly?
 
 First issue I need to solve is how to run a functional regularlly? Of course a simple for/while loop should work. But I found a better solution in [Xie's blog](https://yihui.org/en/2017/10/later-recursion/), who recommanded a package called `later`, it could delay the code a bit.
 
@@ -48,9 +48,7 @@ mongoBackup()
 
 At the end of the function, a 86400 second "delay" would be set for set for next run.
 
----
-
-## Backup to Github
+### Backup to Github
 
 Now I can dump MongoDB file successfully. Next questions is how to store these file into another place. Firstly I would try to push them to my github. **Here I need to set my vm could automatically push to github, by setting SSH key.**
 
@@ -69,8 +67,7 @@ Then modify the code as:
 
 The above code looks super ugly, but it really works...
 
----
-## Backup to RDS
+### Backup to RDS
 
 Finally, I want to also backup it in the RDS. It should not be hard, and should be able to be set automatically.
 

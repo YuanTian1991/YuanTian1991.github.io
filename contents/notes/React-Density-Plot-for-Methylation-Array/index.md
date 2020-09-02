@@ -8,7 +8,7 @@ abstract: "In one of my colaboration project, I need to sometimes show density p
 
 Here I want to create a quick react APP to show density plot for Human Methylation array data. I know it's kind of like reinventing wheel, but I think it's better than already give my collegeus R plot.
 
-## Create React Density Plot
+### Create React Density Plot
 
 Firstly I need to created a react app [on my github](https://github.com/YuanTian1991/densityPlot). I just used the most simply `react-cli` tool to create the site:
 
@@ -102,10 +102,8 @@ Then the page should show a simple line already.
 
 The React part is nearly done, now we need to generate density plot for DNA Methylation Array.
 
----
 
-
-## Prepare Density Plot Line
+### Prepare Density Plot Line
 
 Then I need to prepare the methylation array data. It could be normalized, Combat corrected, etc. In my case, I saved the matrix and pd file into a R file:
 
@@ -211,9 +209,7 @@ In above code, since I have two phenotypes in "Density Plot - Manaually Removed 
 
 Now I have get the density line data for all sample, and nicely in JSON format. Finally I want to integrate them into react website code.
 
----
-
-## Integrate JSON into React
+### Integrate JSON into React
 
 Create a path as `assets/js` under `src` folder of React project, create a new file name as `dataset.js`. Then copy-paste the density.json file in. (Or just copy the file into the path, then rename it as dataset.js). Finally, open the dataset.js file, add two letter at head: 'export default'
 

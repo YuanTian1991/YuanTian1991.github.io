@@ -16,15 +16,11 @@ By using parallel, the command is below.
 parallel --plus 'samtools sort {...}.bam -o {...}.sorted.bam' ::: *.bam
 ```
 
----
-
 ### Index sorted Bam file
 
 ```bash
 parallel --plus 'samtools index {...}.sorted.bam {...}.sorted.bam.bai' ::: *.bam
 ```
-
----
 
 ### Merge bam files into one bam
 

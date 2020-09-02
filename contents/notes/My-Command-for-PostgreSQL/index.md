@@ -18,8 +18,6 @@ Type "help" for help.
 macos=#
 ```
 
----
-
 ### Create New User with Password
 
 Use below command to create a user **with** password
@@ -29,8 +27,6 @@ macos=# CREATE USER demo WITH PASSWORD 'demo123';
 CREATE ROLE
 ```
 
----
-
 ### Create New Databse for Certain User
 
 Below command works.
@@ -39,8 +35,6 @@ Below command works.
 macos=# CREATE DATABASE phenopolis_db_demo OWNER demo;
 CREATE DATABASE
 ```
-
----
 
 ### Check all Database
 
@@ -62,8 +56,6 @@ macos=# \list
                     |          |          |             |             | postgres=CTc/postgres
 (7 rows)
 ```
-
----
 
 ### Remove Database
 

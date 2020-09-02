@@ -8,7 +8,6 @@ abstract: "For many years, I merely only use commands like git add, git commit, 
 
 Here I just record my handy commands, not full-power git manual. As I guess I can't remember them all, so some essential one accumulated list would be perfect for me.
 
----
 
 ### Abandon all my current changes
 Happend when I wrote couple lines, then find this is the correct branch.
@@ -18,8 +17,6 @@ git reset --hard HEAD
 ```
 
 It would remove all add/delete I have done, to the latest commit.
-
----
 
 ### Checkout new branch from current
 Open a bug/feature branch based on current one (for example dev-live), after fixing bugs/features, I will merge this bug/feature branch to main (current) one.
@@ -33,8 +30,6 @@ Another solution is, **after you are on the correct current verison branch**, ru
 ```bash
 git checkout -b FEATURE
 ```
-
----
 
 ### Keep the feature branch up to date
 
@@ -60,8 +55,7 @@ git commit -m "Merged Updated Conflict from new dev-live"
 
 Then I can continue the Feature/Bug development.
 
----
-## Discard changes to one file
+### Discard changes to one file
 
 This happens somtimes I modified a lot of files, but eventually found some file is totally unneccesary to be modified. So I want to revoke what I have done to certain one file.
 
@@ -69,9 +63,7 @@ This happens somtimes I modified a lot of files, but eventually found some file 
 git checkout -- file
 ```
 
----
-
-## Rename a Local branch
+### Rename a Local branch
 
 This happens when I created a branch, but later I don't like the name. In most case, it's because I fixed many issues in it.
 
@@ -79,9 +71,7 @@ This happens when I created a branch, but later I don't like the name. In most c
 git branch -m currentBranchName newBranchName
 ```
 
----
-
-## Replace a Branch completelyl with Another
+### Replace a Branch completelyl with Another
 
 This happens when I pushed and merged a branch, say `SolveIssues`, to master. Then I want to continue solve more issues, then I want to also use the same name `SolveIssues`. However, if I blindly merge, sometimes conflict would happen. So the best way here is to directly rewrite SolveIssues Branch with the master branch, then continue developing.
 

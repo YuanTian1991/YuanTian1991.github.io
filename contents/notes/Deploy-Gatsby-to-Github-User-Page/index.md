@@ -14,8 +14,6 @@ According the [Gatsby Docs](https://www.gatsbyjs.org/docs/how-gatsby-works-with-
 
  I want to try the first one here, hopefully it works.
 
----
-
 Firstly I installed a npm library:
 ```bash
 npm install gh-pages --save-dev
@@ -60,8 +58,6 @@ Then in theory, if I type `npm run deploy`, it should work, then I tried... it's
 Then after about 10 seconds, the website is online, perfectly. With all the fonts, style, assets, url, image included. It looks good, much better than my last time next.js development experience.
 
 For now, the first milestone has reached. In the future I can constantly update this blog, learn how to improve SEO, how to add features, how to created css animation, etc.
-
----
 
 In the future, the steps to update notes are:
 1. Open the project with vscode, run `gatsby develop`

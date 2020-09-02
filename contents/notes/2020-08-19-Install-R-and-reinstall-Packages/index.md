@@ -74,8 +74,6 @@ R_LIBS_USER=/Data/Tian/Software/install/R_4.0.2/lib64/R/library
 
 The first line indicates if R is about to create some tmp, where should it download it. **The second line indicates where to install packages**. I don't want to put everything in my Home Directory.
 
----
-
 ## Install Packages
 
 Then, I think I need a script to install all packages. So the steps are simply: 1, get package names from old installed R, 2, install in new R.

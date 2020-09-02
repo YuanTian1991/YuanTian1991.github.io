@@ -67,8 +67,6 @@ Then I can `git add .` it works well.
 ```
 
 
----
-
 Below bash code could count numbers of each types of file.
 ```bash
 find . -type f | sed -n 's/..*\.//p' | sort | uniq -c
