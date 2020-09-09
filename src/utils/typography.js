@@ -5,7 +5,7 @@ ParnassusTheme.overrideThemeStyles = ({ rhythm }, options) => ({
   "h1,h2,h3,h4,h5,h6": {
     marginTop: rhythm(1 / 4),
     marginBottom: rhythm(1 / 4),
-    color: '#4f4f4f'
+    color: '#424242'
   },
   "img": {
       borderRadius: '6px',
@@ -14,7 +14,7 @@ ParnassusTheme.overrideThemeStyles = ({ rhythm }, options) => ({
       border: '0.5px solid lightgrey',
   },
   "p": {
-      color: '#4f4f4f'
+      color: '#424242'
   },
   "a": { 
     color: 'rgba(185, 0, 4)'
