@@ -16,8 +16,6 @@ It's my first time to deal with Whole WGBS data. Merely I want to at least coupl
 
 ## 1. Software Installation
 
----
-
 After chating with lab members,  I decide to start with gemBS software, it' s python based software, requires you to input data, and relies on your compiled configuration to work. Firstly I need to install is based on it's [instruction](http://statgen.cnag.cat/gemBS/UserGuide/_build/html/installation.html). Since I always have Python version 3.7 installed, I can directly install the Python Library it requires.
 
 ```r
@@ -33,8 +31,6 @@ python3 setup.py install --user
 ```
 
 ## 2. Perpare Data and Configuration
-
----
 
 After installation, I need to prepare data (fastq files) and configurations for this for this software. In my case, my **base analysis folder** is `..../BS_Analysis` . The base means where I am going to run the software, this parameter will be used in configuration later. 
 
@@ -145,8 +141,6 @@ Finally, I need to prepare the reference genome to be mapped. Here I downloaded 
 That's all, above 4 files are needs to be prepared.
 
 ## 3. GemBS Pipeline
-
----
 
 After installation, now it's time to run GemBS. **Note that all below commands needs to be run in the base folder.**
 
