@@ -37,7 +37,7 @@ class IndexPage extends React.Component {
                       {node.frontmatter.title} </h2>
                     {/* </Typography> */}
 
-                    <Typography variant="body2" style={{ fontWeight: "100" }}>
+                    <Typography  style={{ fontWeight: "100", fontSize: '0.7em', color: 'gray', margin: '10px 0px' }}>
                       {node.frontmatter.date}
                       {
                         node.frontmatter.tags.map((tag, tagIndex) => {

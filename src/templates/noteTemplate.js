@@ -19,11 +19,11 @@ export default function Template({
           <h1 style={{ fontWeight: '900' }}>{frontmatter.title}</h1>
           <Container style={{padding: '1.5em'}}>
               <Container style={{padding: '1em',
-                                 backgroundColor: 'rgba(0, 0, 0, 0.06)', 
+                                 backgroundColor: 'rgba(0, 0, 0, 0.05)', 
                                 }}>
-                    <Typography variant="body1" style={{fontWeight: '100'}}>
+                    <small style={{fontWeight: '100', fontSize: '0.9em', color: '#616161'}}>
                         {frontmatter.abstract}
-                    </Typography>
+                    </small>
             </Container>
             <Divider style={{marginTop: '1em', marginBottom: '1em'}}/>
           </Container>

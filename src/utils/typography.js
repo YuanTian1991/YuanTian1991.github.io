@@ -1,10 +1,10 @@
 import Typography from "typography";
-import ParnassusTheme from 'typography-theme-parnassus'
+import IrvingTheme from 'typography-theme-irving'
 
-ParnassusTheme.overrideThemeStyles = ({ rhythm }, options) => ({
+IrvingTheme.overrideThemeStyles = ({ rhythm }, options) => ({
   "h1,h2,h3,h4,h5,h6": {
-    marginTop: rhythm(1 / 2),
-    marginBottom: rhythm(1 / 2),
+    marginTop: rhythm(1 / 4),
+    marginBottom: rhythm(1 / 4),
     color: '#424242'
   },
   "img": {
@@ -31,7 +31,7 @@ const typography = new Typography(
   //   headerFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
   //   bodyFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
   // },
-  ParnassusTheme
+  IrvingTheme
 );
 
 export default typography;
