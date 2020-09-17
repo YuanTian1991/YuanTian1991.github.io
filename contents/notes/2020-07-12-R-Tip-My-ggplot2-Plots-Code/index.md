@@ -1,7 +1,7 @@
 ---
-slug: '/notes/R-Tip-My-ggplot2-Plots-Code'
+slug: '/notes/My-ggplot2-Plots-Code'
 date: '2020-07-12'
-title: 'R Tip: My ggplot2 Plots Code'
+title: 'My ggplot2 Plots Code'
 tags: ['R', 'ggplot2', 'visualisation']
 abstract: 'This is a note to record my quick code to draw comparaibily nice figure with ggplot2.'
 ---
