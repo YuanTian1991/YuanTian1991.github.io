@@ -32,3 +32,11 @@ This happens when I take back the fold access, and want to get all file modified
 ```bash
 sudo chown -R regmtyu Polish_Cohort_11/
 ```
+
+### Find and copy files with certain postfix
+
+This happens when I want to found out a list of files recursively in a folder, then copy them into another places.
+
+```bash
+find . -type f  -iname "*cpg.txt.gz" -exec cp {} ../../Data/5mC/ \;
+```
