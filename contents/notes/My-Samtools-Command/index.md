@@ -8,6 +8,12 @@ abstract: "This is a note for my regular-used Samtools command."
 
 This is a simple note to record my Samtools commands.
 
+### View first couple lines in bam file
+
+```bash
+samtools view sample.bam | head -n 5
+```
+
 ### Sort Bam file
 
 By using parallel, the command is below.
