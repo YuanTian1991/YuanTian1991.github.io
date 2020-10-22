@@ -37,3 +37,9 @@ This situation happens when you have multiple bam file, all for same phenotype, 
 ```bash
 samtools merge ./MergedBam/LT-bnd.bam ./SortedBam/SUL_LT49_bnd_chr.sorted.bam ./SortedBam/SUL_LT51_bnd_chr.sorted.bam ./SortedBam/SUL_LT52_bnd_chr.sorted.bam ./SortedBam/SUL_LT53_bnd_chr.sorted.bam ./SortedBam/SUL_LT55_bnd_chr.sorted.bam
 ```
+
+Another better way to do it:
+
+```bash
+samtools merge MergedInput.bam `ls ./myGreyList/*_Inp.grey_filtered.bam`
+```
