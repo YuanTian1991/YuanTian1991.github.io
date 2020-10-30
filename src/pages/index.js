@@ -33,7 +33,7 @@ class IndexPage extends React.Component {
                 <Paper key={index} elevation={0} className={classes.root}>
                   <Box my={1}>
                     {/* <Typography variant="h4" component="h1" style={{ fontWeight: "700" }} gutterBottom> */}
-                    <h2>
+                    <h2 style={{ fontWeight: '900' }}>
                       {node.frontmatter.title} </h2>
                     {/* </Typography> */}
 
@@ -53,9 +53,9 @@ class IndexPage extends React.Component {
                       }
                     </Typography>
 
-                    <p>
+                    <Typography style={{fontWeight: '300', fontSize: '0.7em'}}>
                       {node.frontmatter.abstract}
-                    </p>
+                    </Typography>
                   </Box>
                 </Paper>
               </Link>
@@ -76,7 +76,7 @@ const styles = theme => ({
     // minWidth: 275,
     padding: '1em',
     margin: '0.5em',
-    marginBottom: '2em',
+    // marginBottom: '2em',
     cursor: 'pointer',
     backgroundColor: 'rgba(255, 0, 0, 0)',
     "&:hover": {

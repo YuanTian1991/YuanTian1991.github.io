@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 
 
-import { Container, Box, Toolbar, Paper } from '@material-ui/core';
+import { Container, Box, Toolbar, Paper, Grid, Typography, CardHeader, Avatar } from '@material-ui/core';
 import { Link } from "gatsby"
 import StickyFooter from "./footer.js"
 
@@ -28,39 +28,22 @@ class Layout extends React.Component {
 
     return (
       <Container maxWidth="lg">
-        <Box my={5} >
+        <Box my={1} >
           <Toolbar className={classes.toolbarSecondary}>
-            {
-              url !== '/' ? (
+
                 <div className={classes.root}>
-                  <Paper elevation={0} className={classes.verticalAlign} style={{ paddingTop: '1em' }}>
+                  {/* <Paper elevation={0} >
                     <img alt="Tian" className={classes.smallTitleIcon} src={require("../assets/image/Tian.jpg")} />
-                  </Paper>
+                  </Paper> */}
                   <Link
                     to='/'
                     className={classes.Link}
                   >
-                    <Paper elevation={0} className={classes.verticalAlign}>
-                      <h4>Yuan Tian</h4>
+                    <Paper elevation={0} >
+                      <h4>Tian</h4>
                     </Paper>
                   </Link>
                 </div>
-              ) : (
-                  <div className={classes.root}>
-                    <Paper elevation={0} className={classes.verticalAlign} style={{ paddingTop: '1em' }}>
-                      <img alt="Tian" className={classes.TitleIcon} src={require("../assets/image/Tian.jpg")} />
-                    </Paper>
-                    <Link
-                      to='/'
-                      className={classes.Link}
-                    >
-                      <Paper elevation={0} className={classes.verticalAlign}>
-                        <h2>Yuan Tian</h2>
-                      </Paper>
-                    </Link>
-                  </div>
-                )
-            }
             <div className={classes.toolbarButtons}>
               {/* <Avatar size="large" style={{ position: "absolute", padding: '0.2em' }}></Avatar> */}
               {/* <img className={classes.imageIcon} src={Mountain} /> */}
@@ -104,7 +87,10 @@ const styles = theme => ({
   },
   Link: {
     textDecoration: "none",
-    color: 'rgba(245, 245, 245, 0)'
+    color: 'black',
+    "&:hover ": {
+        color: 'black',
+    }
   },
   title: {
     color: "black",
@@ -122,7 +108,8 @@ const styles = theme => ({
     cursor: 'pointer'
   },
   smallTitleIcon: {
-    width: 40, height: 40, borderRadius: 40 / 2
+    marginTop: '1em',
+    width: 50, height: 50, borderRadius: 50 / 2,
   },
   TitleIcon: {
     // marginRight: '1em',
@@ -143,7 +130,7 @@ const styles = theme => ({
     display: `flex`,
     justifyContent: `center`,
     alignItems: `center`,
-    height: '2em',
+    height: '0em',
   }
 });
 

@@ -14,8 +14,8 @@ export default function Template({
   return (
     <div className="blog-post-container">
       <Layout>
-        {/* <Paper elevation={0} style={{ padding: '1em', backgroundColor: 'rgba(245, 245, 245, 0)' }}> */}
-          <p style={{ marginBottom: '2em', fontWeight: '100' }}>{frontmatter.date}</p>
+        {/* <Paper elevation={2} style={{ padding: '2em', backgroundColor: 'rgba(245, 245, 245, 0)' }}> */}
+          <p style={{ marginTop: '2em', fontWeight: '100' }}>{frontmatter.date}</p>
           <h1 style={{ fontWeight: '900' }}>{frontmatter.title}</h1>
           <Container style={{padding: '1.5em'}}>
               <Container style={{padding: '1em',
