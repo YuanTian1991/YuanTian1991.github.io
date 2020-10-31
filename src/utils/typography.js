@@ -6,12 +6,13 @@ IrvingTheme.overrideThemeStyles = ({ rhythm }, options) => ({
     color: 'black',
     marginTop: "0.5em",
     marginBottom: '0.5em',
+    lineHeight: 1.3,
   },
   "img": {
       borderRadius: '6px',
   },
   "pre": {
-      border: '0.5px solid lightgrey',
+      border: '1px solid lightgrey',
   },
   "p": {
       color: 'black',

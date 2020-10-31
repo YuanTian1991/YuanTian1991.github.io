@@ -5,6 +5,6 @@ html {
   font-family: "Helvetica"
 }
 
-/* *::selection {
+*::selection {
 background: rgba(254, 217, 10, 0.7);
-} */
+}
