@@ -79,3 +79,27 @@ This happens when I pushed and merged a branch, say `SolveIssues`, to master. Th
 git checkout SolveIssues
 git reset --hard maste
 ```
+
+### Copy changes in one or more commit in one branch into another
+
+This happens a lot to me when I update ChAMP package, I need to modify the master branch first, then checkout into RELEASE_3_XX branch, then do the modifications again, by typing! So I think there must be a way to do it, which is `cherry-picking`.
+
+Assuming I am have modified branch master, and committed something into Github. Now I should firstly get the commit ID of these changes, with below command:
+```bash
+git log --oneline -3
+```
+Then I found the two commits I want to cherry-pick:
+
+```bash
+ff261fe (HEAD -> master, upstream/master, origin/master, origin/HEAD) Removed Valid Checking in champ.runCombat(), Combat now take factors with even one sample.
+7223d10 Fixed bug of missing blc function, removed counfouding checking in champ.runCombat.R
+9a0b89a bump x.y.z version to odd y following creation of RELEASE_3_12 branch
+```
+
+Then I checkout to another branch, say RELEASE_12 here, cherry-pick these two commit with code:
+
+```bash
+git cherry-pick 7223d10 ff261fe -n
+```
+
+Then the changes I did in commit 7223d10 ff261fe will all be copied into this branch, but not committed (because of the `-n` parameter above), which is exactly what I need. Note that sometimes there may be conflict when cherry-picking, just solve them, then recommit.
