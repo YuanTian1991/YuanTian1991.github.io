@@ -12,7 +12,7 @@ I am not analysing a set of hMeDIP-seq data, it's my first time working on this 
 
 The works is actually started from a set of splitted fq file. I don't know why they are initially in this status, but it's not good. So I merged those fastq file into each sample with my own script.
 
-- Script for Merging fq files based on Sample Name
+Script for Merging fq files based on Sample Name
 
     ```r
     # A script I wrote to merge fq files based on pheno-sample-fraction.
@@ -68,7 +68,7 @@ Note that I created a folder to allow fastQC files to put into it.
 
 Fastp is so easy to use in terms of triming, as it's very fast and automatically detect all adapters. Note that we need above fastQC work to make sure if this data is preh64 (a very old data format), or it's preh33. It would be labelled in the html report of fastQC as `encode`.
 
-- core code for fastp
+core code for fastp
 
     ```r
     cmd <- paste0("parallel --plus 'fastp -h ./myFastp/{/..}.html -j ./myFastp/{/..}.json -i {} -o ./myFastp/{/..}.fastp.fq' ::: ", directory, "* &> ./myLog/myFastp.log")
@@ -82,19 +82,19 @@ There are so many tools now out there but still seems bowtie2 is the main option
 
 There the threads parameter is 30. core code for bowtie2 alignment:
 
-    ```r
-    message("\n[ Section 3: bowtie2 alignment ] (require bowtie2 installed on server)")
-    message("!!! Prepare genome from bowtie2 into a folder called Genome in this folder yourself, unzip it.")
-    if (!file.exists("./myAlignment")) dir.create("./myAlignment")
+```r
+message("\n[ Section 3: bowtie2 alignment ] (require bowtie2 installed on server)")
+message("!!! Prepare genome from bowtie2 into a folder called Genome in this folder yourself, unzip it.")
+if (!file.exists("./myAlignment")) dir.create("./myAlignment")
 
-    for(i in dir("./myFastp/", pattern="*.fastp.fq"))
-    {
-        name <- strsplit(i, split="[.]")[[1]][1]
-        cmd <- paste0("bowtie2 -p ",threads," -q --local -x ./Genome/GRCh38_noalt_as/GRCh38_noalt_as -U  ./myFastp/", i , " | samtools view -bS - > ./myAlignment/", name,".bam")
-        message(cmd)
-        system(cmd)
-    }
-    ```
+for(i in dir("./myFastp/", pattern="*.fastp.fq"))
+{
+    name <- strsplit(i, split="[.]")[[1]][1]
+    cmd <- paste0("bowtie2 -p ",threads," -q --local -x ./Genome/GRCh38_noalt_as/GRCh38_noalt_as -U  ./myFastp/", i , " | samtools view -bS - > ./myAlignment/", name,".bam")
+     message(cmd)
+     system(cmd)
+}
+```
 
 ## 5. Blacklist Removing
 

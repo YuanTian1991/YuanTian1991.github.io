@@ -36,7 +36,7 @@ sudo yum install centos-release-scl
 sudo yum install devtoolset-8-gcc*
 ```
 
-## 2 compose `~/.R/Makevars` file
+## 2. compose `~/.R/Makevars` file
 
 After installation, find the location of g++, in my case:
 
