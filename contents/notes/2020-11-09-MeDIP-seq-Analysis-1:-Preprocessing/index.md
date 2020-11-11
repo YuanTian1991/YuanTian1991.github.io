@@ -14,29 +14,29 @@ The works is actually started from a set of splitted fq file. I don't know why t
 
 Script for Merging fq files based on Sample Name
 
-    ```r
-    # A script I wrote to merge fq files based on pheno-sample-fraction.
-    # Author: Yuan Tian
+```r
+ # A script I wrote to merge fq files based on pheno-sample-fraction.
+ # Author: Yuan Tian
 
-    directory <- "../20110401_LewisS_AM_HydrxMeth/"
+directory <- "../20110401_LewisS_AM_HydrxMeth/"
 
-    resultsDir <- "./Merged"
-    if (!file.exists(resultsDir)) dir.create(resultsDir)
+resultsDir <- "./Merged"
+if (!file.exists(resultsDir)) dir.create(resultsDir)
 
-    index <- read.csv("../20110401_LewisS_AM_HydrxMeth/index.csv", as.is=TRUE, header=F)
-    colnames(index) <- c("file", "B", "Sample", "Index")
+index <- read.csv("../20110401_LewisS_AM_HydrxMeth/index.csv", as.is=TRUE, header=F)
+colnames(index) <- c("file", "B", "Sample", "Index")
 
-    Samples <- names(table(index$Sample))
-    Samples <- Samples[Samples != ""]
+Samples <- names(table(index$Sample))
+Samples <- Samples[Samples != ""]
 
-    for(x in Samples)
-    {
-        message(x)
-        tmp <- paste(paste(directory, index$file[index$Sample == x], sep=""), collapse=" ")
-        tmp <- paste("cat ", tmp, " > ./Merged/", x, ".fq.gz", sep="")
-        system(tmp)
-    }
-    ```
+for(x in Samples)
+{
+    message(x)
+    tmp <- paste(paste(directory, index$file[index$Sample == x], sep=""), collapse=" ")
+    tmp <- paste("cat ", tmp, " > ./Merged/", x, ".fq.gz", sep="")
+    system(tmp)
+}
+```
 
 After above code, files are presented into a better format, like below. There are two types of data, **bnds** indicates they are samples with antibody, which means they should have real signals on it. The `Inp` samples are background control samples, they will be used by calling peaks for bnds samples against them.
 
@@ -57,10 +57,10 @@ The initial samples are **not** going to be used here: SUL_CRC2... I guess they 
 
 This part is merely for generate QC report for fastq file, fastqc command is very easy to use, and merely there are many parameters after that, and they are mostly working well. Below is my code code for fastQC, written in R. Actually there is no need to use R to write it, I do it because I am not good at shell, so I prefer a R script to do everything later.
 
-    ```r
-    cmd <- paste0("fastqc --threads " , threads, "  --outdir ./myFastQC " , directory ,"* &> ./myLog/myFastQC.log")
-    system(cmd)
-    ```
+```r
+cmd <- paste0("fastqc --threads " , threads, "  --outdir ./myFastQC " , directory ,"* &> ./myLog/myFastQC.log")
+system(cmd)
+```
 
 Note that I created a folder to allow fastQC files to put into it.
 
@@ -70,9 +70,9 @@ Fastp is so easy to use in terms of triming, as it's very fast and automatically
 
 core code for fastp
 
-    ```r
-    cmd <- paste0("parallel --plus 'fastp -h ./myFastp/{/..}.html -j ./myFastp/{/..}.json -i {} -o ./myFastp/{/..}.fastp.fq' ::: ", directory, "* &> ./myLog/myFastp.log")
-    ```
+```r
+cmd <- paste0("parallel --plus 'fastp -h ./myFastp/{/..}.html -j ./myFastp/{/..}.json -i {} -o ./myFastp/{/..}.fastp.fq' ::: ", directory, "* &> ./myLog/myFastp.log")
+```
 
 It would take very short time if I use above parallel running.
 
@@ -115,19 +115,19 @@ if (!file.exists("./myGreyList")) dir.create("./myGreyList")
 library("GreyListChIP")
 library("BSgenome.Hsapiens.UCSC.hg38")
 
- files <- dir("./myAlignment")
-    files <- unique(sapply(files, function(x) strsplit(x, split="[.]")[[1]][1]))
-    Inps <- files[grep("Inp",files)]
+files <- dir("./myAlignment")
+files <- unique(sapply(files, function(x) strsplit(x, split="[.]")[[1]][1]))
+Inps <- files[grep("Inp",files)]
 
-    for(i in Inps)
-    {
-        message(i)
-        gl <- greyListBS(BSgenome.Hsapiens.UCSC.hg38, paste0("./myAlignment/",i,".bam"))
-        export(gl,con=paste0("./myGreyList/",i,"GreyList.bed"))
-    }
+for(i in Inps)
+{
+    message(i)
+    gl <- greyListBS(BSgenome.Hsapiens.UCSC.hg38, paste0("./myAlignment/",i,".bam"))
+    export(gl,con=paste0("./myGreyList/",i,"GreyList.bed"))
+}
 
-    cmd <- "cat ./myGreyList/* > ./MergedGreyList.bed"
-    system(cmd)
+cmd <- "cat ./myGreyList/* > ./MergedGreyList.bed"
+system(cmd)
 ```
 
 After generation of GreyList, we can use this list to do filtering on our bam file, with bedtool command:
