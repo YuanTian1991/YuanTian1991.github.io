@@ -2,29 +2,27 @@
 <h2>1. Data Preparation</h2>
 <p>The works is actually started from a set of splitted fq file. I don't know why they are initially in this status, but it's not good. So I merged those fastq file into each sample with my own script.</p>
 <p>Script for Merging fq files based on Sample Name</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">```r
-# A script I wrote to merge fq files based on pheno-sample-fraction.
-# Author: Yuan Tian
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"> <span class="token comment"># A script I wrote to merge fq files based on pheno-sample-fraction.</span>
+ <span class="token comment"># Author: Yuan Tian</span>
 
-directory &lt;- &quot;../20110401_LewisS_AM_HydrxMeth/&quot;
+directory <span class="token operator">&lt;-</span> <span class="token string">"../20110401_LewisS_AM_HydrxMeth/"</span>
 
-resultsDir &lt;- &quot;./Merged&quot;
-if (!file.exists(resultsDir)) dir.create(resultsDir)
+resultsDir <span class="token operator">&lt;-</span> <span class="token string">"./Merged"</span>
+<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>file.exists<span class="token punctuation">(</span>resultsDir<span class="token punctuation">)</span><span class="token punctuation">)</span> dir.create<span class="token punctuation">(</span>resultsDir<span class="token punctuation">)</span>
 
-index &lt;- read.csv(&quot;../20110401_LewisS_AM_HydrxMeth/index.csv&quot;, as.is=TRUE, header=F)
-colnames(index) &lt;- c(&quot;file&quot;, &quot;B&quot;, &quot;Sample&quot;, &quot;Index&quot;)
+index <span class="token operator">&lt;-</span> read.csv<span class="token punctuation">(</span><span class="token string">"../20110401_LewisS_AM_HydrxMeth/index.csv"</span><span class="token punctuation">,</span> as.is<span class="token operator">=</span><span class="token boolean">TRUE</span><span class="token punctuation">,</span> header<span class="token operator">=</span>F<span class="token punctuation">)</span>
+colnames<span class="token punctuation">(</span>index<span class="token punctuation">)</span> <span class="token operator">&lt;-</span> c<span class="token punctuation">(</span><span class="token string">"file"</span><span class="token punctuation">,</span> <span class="token string">"B"</span><span class="token punctuation">,</span> <span class="token string">"Sample"</span><span class="token punctuation">,</span> <span class="token string">"Index"</span><span class="token punctuation">)</span>
 
-Samples &lt;- names(table(index$Sample))
-Samples &lt;- Samples[Samples != &quot;&quot;]
+Samples <span class="token operator">&lt;-</span> names<span class="token punctuation">(</span>table<span class="token punctuation">(</span>index<span class="token operator">$</span>Sample<span class="token punctuation">)</span><span class="token punctuation">)</span>
+Samples <span class="token operator">&lt;-</span> Samples<span class="token punctuation">[</span>Samples <span class="token operator">!=</span> <span class="token string">""</span><span class="token punctuation">]</span>
 
-for(x in Samples)
-{
-    message(x)
-    tmp &lt;- paste(paste(directory, index$file[index$Sample == x], sep=&quot;&quot;), collapse=&quot; &quot;)
-    tmp &lt;- paste(&quot;cat &quot;, tmp, &quot; &gt; ./Merged/&quot;, x, &quot;.fq.gz&quot;, sep=&quot;&quot;)
-    system(tmp)
-}
-```</code></pre></div>
+<span class="token keyword">for</span><span class="token punctuation">(</span>x <span class="token keyword">in</span> Samples<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    message<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+    tmp <span class="token operator">&lt;-</span> paste<span class="token punctuation">(</span>paste<span class="token punctuation">(</span>directory<span class="token punctuation">,</span> index<span class="token operator">$</span>file<span class="token punctuation">[</span>index<span class="token operator">$</span>Sample <span class="token operator">==</span> x<span class="token punctuation">]</span><span class="token punctuation">,</span> sep<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">)</span><span class="token punctuation">,</span> collapse<span class="token operator">=</span><span class="token string">" "</span><span class="token punctuation">)</span>
+    tmp <span class="token operator">&lt;-</span> paste<span class="token punctuation">(</span><span class="token string">"cat "</span><span class="token punctuation">,</span> tmp<span class="token punctuation">,</span> <span class="token string">" > ./Merged/"</span><span class="token punctuation">,</span> x<span class="token punctuation">,</span> <span class="token string">".fq.gz"</span><span class="token punctuation">,</span> sep<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">)</span>
+    system<span class="token punctuation">(</span>tmp<span class="token punctuation">)</span>
+<span class="token punctuation">}</span></code></pre></div>
 <p>After above code, files are presented into a better format, like below. There are two types of data, <strong>bnds</strong> indicates they are samples with antibody, which means they should have real signals on it. The <code class="language-text">Inp</code> samples are background control samples, they will be used by calling peaks for bnds samples against them.</p>
 <p>In my data, there are totally 4 phenotypes, NC(Normal Colon), NL(Normal Liver), TC(Tumour Colon) and LT (Liver Tumour). However, there are only two phenotypes (NC and LT) have Inp samples, so I think later in Peak Calling the only way I can do is to merge Inps togather, into a big <code class="language-text">MergedInp.bam</code>.</p>
 <div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token punctuation">(</span>base<span class="token punctuation">)</span> regmtyu<span class="token operator">@</span>SLMSICANBECK01<span class="token operator">:</span><span class="token operator">/</span>Data<span class="token operator">/</span>Tian<span class="token operator">/</span>Postdoc<span class="token operator">/</span>BathCRC<span class="token operator">/</span>MeDIP<span class="token operator">-</span>seq<span class="token operator">/</span><span class="token number">0.</span>Data<span class="token operator">/</span>Merged<span class="token operator">$</span> ls
@@ -36,17 +34,13 @@ SUL_CRC2_35NC_hmC_Input.fq.gz  SUL_LT51_bnd.fq.gz           SUL_LT53_Inp.fq.gz  
 <p>The initial samples are <strong>not</strong> going to be used here: SUL_CRC2... I guess they are Methylation MeDIP-seq data.</p>
 <h2>2. FastQC Report</h2>
 <p>This part is merely for generate QC report for fastq file, fastqc command is very easy to use, and merely there are many parameters after that, and they are mostly working well. Below is my code code for fastQC, written in R. Actually there is no need to use R to write it, I do it because I am not good at shell, so I prefer a R script to do everything later.</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">```r
-cmd &lt;- paste0(&quot;fastqc --threads &quot; , threads, &quot;  --outdir ./myFastQC &quot; , directory ,&quot;* &amp;&gt; ./myLog/myFastQC.log&quot;)
-system(cmd)
-```</code></pre></div>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r">cmd <span class="token operator">&lt;-</span> paste0<span class="token punctuation">(</span><span class="token string">"fastqc --threads "</span> <span class="token punctuation">,</span> threads<span class="token punctuation">,</span> <span class="token string">"  --outdir ./myFastQC "</span> <span class="token punctuation">,</span> directory <span class="token punctuation">,</span><span class="token string">"* &amp;> ./myLog/myFastQC.log"</span><span class="token punctuation">)</span>
+system<span class="token punctuation">(</span>cmd<span class="token punctuation">)</span></code></pre></div>
 <p>Note that I created a folder to allow fastQC files to put into it.</p>
 <h2>3. Fastp Triming</h2>
 <p>Fastp is so easy to use in terms of triming, as it's very fast and automatically detect all adapters. Note that we need above fastQC work to make sure if this data is preh64 (a very old data format), or it's preh33. It would be labelled in the html report of fastQC as <code class="language-text">encode</code>.</p>
 <p>core code for fastp</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">```r
-cmd &lt;- paste0(&quot;parallel --plus &#39;fastp -h ./myFastp/{/..}.html -j ./myFastp/{/..}.json -i {} -o ./myFastp/{/..}.fastp.fq&#39; ::: &quot;, directory, &quot;* &amp;&gt; ./myLog/myFastp.log&quot;)
-```</code></pre></div>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r">cmd <span class="token operator">&lt;-</span> paste0<span class="token punctuation">(</span><span class="token string">"parallel --plus 'fastp -h ./myFastp/{/..}.html -j ./myFastp/{/..}.json -i {} -o ./myFastp/{/..}.fastp.fq' ::: "</span><span class="token punctuation">,</span> directory<span class="token punctuation">,</span> <span class="token string">"* &amp;> ./myLog/myFastp.log"</span><span class="token punctuation">)</span></code></pre></div>
 <p>It would take very short time if I use above parallel running.</p>
 <h2>4. Bowtie2 Alignment</h2>
 <p>There are so many tools now out there but still seems bowtie2 is the main option for medip-seq. So the firstly think I need to do is download index for bowtie2, directly from <a href="http://bowtie-bio.sourceforge.net/bowtie2/index.shtml">official website</a>. I used <code class="language-text">GRCh38 no-alt</code>. Then I wrote a loop in R to run samples one by one.</p>
@@ -73,19 +67,19 @@ message<span class="token punctuation">(</span><span class="token string">"!!! P
 library<span class="token punctuation">(</span><span class="token string">"GreyListChIP"</span><span class="token punctuation">)</span>
 library<span class="token punctuation">(</span><span class="token string">"BSgenome.Hsapiens.UCSC.hg38"</span><span class="token punctuation">)</span>
 
- files <span class="token operator">&lt;-</span> dir<span class="token punctuation">(</span><span class="token string">"./myAlignment"</span><span class="token punctuation">)</span>
-    files <span class="token operator">&lt;-</span> unique<span class="token punctuation">(</span>sapply<span class="token punctuation">(</span>files<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> strsplit<span class="token punctuation">(</span>x<span class="token punctuation">,</span> split<span class="token operator">=</span><span class="token string">"[.]"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    Inps <span class="token operator">&lt;-</span> files<span class="token punctuation">[</span>grep<span class="token punctuation">(</span><span class="token string">"Inp"</span><span class="token punctuation">,</span>files<span class="token punctuation">)</span><span class="token punctuation">]</span>
+files <span class="token operator">&lt;-</span> dir<span class="token punctuation">(</span><span class="token string">"./myAlignment"</span><span class="token punctuation">)</span>
+files <span class="token operator">&lt;-</span> unique<span class="token punctuation">(</span>sapply<span class="token punctuation">(</span>files<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> strsplit<span class="token punctuation">(</span>x<span class="token punctuation">,</span> split<span class="token operator">=</span><span class="token string">"[.]"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+Inps <span class="token operator">&lt;-</span> files<span class="token punctuation">[</span>grep<span class="token punctuation">(</span><span class="token string">"Inp"</span><span class="token punctuation">,</span>files<span class="token punctuation">)</span><span class="token punctuation">]</span>
 
-    <span class="token keyword">for</span><span class="token punctuation">(</span>i <span class="token keyword">in</span> Inps<span class="token punctuation">)</span>
-    <span class="token punctuation">{</span>
-        message<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
-        gl <span class="token operator">&lt;-</span> greyListBS<span class="token punctuation">(</span>BSgenome.Hsapiens.UCSC.hg38<span class="token punctuation">,</span> paste0<span class="token punctuation">(</span><span class="token string">"./myAlignment/"</span><span class="token punctuation">,</span>i<span class="token punctuation">,</span><span class="token string">".bam"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-        export<span class="token punctuation">(</span>gl<span class="token punctuation">,</span>con<span class="token operator">=</span>paste0<span class="token punctuation">(</span><span class="token string">"./myGreyList/"</span><span class="token punctuation">,</span>i<span class="token punctuation">,</span><span class="token string">"GreyList.bed"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-    <span class="token punctuation">}</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span>i <span class="token keyword">in</span> Inps<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    message<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+    gl <span class="token operator">&lt;-</span> greyListBS<span class="token punctuation">(</span>BSgenome.Hsapiens.UCSC.hg38<span class="token punctuation">,</span> paste0<span class="token punctuation">(</span><span class="token string">"./myAlignment/"</span><span class="token punctuation">,</span>i<span class="token punctuation">,</span><span class="token string">".bam"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    export<span class="token punctuation">(</span>gl<span class="token punctuation">,</span>con<span class="token operator">=</span>paste0<span class="token punctuation">(</span><span class="token string">"./myGreyList/"</span><span class="token punctuation">,</span>i<span class="token punctuation">,</span><span class="token string">"GreyList.bed"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
 
-    cmd <span class="token operator">&lt;-</span> <span class="token string">"cat ./myGreyList/* > ./MergedGreyList.bed"</span>
-    system<span class="token punctuation">(</span>cmd<span class="token punctuation">)</span></code></pre></div>
+cmd <span class="token operator">&lt;-</span> <span class="token string">"cat ./myGreyList/* > ./MergedGreyList.bed"</span>
+system<span class="token punctuation">(</span>cmd<span class="token punctuation">)</span></code></pre></div>
 <p>After generation of GreyList, we can use this list to do filtering on our bam file, with bedtool command:</p>
 <div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r">parallel <span class="token operator">-</span><span class="token operator">-</span>plus <span class="token string">'bedtools intersect -v -abam {} -b ./MergedGreyList.bed > ./myGreyList/{/.}.grey_filtered.bam'</span> <span class="token operator">::</span><span class="token operator">:</span> .<span class="token operator">/</span>myAlignment<span class="token operator">/</span><span class="token operator">*</span>.bam</code></pre></div>
 <h2>6.bigwig IGV visualisation</h2>
