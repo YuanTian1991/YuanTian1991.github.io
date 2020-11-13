@@ -33,11 +33,11 @@ class IndexPage extends React.Component {
                 <Paper key={index} elevation={0} className={classes.root}>
                   <Box my={1}>
                     {/* <Typography variant="h4" component="h1" style={{ fontWeight: "700" }} gutterBottom> */}
-                    <h2 style={{ fontWeight: '900' }}>
+                    <h2 style={{fontWeight: '700'}}>
                       {node.frontmatter.title} </h2>
                     {/* </Typography> */}
 
-                    <Typography  style={{ fontWeight: "100", fontSize: '0.7em', color: 'gray', margin: '10px 0px' }}>
+                    <Typography  style={{ fontWeight: "100", fontSize: '0.9em', color: 'gray', margin: '0px 0px' }}>
                       {node.frontmatter.date}
                       {
                         node.frontmatter.tags.map((tag, tagIndex) => {
@@ -53,9 +53,13 @@ class IndexPage extends React.Component {
                       }
                     </Typography>
 
-                    <Typography style={{fontWeight: '300', fontSize: '0.7em'}}>
+                    <p>
+                        {node.frontmatter.abstract}
+                    </p>
+
+                    {/* <Typography style={{fontWeight: '300', fontSize: '0.7em'}}>
                       {node.frontmatter.abstract}
-                    </Typography>
+                    </Typography> */}
                   </Box>
                 </Paper>
               </Link>

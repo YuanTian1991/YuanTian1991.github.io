@@ -40,7 +40,7 @@ class Layout extends React.Component {
                     className={classes.Link}
                   >
                     <Paper elevation={0} >
-                      <h4>Tian</h4>
+                      <p>Tian</p>
                     </Paper>
                   </Link>
                 </div>

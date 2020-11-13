@@ -16,7 +16,7 @@ export default function Template({
       <Layout>
         {/* <Paper elevation={2} style={{ padding: '2em', backgroundColor: 'rgba(245, 245, 245, 0)' }}> */}
           <p style={{ marginTop: '1em', fontWeight: '100' }}>{frontmatter.date}</p>
-          <h1 style={{ fontSize: '1.8em' , fontWeight: '500' }}>{frontmatter.title}</h1>
+          <h1 style={{ fontSize: '2.5em' , fontWeight: '700' }}>{frontmatter.title}</h1>
           {/* <Container style={{padding: '1.5em'}}>
               <Container style={{padding: '1em',
                                  backgroundColor: 'rgba(0, 0, 0, 0.05)', 
@@ -27,7 +27,7 @@ export default function Template({
             </Container>
             <Divider style={{marginTop: '1em', marginBottom: '1em'}}/>
           </Container> */}
-          <Divider style={{marginTop: '1em', marginBottom: '1em', color: 'white'}}/>
+          {/* <Divider style={{marginTop: '1em', marginBottom: '1em', color: 'white'}}/> */}
           <div
             className="blog-post-content"
             dangerouslySetInnerHTML={{ __html: html }}
