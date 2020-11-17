@@ -39,9 +39,9 @@ class Layout extends React.Component {
                     to='/'
                     className={classes.Link}
                   >
-                    <Paper elevation={0} >
-                      <p>Tian</p>
-                    </Paper>
+                    {/* <Paper elevation={0} > */}
+                      Tian
+                    {/* </Paper> */}
                   </Link>
                 </div>
             <div className={classes.toolbarButtons}>
@@ -80,7 +80,7 @@ Layout.propTypes = {
 
 const styles = theme => ({
   toolbarSecondary: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
+    // borderBottom: `1px solid ${theme.palette.divider}`,
   },
   toolbarButtons: {
     marginLeft: 'auto',
@@ -88,8 +88,10 @@ const styles = theme => ({
   Link: {
     textDecoration: "none",
     color: 'black',
+    fontWeight: 'bold',
     "&:hover ": {
         color: 'black',
+        textDecoration: "none",
     }
   },
   title: {
