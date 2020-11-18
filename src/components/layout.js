@@ -30,20 +30,15 @@ class Layout extends React.Component {
       <Container maxWidth="lg">
         <Box my={1} >
           <Toolbar className={classes.toolbarSecondary}>
+                          <Grid container spacing="1" alignItems="center">
+              <Grid item>              <Link
+                to='/'
+                className={classes.Link}
+              >
+                Tian
+              </Link></Grid>
+            </Grid>
 
-                <div className={classes.root}>
-                  {/* <Paper elevation={0} >
-                    <img alt="Tian" className={classes.smallTitleIcon} src={require("../assets/image/Tian.jpg")} />
-                  </Paper> */}
-                  <Link
-                    to='/'
-                    className={classes.Link}
-                  >
-                    {/* <Paper elevation={0} > */}
-                      Tian
-                    {/* </Paper> */}
-                  </Link>
-                </div>
             <div className={classes.toolbarButtons}>
               {/* <Avatar size="large" style={{ position: "absolute", padding: '0.2em' }}></Avatar> */}
               {/* <img className={classes.imageIcon} src={Mountain} /> */}
