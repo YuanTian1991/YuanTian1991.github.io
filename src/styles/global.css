@@ -8,3 +8,33 @@ html {
 *::selection {
 background: rgba(254, 217, 10, 0.7);
 }
+
+pre[class*="language-"] { 
+    font-size: 0.95em; 
+    	margin: .5em 0.5em 0.5em 0.5em;
+    background-color: #272c34;
+    border-radius: 3px;
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+    color: whitesmoke;
+    text-shadow: none;
+    font-family: 'SFMono-Regular','Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
+}
+
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+    border-radius: .3em;
+    color: red;
+	white-space: normal;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+	color: #9a6e3a;
+	background: hsla(0, 0%, 100%, 0);
+}

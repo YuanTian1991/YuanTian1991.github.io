@@ -10,7 +10,7 @@ Firstly I find this pacakge `clipr`, which is very easy to use:
 
 ```R
 library(clipr)
- write_clip(mtcars)
+write_clip(mtcars)
 ```
 or directly:
 
