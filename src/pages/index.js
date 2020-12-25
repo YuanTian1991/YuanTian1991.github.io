@@ -33,7 +33,7 @@ class IndexPage extends React.Component {
                 <Paper key={index} elevation={0} className={classes.root}>
                   <Box my={1}>
                     {/* <Typography variant="h4" component="h1" style={{ fontWeight: "700" }} gutterBottom> */}
-                    <h2 style={{fontWeight: '700'}}>
+                    <h2 style={{fontWeight: '700', marginBottom: '0.2em'}}>
                       {node.frontmatter.title} </h2>
                     {/* </Typography> */}
 
