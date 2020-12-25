@@ -71,3 +71,11 @@ Then the file is deleted.
 ---
 
 Here is just a simply record of my first experience with S3, (and AWS).
+
+## Delete files in one folder (prefix) and the folder itself
+
+A command to delete a folder in a S3 bucket
+
+```bash
+aws s3 rm s3://some-bucket-name --recursive --exclude="*" --include="somefolder/*.*"
+```
