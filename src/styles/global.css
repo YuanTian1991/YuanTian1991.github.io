@@ -10,15 +10,15 @@ background: rgba(254, 217, 10, 0.7);
 }
 
 pre[class*="language-"] { 
-    font-size: 0.95em; 
-    	margin: .5em 0.5em 0.5em 0.5em;
+    font-size: 0.9em; 
+    margin: .5em 0em 0.5em 0em;
     background-color: #272c34;
     border-radius: 3px;
 }
 
 code[class*="language-"],
 pre[class*="language-"] {
-    color: whitesmoke;
+    color: #eeeeee;
     text-shadow: none;
     font-family: 'SFMono-Regular','Monaco', 'Andale Mono', 'Ubuntu Mono', monospace;
 }
