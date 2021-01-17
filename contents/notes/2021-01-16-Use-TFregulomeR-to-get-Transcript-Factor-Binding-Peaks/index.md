@@ -2,7 +2,7 @@
 slug: '/notes/Use-TFregulomeR-to-get-Transcript-Factor-Binding-Peaks'
 date: '2021-01-16'
 title: 'Use TFregulomeR to get Transcript Factor Binding Peaks'
-tags: ["TFBS"]
+tags: ["TFBS", "TFEA"]
 abstract: "Recently I am trying to do a set of Transcript Factor Enrichment Analysis for my 5hmC (hMeDIP-seq). I used to use ENCODE to do this, but eventually I found ENCODE data has very few TFs for my cell line (Mouse Intestine). So I started seeking other potential database and tools, and I found a lot indeed. Among them TFregulomeR is a new but quite powerful tool."
 ---
 
