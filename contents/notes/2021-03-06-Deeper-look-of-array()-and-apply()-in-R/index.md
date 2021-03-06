@@ -196,6 +196,85 @@ The code is below:
 >
 ```
 
-## Summary
+## An example to use 3D array?
 
-So now we know the key point of working on 3-Dimension array, we MUST clearly know what each dimension represent for. In other word, you don't need draw it, but you MUST have a very clear mind of above 3-D plot in you head. Any tiny bug in dimension selection here will cause the whole calculation wrong.
+In above sample, I shows what would happen if you directly created 3D array with pure number. The result is you get a complex and hard to read/understand/work data structure. I never used multiple dimensions array in my work, merely because I think it would be super easy to make mistake in coding. However, after some thinking, **I think if the data structure is representing certain level of real world thing, multiple-array may be a good idea**. Below is an example I did, I downloaded GDP **per** sector for **per** England regions and **per** year from [official GOV website](https://www.ons.gov.uk/economy/grossdomesticproductgdp/datasets/quarterlycountryandregionalgdp).
+
+So the excel I downloaded contains UK's each regions' GDP per sectors like Agriculture, Mining .etc in each year from 2012-2019. So I will try read the data into R and form a 3D array. I read them all into a list, then use unlist function to collapse them all into a long vector. Then finally created an 3D array from the long vector. Note that the `dimnames` parameter is highly recommanded to name the x/y/z axis. Finally I get the 3D array object UKRegionGDPbyYear.
+
+```R
+library("readxl")
+
+RegionName <- as.data.frame(read_excel("./rgdptables19q430072020113950.xlsx", sheet=1, skip=8, n_max=11, col_names=FALSE))[,1]
+SectorName <- as.character(as.data.frame(read_excel("./rgdptables19q430072020113950.xlsx", sheet=3, skip=4, n_max=1, col_names=FALSE))[1,2:23])
+SectorName <- sapply(SectorName, function(x) strsplit(x, split=",")[[1]][1])
+Years <- as.character(c(2012:2019))
+
+GDP <- list()
+for(i in 3:13)
+{
+    tmp <- as.data.frame(read_excel("./rgdptables19q430072020113950.xlsx",sheet=i, skip=8, n_max=8, col_names=FALSE))[,3:24]
+    rownames(tmp) <- Years
+    colnames(tmp) <- SectorName
+
+    GDP[[RegionName[i-2]]] <- tmp
+}
+
+UKRegionGDPbyYear <- array(unlist(GDP),
+                           c(length(Years), length(SectorName), length(RegionName)),
+                           dimnames = list(Years, SectorName, RegionName)) # The dimnames is recommanded here.
+
+```
+In the final UKRegionGDPbyYear object, the first dimension is Years, the second dimension is Sectors, and the third dimension is RegionName. Thus since we know their real world meanings, we can easily select data we want like, answer questions like:
+
+* **What is "Education" sector's GDP in each regions per year?**
+
+```R
+> UKRegionGDPbyYear[,"Education",]
+     North East North West Yorkshire and The Humber East Midlands West Midlands
+2012       99.5       94.3                     92.6         102.2         100.6
+2013       98.3       98.4                     96.6         103.2         100.1
+2014       96.5       97.1                     99.1         102.9          99.9
+2015       97.1       98.7                    102.7         101.9         100.4
+2016      100.0      100.0                    100.0         100.0         100.0
+2017       96.1      102.6                     98.7         104.5         103.6
+2018       94.1      102.9                    101.0         104.8         108.1
+2019       86.2      105.3                    100.8         113.6         101.3
+     East of England London South East South West England Wales
+2012           102.3   98.8       94.0       94.4    97.2 100.1
+2013           102.5   98.7       96.7       96.8    98.7 102.0
+2014            98.2  103.2       95.6       97.8    99.2  99.3
+2015            98.1  105.4       98.3       97.6   100.6  99.7
+2016           100.0  100.0      100.0      100.0   100.0 100.0
+2017            99.9  102.8      100.9       99.4   101.4  98.3
+2018           103.4  104.6       98.8       98.0   102.2  95.1
+2019           111.2  113.4      103.5       98.5   105.7 100.6
+```
+
+* **What is London's GDP in "Arts" sector in 2012-2015 ?**
+
+```R
+> UKRegionGDPbyYear[c("2012","2013","2014","2015"),"Arts","London"]
+2012 2013 2014 2015
+89.4 88.5 93.3 99.0
+>
+```
+
+* **What is London's top 5 GDP sector in 2019?**
+
+```R
+> sort(UKRegionGDPbyYear["2019",,"London"],decreasing=TRUE)[1:5]
+                                            Mining & quarrying
+                                                         168.5
+                                 Information and Communication
+                                                         122.2
+                 Administrative and support service activities
+                                                         118.4
+Wholesale and retail: repair of motor vehicles and motorcycles
+                                                         116.7
+                                                   Agriculture
+                                                         114.9
+>
+```
+
+In short, when you creat a multiple dimension array with some real-world thing represented (and named in dimensions). It would be easiler to use it.
