@@ -15,7 +15,7 @@ export default function Template({
     <div className="blog-post-container">
       <Layout>
         {/* <Paper elevation={2} style={{ padding: '2em', backgroundColor: 'rgba(245, 245, 245, 0)' }}> */}
-          <p style={{ marginTop: '1em', marginBottom: '0px', fontWeight: '100' }}>{frontmatter.date}</p>
+          <span style={{ marginTop: '1em', marginBottom: '0px' }}>{frontmatter.date}</span>
           <h1 style={{ fontSize: '2.5em' , fontWeight: '700',  marginTop: '0.2em' }}>{frontmatter.title}</h1>
           {/* <Container style={{padding: '1.5em'}}>
               <Container style={{padding: '1em',
