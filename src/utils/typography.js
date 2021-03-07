@@ -33,8 +33,8 @@ const typography = new Typography(
     baseFontSize: '20px',
     baseLineHeight: 1.7,
     fontWeight: '100',
-    headerFontFamily: ['Merriweather', 'Helvetica Neue','Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Arial', 'sans-serif'],
-    bodyFontFamily: ['Merriweather', 'Helvetica', 'Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Arial', 'sans-serif'],
+    headerFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
+    bodyFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
     headerColor: 'black',
   },
   githubTheme
