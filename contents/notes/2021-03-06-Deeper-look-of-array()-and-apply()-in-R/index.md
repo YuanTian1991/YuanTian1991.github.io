@@ -6,6 +6,8 @@ tags: ['R']
 abstract: 'Recently my wife asked a question that how to understand 3-dimension array in R. And How to understand the apply() function when it is applied on multi-dimension array. After digging further, I think it is really interesing...'
 ---
 
+<a style="text-decoration: none;border-radius: 4px; background-color: rgba(41,98,255); color: white; padding: 0.3em 1em" href="https://ty.hashnode.dev/multiple-dimension-array-and-apply-in-r">Link to my Hashnode Blog </a>
+
 The thing started my wife ask me how to understand the 3-dimension object created by the `array()` function in R. We know that if there are only 2 dimensions, they are the x-axis and y-axis in a plot. And in R (or any other terminal tool), it looks like rows and columns. For example, below I created a 2-dimension array data. (In most case, I always call them `matrix` or `data.frame`, maybe I have been wrong for a very long time...haha)
 
 ```R
