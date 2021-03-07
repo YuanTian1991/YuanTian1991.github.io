@@ -2,12 +2,12 @@ import Typography from "typography";
 import githubTheme from 'typography-theme-github'
 
 githubTheme.overrideThemeStyles = ({ rhythm }, options) => ({
-  "h1,h2,h3,h4,h5,h6": {
-    color: 'hsla(0,0%,0%,0.9)',
-    marginTop: "0.8em",
-    marginBottom: '0.8em',
-    lineHeight: '1.3',
-  },
+//   "h1,h2,h3,h4,h5,h6": {
+//     color: 'hsla(0,0%,0%,0.9)',
+//     marginTop: "0.8em",
+//     marginBottom: '0.8em',
+//     lineHeight: '2',
+//   },
 //   "img": {
 //       borderRadius: '6px',
 //   },
@@ -29,13 +29,14 @@ githubTheme.overrideThemeStyles = ({ rhythm }, options) => ({
 });
 
 const typography = new Typography(
-//   {
-//     baseFontSize: '18.5px',
-//     baseLineHeight: 1.666,
-//     headerFontFamily: ['Helvetica Neue','Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Arial', 'sans-serif'],
-//     bodyFontFamily: ['Helvetica', 'Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Arial', 'sans-serif'],
-//     headerColor: 'blue',
-//   },
+  {
+    baseFontSize: '20px',
+    baseLineHeight: 1.7,
+    fontWeight: '100',
+    headerFontFamily: ['Merriweather', 'Helvetica Neue','Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Arial', 'sans-serif'],
+    bodyFontFamily: ['Merriweather', 'Helvetica', 'Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Arial', 'sans-serif'],
+    headerColor: 'black',
+  },
   githubTheme
 );
 

@@ -6,7 +6,7 @@ tags: ['R']
 abstract: 'Recently my wife asked a question that how to understand 3-dimension array in R. And How to understand the apply() function when it is applied on multi-dimension array. After digging further, I think it is really interesing...'
 ---
 
-The thing started my wife ask me how to understand 3-dimension matrix created by `array()` function in R. We know that if there are only 2 dimentions, they are x-axis and y-axis in a plot. And in R (or any other terminal tool), it looks like rows and columns. For example, below I created a two array data. (In most case, I always call them as matrix or data.frame, maybe I have been wrong for very long time...haha)
+The thing started my wife ask me how to understand the 3-dimension object created by the `array()` function in R. We know that if there are only 2 dimensions, they are the x-axis and y-axis in a plot. And in R (or any other terminal tool), it looks like rows and columns. For example, below I created a 2-dimension array data. (In most case, I always call them `matrix` or `data.frame`, maybe I have been wrong for a very long time...haha)
 
 ```R
 > d2 <- array(1:(4 * 5), c(4,5))
@@ -18,7 +18,7 @@ The thing started my wife ask me how to understand 3-dimension matrix created by
 [4,]    4    8   12   16   20
 ```
 
-Other functions like `matrix()`, `data.frame()` .etc can reach similar results. In short, in above example, we get a 2-dimension data structure with rows and columns. Then as we know, `apply()` function is a very nice way to quickly iterate rows or columns.
+Other functions like `matrix()`, `data.frame()` .etc can reach similar results. In short, in the above example, we get a 2-dimension data structure with rows and columns. Then as we know, the `apply()` function is a very nice way to quickly iterate rows or columns.
 
 ```R
 > test <- apply(d2, 1, function(x) print(x))
@@ -36,21 +36,21 @@ Other functions like `matrix()`, `data.frame()` .etc can reach similar results. 
 >
 ```
 
-Then here comes the important part. I know many people are "memorying" that the second parameter in `apply()` function decided the dimention it iterates, including me before. So we all think that 1 indicates rows, and 2 indicates columns right? So there comes two vital questions: 
-* 1. How the second parameter works for multi-dimention arrays? If you have 3 dimension, then what the "first" dimension (1) iteration result will be?
-* 2. What will `apply(d2, c(1,2), function(x) print(x))` output?
+Then here comes the important part. I know many people are "memorying" that the second parameter in the `apply()` function decided the dimension it iterates, including me before. So we all think that 1 indicates rows, and 2 indicates columns right? So there come two vital questions: 
+1. How the second parameter works for multi-dimension arrays? If you have 3 dimensions, then what the "first" dimension (1) iteration result will be?
+2. What will `apply(d2, c(1,2), function(x) print(x))` output?
 
 ---
 
 ## Visualisation of 3-Dimension Array
 
-So I want to visualis the 3-Dimension array a bit. I firstly created a 3D array here. I defined a 3D array with 3 dimensions as 2, 3, 4 separately. The purposed is if dimensions have different value, it's easier for me to find which one is which.
+So I want to visualise the 3-Dimension array a bit. I firstly created a 3D array here. I defined a 3D array with 3 dimensions as 2, 3, 4 separately. The purposed is if dimensions have different value, it's easier for me to find which one is which.
 
 ```R
 d3 <- array(1:c(2 * 3 * 4), c(2, 3, 4))
 ```
 
-Then let's have a look what it looks like below. Seems we can see there are 4 matrix, that there is a `,,1` at the beginning of each, so we can guess out that the `,,` indicates 3 dimensions, and `,,[]`, the third value after the second comma indicates the third dimension. There are 4 matrixes here because previous I definded the three dimensions as `c(2, 3, 4)`. The only the third dimension have 4 elements. The first dimension should only have 2 elements, while the second dimension should only have 3 dimension.
+Then let's have a look at what it looks like below. Seems we can see there are 4 matrixes, that there is a `,,1` at the beginning of each, so we can guess out that the `,,` indicates 3 dimensions, and `,,[]`, the third value after the second comma indicates the third dimension. There are 4 matrixes here because previous I defined the three dimensions as `c(2, 3, 4)`. Only the third dimension has 4 elements. The first dimension should only have 2 elements, while the second dimension should only have 3 elements.
 
 ```R
 > d3
@@ -81,23 +81,26 @@ Then let's have a look what it looks like below. Seems we can see there are 4 ma
 >
 ```
 
-Above is still hard for us to understand the 3D strucuture of the data. And even, later we want to see how `apply()` function works on it. So I decided to visualise it. In below figure, I just screenshort above 4 matrix, then rotated a bit via Powerpoint. Now we can clearly see the 3 dimentions. In above plot there are 3 axises, normally in 2-dimension matrixes, we normally only can see two axis (X and Y), we named them as row and column in 2-dimension. Howeverm in 3D situation, we need add one more axis (I named as Z here), which does NOT have a a name in 2D situation. That's why I can't simply call it as "hight" or "tall" or anything.
+Above is still hard for us to understand the 3D structure of the data. And even, later we want to see how the `apply()` function works on it. So I decided to visualise it. In the below figure, I just screenshot the above 4 matrixes, then rotated a bit via Powerpoint. Now we can clearly see the 3 dimensions. In the above plot there are 3 axes, normally in 2-dimension matrixes, we normally only can see two axes (X and Y), we named them as row and column in 2-dimension. However, in the 3D situation, we need to add one more axis (I named it as Z here), which does NOT exist in the 2D situation. That's why I can't simply call it "hight" or "tall" or anything.
 
-![3DVisual](figure1.png)
 
-On very interesting thing is, I think in above figure, the 3 dimensions actually have many names in different scenarios. For example, as I labelled in above plot, **name `X`, `Y`, `Z` are named by me**, which means maybe for other people, they prefer to think the `Y` axis in my plot should be labelled as `X`. 
+![image.png](figure1.png)
 
-**However, in R language, it has defind the three dimensions.** For example, in my plot it shows, the third dimension (`Z` axis) is the one vertical to floor. So it means, if you are selecting a 3D array by the thid dimensions (`Z` axis). You are actually selecting a horizontal slice of plate in my figure.
+One very interesting thing is, I think in the above figure, the 3 dimensions actually have many names in different scenarios. For example, as I labelled in the above plot, **name `X`, `Y`, and `Z` are named by me**, which means maybe for other people, they prefer to think the `Y` axis in my plot should be labelled as `X`. **These names are mathematical or even just personal labels, it varies.**
+
+**However, in R language, it has defined the three dimensions, which is fixed and not changeable by personal ideas.** For example, my above plot shows, the third dimension (`Z` axis) is the one vertical to the floor. So it means if you are selecting a 3D array by the third dimensions (`Z` axis). You are actually selecting a horizontal slice through the 3D objects.
+
 ```R
 > d3[,,1]
 ```
-![TopSlice](figure2.png)
 
-## One Dimension Selection with 3D array
+![image.png](figure2.png)
 
-It's so common in R that we need select certain rows or certain columns when we working on 2-D matrix. In above example, we have shown that if things turn to 3D, it's harder for us to select just via one dimension: It actualy select a plate, or in other word, a slice of 2D matrix. Here I will give more examples.
+## One Dimension Selection with a 3D array
 
-So now we can infer, if we now use `apply()` function here as the third dimensions, it wil cut all data horizontally into 4 slices, then iterate each matrix.
+It's so common in R that we need to select certain rows or certain columns when we working on a 2-D matrix. In the above example, we have shown that if things turn to 3D, it's harder for us to select just via one dimension: It actually selects a plate, or in another word, a slice of a 2D matrix. Here I will give more examples.
+
+So now we can infer, if we now use the `apply()` function here as the third dimensions, it will cut all data horizontally into 4 slices, then iterate each matrix.
 
 ```R
 > test <- apply(d3, c(3), function(x) print(x))
@@ -116,13 +119,9 @@ So now we can infer, if we now use `apply()` function here as the third dimensio
 >
 ```
 
-<div style="margin: 50px" >
-</div
+Now we know how and what exactly the third (Z) axis is, and how can we iterate it via a loop. So what `d3[1,,]` return? By checking the plot, we can infer that we can get another slice, but not horizontally, but vertically and parallel to the `wall` created by the Y and Z-axis. Like below, when we run `d3[1,,]`, we are setting X-axis as 1, while no restriction for the Y or Z axis. So it can be seen as a vertical slice plate that was cut through X-axis but parallels with the wall created by the Y and Z axes. So eventually we can get a 2-dimension matrix on that vertical slice.
 
-Now we know how and what exactly the third (Z) axis is, and how can we iterate it via loop. So what `d3[1,,]` return? By checking the plot, we can infer that we can get another slice, but not horizontally, but vertically and parallel to the `wall` created by Y and Z axis. Like below, when we run `d3[1,,]`, we are setting x axis as 1, while no restricion for y or z axis. So it can be seen as a vertical slice plate was cut through x axis, but parallel with the wall created by y and z axises. So eventually we can get a 2-dimension matrix on that vertical slice.
-
-![X=1Slice](figure4.png)
-
+![image.png](figure4.png)
 ```R
 > d3[1,,]
      [,1] [,2] [,3] [,4]
@@ -132,9 +131,10 @@ Now we know how and what exactly the third (Z) axis is, and how can we iterate i
 >
 ```
 
-The same logic could works for y axis. If we select `d3[,1,]`, you can image we are selecting a slice plate parallel to the wall created by X and Z axis. And it will return a 2-d matrix:
+The same logic could work for Y-axis. If we select `d3[,1,]`, you can imagine we are selecting a slice plate parallel to the wall created by the X and Z axis. And it will return a 2-d matrix:
 
-![Y=1Slice](figure5.png)
+
+![image.png](figure5.png)
 
 ```R
 > d3[,1,]
@@ -154,15 +154,15 @@ Have you considered, why when we select `d3[,1,]`, it returns as above matrix in
 [4,]   19   20
 ```
 
-Above matrix seems more obvious from my figure, why there is a rotation here? My understand is there is a ranking priority between the 3 dimensions. The X axis has highest priority, so if X axis exist, which means we are selecting on x axis, the returned matrix will take x aixs as rows and the other axis as columns. Thus in my above example, then Y=1, the X axis (2 vlaues) will be set a rows and Z axis (4 values) will be set as columns. So eventually a 2 by 4 matrix is returned. If X axis is not exist, say `d3[1,,]`, Y axis have higher priority over Z aixs, it it will return Y axis as row, and Z axis as columns.
+The above matrix seems more obvious from my figure, why there is rotation here? My understanding is there is a ranking priority between the 3 dimensions. The X-axis has the highest priority, so if X-axis exist, which means we are selecting the X-axis, the returned matrix will take the X-axis as rows and the other axis as columns. Thus in my above example, then Y=1, the X-axis (contains 2 values) will be set rows and Z-axis (contains 4 values) will be set as columns. So eventually a 2 by 4 matrix is returned. If X-axis does not exist, say `d3[1,,]`, Y-axis have a higher priority over the Z-axis, it will return Y-axis as a row, and Z axis as columns.
 
 ---
 
-In short, for me, it's not easy to select even one dimension from 3D array. 
+In short, for me, it's not easy to select even one dimension from a 3D array. 
 
 * It's more like cutting slices into a 3D object and get pieces of plates from them. 
 * The returned matrix may be rotated based on priorities of different dimensions. 
-* It's hard to match names between them. Make sure you are correctly matched them everytime you are using 3D array.
+* It's hard to match names between them. Make sure you have correctly matched them every time you are using the 3D array.
     * 1): The second parameter `c(1,2,3)` in `apply()`; 
     * 2): `d3[*,*,*]` in raw R code; 
     * 3): Names like row, column, other like higher. 
@@ -170,8 +170,7 @@ In short, for me, it's not easy to select even one dimension from 3D array.
 
 **All these cause potential programming bugs for analyser**.
 
-
-## Two Dimension Selection with 3D array
+## Two Dimension Selection with a 3D array
 
 Then we can have a look how to select 2 Dimensions togather from 3D array. In other word, what code like `apply(d3, c(1,2) function(x) print(x))` would retrun? When we use `apply()` function, it will create a index list based on our parameter setting. When we set the second parameter as `c(1)`, it will return: `d3[1,,]`, `d3[2,,]` . So if we set the parameter as `c(1,2)`. It will return:
 
@@ -179,9 +178,10 @@ Then we can have a look how to select 2 Dimensions togather from 3D array. In ot
     d3[1,1,], d3[2,1,], d3[1,2,], d3[2,2,], d3[1,3,], d3[2,3,]
 
 
-As you can see ,it's just the combination of the first (x) and second (y) dimensions, There are only 2 value in first dimensions, and there are only 3 dimensions in second dimensions, so there are totally 2*3=6 combinations. Then the apply() function will fetch data based on these 2-D index one by one, and iterate the whole data. Now what would be returned if both X and Y axis are selected? Yes a vector across Z axis. You can image a drill into the 3D object. Below I draw an example of `d3[2,1,]`:
+As you can see, it's just the combination of the first (x) and second (y) dimensions, There are only 2 values in the first dimensions, and there are only 3 values in the second dimensions, so there are a totally `2*3=6` combinations. Then the apply() function will fetch data based on these 2-D index one by one, and iterate the whole data. Now, what would be returned if both X and Y axis are selected? Yes, a vector across Z-axis. You can image a drill into the 3D object. Below I draw an example of `d3[2,1,]`:
 
-![X=2Y=1Slice](figure6.png)
+
+![image.png](figure6.png)
 
 The code is below:
 
@@ -196,11 +196,11 @@ The code is below:
 >
 ```
 
-## An example to use 3D array?
+## An example to use a 3D array?
 
-In above sample, I shows what would happen if you directly created 3D array with pure number. The result is you get a complex and hard to read/understand/work data structure. I never used multiple dimensions array in my work, merely because I think it would be super easy to make mistake in coding. However, after some thinking, **I think if the data structure is representing certain level of real world thing, multiple-array may be a good idea**. Below is an example I did, I downloaded GDP **per** sector for **per** England regions and **per** year from [official GOV website](https://www.ons.gov.uk/economy/grossdomesticproductgdp/datasets/quarterlycountryandregionalgdp).
+In the above sample, I show what would happen if you directly created 3D array with pure numbers. The result is you get a complex and hard to read/understand/work data structure. I never used multiple dimensions array in my work, merely because I think it would be super easy to make mistake in coding. However, after some thinking, **I think if the data structure is representing a certain level of real-world thing, multiple-array may be a good idea**. Below is an example I did, I downloaded GDP **per** sector for **per** England regions and **per** year from [official GOV website](https://www.ons.gov.uk/economy/grossdomesticproductgdp/datasets/quarterlycountryandregionalgdp).
 
-So the excel I downloaded contains UK's each regions' GDP per sectors like Agriculture, Mining .etc in each year from 2012-2019. So I will try read the data into R and form a 3D array. I read them all into a list, then use unlist function to collapse them all into a long vector. Then finally created an 3D array from the long vector. Note that the `dimnames` parameter is highly recommanded to name the x/y/z axis. Finally I get the 3D array object UKRegionGDPbyYear.
+So the excel I downloaded contains UK's each regions' GDP per sectors like Agriculture, Mining .etc in each year from 2012-2019. So I will try to read the data into R and form a 3D array. I read them all into a list, then use unlist function to collapse them all into a long vector. Then finally created a 3D array from the long vector. Note that the `dimnames` parameter is highly recommended to name the x/y/z axis. Finally, I get the 3D array object UKRegionGDPbyYear.
 
 ```R
 library("readxl")
@@ -225,9 +225,9 @@ UKRegionGDPbyYear <- array(unlist(GDP),
                            dimnames = list(Years, SectorName, RegionName)) # The dimnames is recommanded here.
 
 ```
-In the final UKRegionGDPbyYear object, the first dimension is Years, the second dimension is Sectors, and the third dimension is RegionName. Thus since we know their real world meanings, we can easily select data we want like, answer questions like:
+In the final `UKRegionGDPbyYear` object, the first dimension is Years, the second dimension is Sectors, and the third dimension is RegionName. Thus since we know their real-world meanings, we can easily select data we want like, answer questions like:
 
-* **What is "Education" sector's GDP in each regions per year?**
+* **What is the "Education" sector's GDP in each England region per year?**
 
 ```R
 > UKRegionGDPbyYear[,"Education",]
@@ -251,7 +251,7 @@ In the final UKRegionGDPbyYear object, the first dimension is Years, the second 
 2019           111.2  113.4      103.5       98.5   105.7 100.6
 ```
 
-* **What is London's GDP in "Arts" sector in 2012-2015 ?**
+* **What is London's GDP in the "Arts" sector in 2012-2015 ?**
 
 ```R
 > UKRegionGDPbyYear[c("2012","2013","2014","2015"),"Arts","London"]
@@ -277,4 +277,4 @@ Wholesale and retail: repair of motor vehicles and motorcycles
 >
 ```
 
-In short, when you creat a multiple dimension array with some real-world thing represented (and named in dimensions). It would be easiler to use it.
+In short, when you create a multiple dimension array with some real-world thing represented (and named in dimensions). It would be easier to use.
