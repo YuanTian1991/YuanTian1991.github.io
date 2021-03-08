@@ -11,7 +11,7 @@ background: rgba(254, 217, 10, 0.7);
 pre[class*="language-"] { 
     font-size: 0.8em; 
     margin: 2em 0em 2em 0em;
-    background-color: #272c34;
+    background-color: #1f2937;
     border-radius: 3px;
 }
 
@@ -19,14 +19,26 @@ code[class*="language-"],
 pre[class*="language-"] {
     color: #f5f5f5;
     text-shadow: none;
-    font-family:  'Monaco', 'Andale Mono', 'Ubuntu Mono', 'SFMono-Regular', monospace;
+    font-family:  'Menlo','Monaco', 'Andale Mono', 'Ubuntu Mono', 'SFMono-Regular', monospace;
 }
 
 :not(pre) > code[class*="language-"] {
 	/* padding: .1em; */
     border-radius: .3em;
-    color: red;
-	white-space: normal;
+    font-size: 0.8em; 
+    padding: 3px 5px 3px 5px;
+    color: #212121;
+    white-space: normal;
+    font-weight: 700;
+    font-family:  'Menlo', 'Monaco', 'Andale Mono', 'Ubuntu Mono', 'SFMono-Regular', monospace;
+}
+
+.token.number {
+    color: #ae81ff;
+}
+
+.token.punctuation {
+    color: white;
 }
 
 .token.operator,
