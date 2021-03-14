@@ -53,7 +53,7 @@ class IndexPage extends React.Component {
                       }
                     </Typography>
 
-                    <p>
+                    <p style={{ fontWeight: "300", fontSize: '1em'}}>
                         {node.frontmatter.abstract}
                     </p>
 
