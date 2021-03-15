@@ -38,7 +38,7 @@ pre[class*="language-"] {
 }
 
 .token.keyword {
-    color: #81ffe0;
+    color: #7ec9a1;
 }
 
 .token.punctuation {
@@ -50,7 +50,7 @@ pre[class*="language-"] {
 .token.url,
 .language-css .token.string,
 .style .token.string {
-	color: #e4a558;
+	color: #f4e781;
 	background: hsla(0, 0%, 100%, 0);
 }
 
@@ -63,6 +63,6 @@ blockquote {
 
 a {
     text-decoration: none;
-    color: rgb(60, 58, 155);
+    color: #81c2ff;
     font-weight: 700;
 }

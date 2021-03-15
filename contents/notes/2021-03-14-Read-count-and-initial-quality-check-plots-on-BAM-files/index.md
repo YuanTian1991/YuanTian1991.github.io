@@ -27,6 +27,71 @@ There are many parameters for multiBamSummary, above are some key I will use:
 * **-p**: parallel thread, luckily I have a good computational server...
 * **--outRawCounts**: This is returned readCounts in txt format, convinient for people like me who don't use python.
 
----
+After running, we can have a look what the result looks like, below I read into the `readCounts.tab` file and printed the first 6 columns. Totally for my dataset, there are 46 columns.
 
-To be continued...
+```R
+> readCount <- read.csv("./readCounts.tab", header=TRUE, stringsAsFactors=FALSE, sep="\t" ,quote="'")
+> knitr::kable(readCount[1:5,1:6])
+
+|X.chr                | start|   end| LT49_bnd.grey_filtered.sorted.bam| LT51_bnd.grey_filtered.sorted.bam| LT51_Inp.grey_filtered.sorted.bam|
+|:--------------------|-----:|-----:|---------------------------------:|---------------------------------:|---------------------------------:|
+|chr19_KI270917v1_alt |     0| 10000|                                 1|                                 2|                                 4|
+|chr19_KI270917v1_alt | 10000| 20000|                                 1|                                 0|                                 1|
+|chr19_KI270917v1_alt | 20000| 30000|                                 2|                                 2|                                 2|
+|chr19_KI270917v1_alt | 30000| 40000|                                 0|                                 2|                                 1|
+|chr19_KI270917v1_alt | 40000| 50000|                                 0|                                 1|                                 2|
+>
+```
+
+## Plotly MDS plot
+
+Now I want to visualise it with a MDS plot, it's plot to show clustering status between samples. Firstly I need to normalise it a bit, just like other data type, raw read count data varis a lot. So I use `edgeR` pacakge's `cpm` function to convert origin read count into count per million. Also it's better to remove row all 0, they will fail functions like PCA.
+
+![MDSplot](figure2.png)
+
+Full code:
+
+```R
+# A script to calcualte PCA on bam files.
+# Author: Tian
+
+readCount <- read.csv("./readCounts.tab", header=TRUE, stringsAsFactors=FALSE, sep="\t" ,quote="'")
+
+library("edgeR")
+CountMatrix <- readCount[,4:ncol(readCount)]
+colnames(CountMatrix) <- sapply(colnames(CountMatrix), function(x) strsplit(x, split="[.]")[[1]][1])
+myCPM <- cpm(CountMatrix)
+# Removed all 0 column here
+myCPM <- myCPM[apply(myCPM, 1, var) != 0, ]
+
+## ====== PCA Plot ======
+
+TPM <- cbind(as.data.frame(t(myCPM)), label=substr(colnames(myCPM),1,8))
+
+library(ggfortify)
+df <- TPM[,1:(ncol(TPM)-1)]
+pca_res <- prcomp(df, scale. = TRUE)
+autoplot(pca_res, data = TPM, colour = 'label', size=2, main="PCA for all samples")
+
+## ====== MDS Plot ======
+
+library(plotly)
+library(RColorBrewer)
+
+pheno <- substr(colnames(CountMatrix),1,8) 
+beta <- as.matrix(myCPM)
+
+o <- order(-matrixStats::rowVars(beta))[1:1000]
+d <- dist(t(beta[o,]))
+
+fit <- cmdscale(d)
+col <- brewer.pal(8, "Dark2")[as.factor(pheno)]
+color_number <- nlevels(pheno)
+        pal <- RColorBrewer::brewer.pal(color_number, "Set1")
+        data <- data.frame(x=fit[,1],y=fit[,2],pheno=pheno,Sample_Name=colnames(beta))
+        p <- plot_ly(data = data, x = ~x, y = ~y, text=~Sample_Name, color = ~pheno,colors = ~pal, type="scatter", mode = "markers", marker=list(size=15))
+        m = list(l = 100,r = 50,b = 50,t = 100,pad = 10)
+        p <- layout(p, title = 'MDS 1000 most variable positions',margin=m)
+
+
+```

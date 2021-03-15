@@ -25,7 +25,7 @@ class IndexPage extends React.Component {
 
     return (
       < Layout >
-        <SEO title="Note" />
+        <SEO title="Tian's blog" />
         {
           data.allMarkdownRemark.edges.map(({ node }, index) => {
             return (
@@ -37,16 +37,18 @@ class IndexPage extends React.Component {
                       {node.frontmatter.title} </h2>
                     {/* </Typography> */}
 
-                    <Typography  style={{ fontWeight: "100", fontSize: '0.9em', color: 'gray', margin: '0px 0px' }}>
+                    <Typography  style={{ fontWeight: "100", fontSize: '0.85em', color: 'gray', margin: '15px 0px 15px 0px' }}>
                       {node.frontmatter.date}
                       {
                         node.frontmatter.tags.map((tag, tagIndex) => {
                           return (
                             <span key={tagIndex}>
-                              {' | '}
-                              <span
-                              // className={classes.tag}
-                              >{tag}</span>
+                              {'  '}
+                              <code
+                              className='language-text'
+                              style={{fontSize: '1em'}}
+                              >{tag}
+                              </code>
                             </span>
                           )
                         })
@@ -56,10 +58,6 @@ class IndexPage extends React.Component {
                     <p style={{ fontWeight: "400", fontSize: '1em'}}>
                         {node.frontmatter.abstract}
                     </p>
-
-                    {/* <Typography style={{fontWeight: '300', fontSize: '0.7em'}}>
-                      {node.frontmatter.abstract}
-                    </Typography> */}
                   </Box>
                 </Paper>
               </Link>
