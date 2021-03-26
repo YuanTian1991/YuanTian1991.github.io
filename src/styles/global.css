@@ -45,6 +45,14 @@ pre[class*="language-"] {
     color: white;
 }
 
+.token.string {
+    color: #7ec9a1;
+}
+
+.token.boolean {
+    color: #e07a5f
+}
+
 .token.operator,
 .token.entity,
 .token.url,
