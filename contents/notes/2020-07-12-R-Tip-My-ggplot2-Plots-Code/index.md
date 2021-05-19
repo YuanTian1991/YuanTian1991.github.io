@@ -74,4 +74,47 @@ UCL39 0.7085020 LCNEC LCNEC
 >
 ```
 
-![PCA plot](./figure3.png)
+![Boxplot plot](./figure3.png)
+
+## Group Boxplot
+
+This is a nice way to show a groups of boxplot, for example in my case, I have 4 cell types to show. And for each cell type, there is a list of phenotype to show boxplot.
+
+```r
+library("ggplot2")
+library("ggpubr")
+
+df <- list()
+for(i in colnames(CF)){
+    df[[i]] <- data.frame(CF=CF[,i], pheno=RF$cohort, Label=factor(RF$cohort, levels=c("TC", "AC",  "LCNEC")), CellType=i)
+}
+df <- do.call("rbind", df)
+
+p <- ggplot(df, aes(Label, CF,color=Label)) +
+    geom_boxplot(notch=FALSE)+
+    geom_jitter(shape=16, position=position_jitter(0.2)) +
+    facet_wrap(~CellType) +
+    scale_color_manual(values=c("#6c6c6c", "#ff0200", "#4ab7ff")) +
+    labs(title="Cell Fraction from EpiSCORE", x="", y = "Cell Type Fraction") +
+    theme(plot.margin=unit(c(2,2,2,2),"cm"), plot.title = element_text(hjust = 0.5)) +
+    stat_compare_means(method = "anova", label.y = 0.5, label = "p.format")
+```
+Below is how the `df` looks like:
+
+```r
+> dim(df)
+[1] 508   4
+> head(df)
+                        CF pheno Label   CellType
+Epithelial.UCL61 0.6014421    TC    TC Epithelial
+Epithelial.UCL03 0.6345701    AC    AC Epithelial
+Epithelial.UCL04 0.4571514    TC    TC Epithelial
+Epithelial.UCL06 0.5656207    TC    TC Epithelial
+Epithelial.UCL07 0.7100541 LCNEC LCNEC Epithelial
+Epithelial.UCL39 0.7085020 LCNEC LCNEC Epithelial
+>
+```
+
+Note that here the `stat_compare_means()` function is using Anova method.
+
+![Grouped Boxplot plot](./figure4.png)
