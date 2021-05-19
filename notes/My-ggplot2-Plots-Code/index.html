@@ -117,13 +117,74 @@ UCL39 <span class="token number">0.7085020</span> LCNEC LCNEC
   ></span>
   <img
         class="gatsby-resp-image-image"
-        alt="PCA plot"
-        title="PCA plot"
+        alt="Boxplot plot"
+        title="Boxplot plot"
         src="/static/7c33479b8deb8b5dbcd026b1f18672bc/31198/figure3.png"
         srcset="/static/7c33479b8deb8b5dbcd026b1f18672bc/63868/figure3.png 250w,
 /static/7c33479b8deb8b5dbcd026b1f18672bc/0b533/figure3.png 500w,
 /static/7c33479b8deb8b5dbcd026b1f18672bc/31198/figure3.png 694w"
         sizes="(max-width: 694px) 100vw, 694px"
+        style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+        loading="lazy"
+      />
+  </a>
+    </span></p>
+<h2>Group Boxplot</h2>
+<p>This is a nice way to show a groups of boxplot, for example in my case, I have 4 cell types to show. And for each cell type, there is a list of phenotype to show boxplot.</p>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r">library<span class="token punctuation">(</span><span class="token string">"ggplot2"</span><span class="token punctuation">)</span>
+library<span class="token punctuation">(</span><span class="token string">"ggpubr"</span><span class="token punctuation">)</span>
+
+df <span class="token operator">&lt;-</span> list<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span><span class="token punctuation">(</span>i <span class="token keyword">in</span> colnames<span class="token punctuation">(</span>CF<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+    df<span class="token punctuation">[</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">&lt;-</span> data.frame<span class="token punctuation">(</span>CF<span class="token operator">=</span>CF<span class="token punctuation">[</span><span class="token punctuation">,</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> pheno<span class="token operator">=</span>RF<span class="token operator">$</span>cohort<span class="token punctuation">,</span> Label<span class="token operator">=</span>factor<span class="token punctuation">(</span>RF<span class="token operator">$</span>cohort<span class="token punctuation">,</span> levels<span class="token operator">=</span>c<span class="token punctuation">(</span><span class="token string">"TC"</span><span class="token punctuation">,</span> <span class="token string">"AC"</span><span class="token punctuation">,</span>  <span class="token string">"LCNEC"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> CellType<span class="token operator">=</span>i<span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+df <span class="token operator">&lt;-</span> do.call<span class="token punctuation">(</span><span class="token string">"rbind"</span><span class="token punctuation">,</span> df<span class="token punctuation">)</span>
+
+p <span class="token operator">&lt;-</span> ggplot<span class="token punctuation">(</span>df<span class="token punctuation">,</span> aes<span class="token punctuation">(</span>Label<span class="token punctuation">,</span> CF<span class="token punctuation">,</span>color<span class="token operator">=</span>Label<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+    geom_boxplot<span class="token punctuation">(</span>notch<span class="token operator">=</span><span class="token boolean">FALSE</span><span class="token punctuation">)</span><span class="token operator">+</span>
+    geom_jitter<span class="token punctuation">(</span>shape<span class="token operator">=</span><span class="token number">16</span><span class="token punctuation">,</span> position<span class="token operator">=</span>position_jitter<span class="token punctuation">(</span><span class="token number">0.2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+    facet_wrap<span class="token punctuation">(</span><span class="token operator">~</span>CellType<span class="token punctuation">)</span> <span class="token operator">+</span>
+    scale_color_manual<span class="token punctuation">(</span>values<span class="token operator">=</span>c<span class="token punctuation">(</span><span class="token string">"#6c6c6c"</span><span class="token punctuation">,</span> <span class="token string">"#ff0200"</span><span class="token punctuation">,</span> <span class="token string">"#4ab7ff"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+    labs<span class="token punctuation">(</span>title<span class="token operator">=</span><span class="token string">"Cell Fraction from EpiSCORE"</span><span class="token punctuation">,</span> x<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">,</span> y <span class="token operator">=</span> <span class="token string">"Cell Type Fraction"</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+    theme<span class="token punctuation">(</span>plot.margin<span class="token operator">=</span>unit<span class="token punctuation">(</span>c<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">"cm"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> plot.title <span class="token operator">=</span> element_text<span class="token punctuation">(</span>hjust <span class="token operator">=</span> <span class="token number">0.5</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+    stat_compare_means<span class="token punctuation">(</span>method <span class="token operator">=</span> <span class="token string">"anova"</span><span class="token punctuation">,</span> label.y <span class="token operator">=</span> <span class="token number">0.5</span><span class="token punctuation">,</span> label <span class="token operator">=</span> <span class="token string">"p.format"</span><span class="token punctuation">)</span></code></pre></div>
+<p>Below is how the <code class="language-text">df</code> looks like:</p>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token operator">></span> dim<span class="token punctuation">(</span>df<span class="token punctuation">)</span>
+<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token number">508</span>   <span class="token number">4</span>
+<span class="token operator">></span> head<span class="token punctuation">(</span>df<span class="token punctuation">)</span>
+                        CF pheno Label   CellType
+Epithelial.UCL61 <span class="token number">0.6014421</span>    TC    TC Epithelial
+Epithelial.UCL03 <span class="token number">0.6345701</span>    AC    AC Epithelial
+Epithelial.UCL04 <span class="token number">0.4571514</span>    TC    TC Epithelial
+Epithelial.UCL06 <span class="token number">0.5656207</span>    TC    TC Epithelial
+Epithelial.UCL07 <span class="token number">0.7100541</span> LCNEC LCNEC Epithelial
+Epithelial.UCL39 <span class="token number">0.7085020</span> LCNEC LCNEC Epithelial
+<span class="token operator">></span></code></pre></div>
+<p>Note that here the <code class="language-text">stat_compare_means()</code> function is using Anova method.</p>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 788px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/844793a1b1a619b928ee788cb99331a4/ea7fb/figure4.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 101.2%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsSAAALEgHS3X78AAAC10lEQVQ4y3VU227aQBDl//+jUl5TqrRp2oc8VFFTJanU0HAH2/ju9QWDCdhwMmeNUVDA0thr786ZMzNn3IJcu93ug527zp1tnq1zzsvlEkVRYLVa6XWe50jT9GyQ5mrxttlsEEURlFJwXReDwQC9Xg/9fh/j8RjD4RB9+dbtdjEcjeD5vj5LK8vymCFvZOE4jjbbtrX54kRjIJplWfCDADMBdCwTll2fJ5kPgPzYRGysAUqSBIEAdTodRGGIxeMj4qmBUbaFFRfC8ATger3WbEYSnWkqAQrFmca6Me1PFxcwn5+BP/eYT030kw1MtTgN+Pr6qlkEAhoISBQnwiY6AM5mMzw8PCCS/fzpCakxhRUo8QlRnaohC+t5nm6ITlWYNgzjONZP1iuSUoSTCUKeDRW8IDpqCu0A+CS1ubq+xly6u/v2FcqaYeBnCFUsoHVNCaxMUzNtalxV1TFDdpgpv7y84NfdHRJxWP78Ac/x8dtdwwhzJCoS9l4tLYKRPddiK/EtihURa4ZZlun6MTWaJ2uHkuHTC8RRaUeeYeNcSZfl4TvVkEow37EPLFvz+VynwvpRf8Z0qgVM3TkO9VgDcM8U9j3Zm0gdWVNXAmSuaLM7wHJV1ClzvDhWZKc1uGfa1Khh3ugzFl02OiXzYlOhKHco9wI/TApTYFQyi97psAHTjKkCOcMus4a0aq/DQ8rvZcNUKOJTgNwjqJLAuttRbWdnmU5Jkw71RoHvU+Z3XQLuyU8ikuBjP4Xhx6eFzVlmU8ggJANZh+LMriZJCtMwcNluwxX21e0tUhH+37BE11scUj76H263WxnRe7SvrpAKg9WXNkLbxUQtEaW5Bvx+cwNHFJCLRuNBH7ZKtB4/pMwFGY7kn/ev8x+Z1Kr4fIlAhE0WdrxAmsS17vZjyO7OfNFmyEk5kTJfOEKsRynrQhiXYmma6WDc4zRt+ZR6832xWOj1+znm9QbRF+06eyE2kgAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
+  ></span>
+  <img
+        class="gatsby-resp-image-image"
+        alt="Grouped Boxplot plot"
+        title="Grouped Boxplot plot"
+        src="/static/844793a1b1a619b928ee788cb99331a4/ea7fb/figure4.png"
+        srcset="/static/844793a1b1a619b928ee788cb99331a4/63868/figure4.png 250w,
+/static/844793a1b1a619b928ee788cb99331a4/0b533/figure4.png 500w,
+/static/844793a1b1a619b928ee788cb99331a4/ea7fb/figure4.png 788w"
+        sizes="(max-width: 788px) 100vw, 788px"
         style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
         loading="lazy"
       />
