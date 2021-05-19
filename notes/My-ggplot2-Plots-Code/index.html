@@ -75,4 +75,57 @@ autoplot<span class="token punctuation">(</span>pca_res<span class="token punctu
         loading="lazy"
       />
   </a>
+    </span></p>
+<h3>Simple Boxplot</h3>
+<p>This is non-group boxplot, like showing values across various groups.</p>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r">library<span class="token punctuation">(</span>ggplot2<span class="token punctuation">)</span>
+
+df <span class="token operator">&lt;-</span> data.frame<span class="token punctuation">(</span>CF<span class="token operator">=</span>CF<span class="token punctuation">[</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> pheno<span class="token operator">=</span>RF<span class="token operator">$</span>cohort<span class="token punctuation">)</span>
+df<span class="token operator">$</span>Label<span class="token operator">&lt;-</span>factor<span class="token punctuation">(</span>df<span class="token operator">$</span>pheno<span class="token punctuation">,</span> levels<span class="token operator">=</span>c<span class="token punctuation">(</span><span class="token string">"TC"</span><span class="token punctuation">,</span> <span class="token string">"AC"</span><span class="token punctuation">,</span>  <span class="token string">"LCNEC"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment"># Reorder x axis by specify value</span>
+
+p <span class="token operator">&lt;-</span> ggplot<span class="token punctuation">(</span>df<span class="token punctuation">,</span> aes<span class="token punctuation">(</span>x<span class="token operator">=</span>Label<span class="token punctuation">,</span> y<span class="token operator">=</span>CF<span class="token punctuation">,</span> color<span class="token operator">=</span>Label<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+    geom_boxplot<span class="token punctuation">(</span>notch<span class="token operator">=</span><span class="token boolean">FALSE</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+    geom_jitter<span class="token punctuation">(</span>shape<span class="token operator">=</span><span class="token number">16</span><span class="token punctuation">,</span> position<span class="token operator">=</span>position_jitter<span class="token punctuation">(</span><span class="token number">0.2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+    scale_color_manual<span class="token punctuation">(</span>values<span class="token operator">=</span>c<span class="token punctuation">(</span><span class="token string">"#6c6c6c"</span><span class="token punctuation">,</span> <span class="token string">"#ff0200"</span><span class="token punctuation">,</span> <span class="token string">"#4ab7ff"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+    labs<span class="token punctuation">(</span>title<span class="token operator">=</span><span class="token string">"Epithelial"</span><span class="token punctuation">,</span> x<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">,</span> y <span class="token operator">=</span> <span class="token string">"Cell Type Fraction"</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+    theme<span class="token punctuation">(</span>plot.margin<span class="token operator">=</span>unit<span class="token punctuation">(</span>c<span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">"cm"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> plot.title <span class="token operator">=</span> element_text<span class="token punctuation">(</span>hjust <span class="token operator">=</span> <span class="token number">0.5</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+    theme_light<span class="token punctuation">(</span>base_size <span class="token operator">=</span> <span class="token number">14</span><span class="token punctuation">)</span></code></pre></div>
+<p>The <code class="language-text">df</code> object looks like this:</p>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token operator">></span> head<span class="token punctuation">(</span>df<span class="token punctuation">)</span>
+             CF pheno Label
+UCL61 <span class="token number">0.6014421</span>    TC    TC
+UCL03 <span class="token number">0.6345701</span>    AC    AC
+UCL04 <span class="token number">0.4571514</span>    TC    TC
+UCL06 <span class="token number">0.5656207</span>    TC    TC
+UCL07 <span class="token number">0.7100541</span> LCNEC LCNEC
+UCL39 <span class="token number">0.7085020</span> LCNEC LCNEC
+<span class="token operator">></span></code></pre></div>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 694px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/7c33479b8deb8b5dbcd026b1f18672bc/31198/figure3.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 98.8%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAACXBIWXMAAAsSAAALEgHS3X78AAACIklEQVQ4y41Ui6rqMBDs/3+dIIIgHhUVrdra1tY+k7k7SZMTe1TuQmmy2czOvhJB5H6/Y7FYYDabIY5jqqCUgtb6vz6KW0fcDMNgACht26LrOrPnx7OBe/5D3Xin7/sX0ChkQ3FgXuQiHg+Eokbb6d2PDH24NGoa6Kqya60MWNFqNL2mwtz9yrARABrBAQo7fb1asqJ49hbw3mhZ4y8gFQRxYLfbzYRtDISZVAn6fAaKHH3boVX4dS5++9G5ByS75/NpPBVFgeVyaf7Gc1lC1zU00yHJ7x4lbq34qCzDtPkN2VeZYJRaLu73e8znc5xOJ7MnK73ZQKeprAv0ZYVcwkxqAoqqsyGHEq3Xaw9IZsfjEXmeo5HiQIA0Qz4eoC8XX5xa8thKQtXIqhT9WdLCaKPD4QBX6SzLsN1uUUqopuriQIsOSQI5NOFjBLStYwuXpQn2u53JZ7SThSsCQcmOzeq7n6DXi10rC1IJYDfYtmGztfEV8c8GaZ4hWq1WvpkdIPe+D7mWPOuxvQhSdRaQNpygUvgkeYlLfEb0YJ+NueCFSvLxMinMpTgZKZsOYS+6YRkGZVj7okwnxc2pbwVOCtsneADCh+NP27ybRy80IhhZBmfhK/NxUt55d3lUk+fqHcMXQPbgW0CCSUHUWBQ9nn0FDEOYGviwwyJN0vL1+WL/udfGPbCunaZ7p/vI0BlzSpwx9XTAkQxtOGaJTI/ThVH+AwkwJLtGhSX3AAAAAElFTkSuQmCC'); background-size: cover; display: block;"
+  ></span>
+  <img
+        class="gatsby-resp-image-image"
+        alt="PCA plot"
+        title="PCA plot"
+        src="/static/7c33479b8deb8b5dbcd026b1f18672bc/31198/figure3.png"
+        srcset="/static/7c33479b8deb8b5dbcd026b1f18672bc/63868/figure3.png 250w,
+/static/7c33479b8deb8b5dbcd026b1f18672bc/0b533/figure3.png 500w,
+/static/7c33479b8deb8b5dbcd026b1f18672bc/31198/figure3.png 694w"
+        sizes="(max-width: 694px) 100vw, 694px"
+        style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+        loading="lazy"
+      />
+  </a>
     </span></p></div></main></div><div style="padding-top:3em;padding-bottom:3em;text-align:center"><p class="MuiTypography-root MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-alignCenter">Copyright © <!-- -->Yuan Tian<!-- --> <!-- -->2021<!-- -->.</p></div></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/notes/My-ggplot2-Plots-Code";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app-88cc7d53bff4b644d77c.js"],"component---src-pages-404-js":["/component---src-pages-404-js-852bd3a5faea7629c57d.js"],"component---src-pages-index-js":["/component---src-pages-index-js-4260634f559c3321e356.js"],"component---src-pages-page-2-js":["/component---src-pages-page-2-js-ef8c063115e3c48e159a.js"],"component---src-pages-using-typescript-tsx":["/component---src-pages-using-typescript-tsx-ccc63956d1d6da3ec2a1.js"],"component---src-templates-note-template-js":["/component---src-templates-note-template-js-3b4ebf0a47482aef66ee.js"]};/*]]>*/</script><script src="/component---src-templates-note-template-js-3b4ebf0a47482aef66ee.js" async=""></script><script src="/commons-04ea66d531f38b0803fa.js" async=""></script><script src="/app-88cc7d53bff4b644d77c.js" async=""></script><script src="/styles-fa79fef4936efa84b233.js" async=""></script><script src="/framework-8dcecaaefd71e2213eb2.js" async=""></script><script src="/webpack-runtime-f4e0ec702acbca6a6ef7.js" async=""></script></body></html>
