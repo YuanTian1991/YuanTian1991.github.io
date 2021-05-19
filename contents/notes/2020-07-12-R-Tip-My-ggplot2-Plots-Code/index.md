@@ -40,3 +40,38 @@ autoplot(pca_res, data = TPM, colour = 'Mutation', size=5, main="PCA for Transcr
 ```
 
 ![PCA plot](./fig2.png)
+
+### Simple Boxplot
+
+This is non-group boxplot, like showing values across various groups.
+
+```r
+library(ggplot2)
+
+df <- data.frame(CF=CF[,1], pheno=RF$cohort)
+df$Label<-factor(df$pheno, levels=c("TC", "AC",  "LCNEC")) # Reorder x axis by specify value
+
+p <- ggplot(df, aes(x=Label, y=CF, color=Label)) +
+    geom_boxplot(notch=FALSE) +
+    geom_jitter(shape=16, position=position_jitter(0.2)) +
+    scale_color_manual(values=c("#6c6c6c", "#ff0200", "#4ab7ff")) +
+    labs(title="Epithelial", x="", y = "Cell Type Fraction") +
+    theme(plot.margin=unit(c(2,2,2,2),"cm"), plot.title = element_text(hjust = 0.5)) +
+    theme_light(base_size = 14)
+```
+
+The `df` object looks like this:
+
+```r
+> head(df)
+             CF pheno Label
+UCL61 0.6014421    TC    TC
+UCL03 0.6345701    AC    AC
+UCL04 0.4571514    TC    TC
+UCL06 0.5656207    TC    TC
+UCL07 0.7100541 LCNEC LCNEC
+UCL39 0.7085020 LCNEC LCNEC
+>
+```
+
+![PCA plot](./figure3.png)
