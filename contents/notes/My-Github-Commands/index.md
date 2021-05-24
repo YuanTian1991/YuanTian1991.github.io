@@ -103,3 +103,12 @@ git cherry-pick 7223d10 ff261fe -n
 ```
 
 Then the changes I did in commit 7223d10 ff261fe will all be copied into this branch, but not committed (because of the `-n` parameter above), which is exactly what I need. Note that sometimes there may be conflict when cherry-picking, just solve them, then recommit.
+
+## 8. Fetch/Pull a remote branch to local for development
+
+This happens when I need to fetch a remote branch which was not exist in my local computer for development. I did not found better way, so here I record a stupid way:
+
+```bash
+git fetch
+git checkout remote_new_branch
+```
