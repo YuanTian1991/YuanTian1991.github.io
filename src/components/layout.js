@@ -59,7 +59,7 @@ class Layout extends React.Component {
           </Toolbar>
         </Box>
 
-        <Container maxWidth="md">
+        <Container maxWidth="lg">
         <main>{this.props.children}</main>
         </Container>
         {/* <Copyright /> */}
