@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Box, Paper, Grid, Chip, Avatar } from '@material-ui/core';
-import { Link, graphql } from "gatsby"
+import { Link, graphql, navigate } from "gatsby"
 import Layout from "../components/layout"
 // import Image from "../components/image"
 import SEO from "../components/seo"
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '1em',
     margin: '0.5em',
     // marginBottom: '2em',
-    // cursor: 'pointer',
+    cursor: 'pointer',
     backgroundColor: 'rgba(255, 0, 0, 0)',
     "&:hover": {
       backgroundColor: 'rgba(0, 0, 0, 0.07)',
@@ -92,8 +92,8 @@ export default function IndexPage(props) {
     }
   }
 
-  const handleTagClick = (event, tag) => {
-    // window.alert(tag)
+  const handlePageClick = (page) => {
+    navigate(page)
   }
 
   return (
@@ -105,8 +105,10 @@ export default function IndexPage(props) {
       props.data.allMarkdownRemark.edges.map(({ node }, index) => {
         if(selectedTag.length === 0 || selectedTag.some(r=> node.frontmatter.tags.indexOf(r) >= 0)) {
           return (
-            <Link key={index} to={node.frontmatter.slug} style={{ textDecoration: "none", }}>
-              <Paper key={index} elevation={0} className={classes.root}>
+            // <Link key={index} to={node.frontmatter.slug} style={{ textDecoration: "none", }}>
+              <Paper key={index} elevation={0} className={classes.root}
+              onClick={() => handlePageClick(node.frontmatter.slug)}
+              >
                 <Box my={1}>
                   <h2 style={{fontWeight: '700', marginBottom: '0.2em'}} className={classes.title}>
                     {node.frontmatter.title} </h2>
@@ -126,7 +128,10 @@ export default function IndexPage(props) {
                             </code>} 
                           variant={selectedTag.includes(tag) ? "default": 'outlined'}
                           style={{zIndex: 9999,margin: '5px', fontSize: '14px', backgroundColor: selectedTag.includes(tag) ? "hsla(0,0%,0%,0.8)": "white"}} 
-                          onClick={(event) => handleTagClick(event, tag)}
+                          onClick={(e) => {
+                            e.stopPropagation(); 
+                            handleSelectTag(tag)
+                    }}
                           />
                           // <span key={tagIndex}>
                           //   {'  '}
@@ -145,7 +150,7 @@ export default function IndexPage(props) {
                   </p>
                 </Box>
               </Paper>
-              </Link>
+              // </Link>
           )
         }
 
