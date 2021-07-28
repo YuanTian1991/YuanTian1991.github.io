@@ -2,7 +2,7 @@
 slug: '/notes/Update-Bioconductor-package-via-git'
 date: '2020-09-13'
 title: 'Update Bioconductor package via git'
-tags: ['github', 'ChAMP']
+tags: ['Github', 'ChAMP']
 abstract: 'Since I am maintaining ChAMP, constantly I need to update some programs, add features and similar staff. I have been using new git-based Bioconductor system for a while, here I am just record some codes for check.'
 ---
 

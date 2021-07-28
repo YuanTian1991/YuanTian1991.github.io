@@ -2,7 +2,7 @@
 slug: '/notes/My-Shell-Commands'
 date: '2020-07-27'
 title: 'My Shell Commands'
-tags: ['shell']
+tags: ['Shell']
 abstract: 'This is just a simply post to record some of my commonly used bash script. So that I can copy paste quickly.'
 ---
 

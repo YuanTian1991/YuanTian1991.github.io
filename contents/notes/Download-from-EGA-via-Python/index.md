@@ -1,7 +1,7 @@
 ---
 slug: "/notes/Download-from-EGA-via-Python"
 date: "2020-06-28"
-title: "Download from EGA via Python"
+title: 'Download from EGA via Python'
 tags: ['EGA']
 abstract: "Since I am working on a project related to a EGA data, I need to download them from the website. After learning a bit, I successfully down it. Here I recoded a bit the process."
 ---

@@ -1,7 +1,7 @@
 ---
 slug: "/notes/Gatsby-get-current-url-pathname"
 date: "2020-06-28"
-title: "Gatsby Get Current Url Pathname"
+title: 'Gatsby Get Current Url Pathname'
 tags: ['gatsby']
 abstract: "I want to make layout title show different font-size based on pages. For example, show a larger font in note list page, but a small button in blog page."
 ---

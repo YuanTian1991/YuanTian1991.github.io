@@ -2,7 +2,7 @@
 slug: '/notes/Connect-S3-with-AWS-CLI'
 date: '2020-12-13'
 title: 'Connect S3 with AWS CLI'
-tags: ['aws', 'S3']
+tags: ["aws", "S3"]
 abstract: 'Firs time doing things related to AWS. I never use anything related to AWS because I do not want to pay any money to it. Thanks for my friends, now I have a chance to get to know this famous cloud service provider.'
 ---
 

@@ -2,7 +2,7 @@
 slug: '/notes/Github-only-Upload-Certain-Types-of-Files'
 date: '2020-07-20'
 title: 'Github only Upload Certain Types of Files'
-tags: ['github']
+tags: ['Github']
 abstract: 'A short note about how to set up .gitignore'
 ---
 

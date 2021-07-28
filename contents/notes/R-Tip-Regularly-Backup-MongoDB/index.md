@@ -1,8 +1,8 @@
 ---
 slug: "/notes/Regularly-Backup-MongoDB-with-R-script"
 date: "2020-07-07"
-title: "Regularly Backup MongoDB with R script"
-tags: ['R', 'rds', 'github']
+title: 'Regularly Backup MongoDB with R script'
+tags: ['R', 'rds', 'Github']
 abstract: "I am maitaining the GCGR website. So I think it's a good idea to constantly backup the database a bit. So my idea is to regularlly run some R code (because I only good at R), and scp/push dumped file to RDS and github separately."
 ---
 

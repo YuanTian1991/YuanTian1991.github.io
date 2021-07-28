@@ -1,8 +1,8 @@
 ---
 slug: "/notes/My-Github-Commands"
 date: "2020-06-29"
-title: "My Github Commands"
-tags: ['github']
+title: 'My Github Commands'
+tags: ['Github']
 abstract: "For many years, I merely only use commands like git add, git commit, git push .etc. Now I am colaborating with more and more professional people on Github. So I want to record a bit my commands learned here. It's not systemic, but maybe a quick cheatsheet."
 ---
 

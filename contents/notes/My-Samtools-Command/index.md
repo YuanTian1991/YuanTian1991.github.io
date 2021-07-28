@@ -1,7 +1,7 @@
 ---
 slug: "/notes/My-Samtools-Command"
 date: "2020-07-08"
-title: "My Samtools Command"
+title: 'My Samtools Command'
 tags: ['samtools']
 abstract: "This is a note for my regular-used Samtools command."
 ---

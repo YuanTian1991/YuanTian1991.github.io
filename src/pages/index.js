@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'rgb(255,255,255, 0)', 
     color: '#757575', 
     fontWeight: '100',
-    fontFamily: "'Menlo', 'Monaco', 'Andale Mono', 'Ubuntu Mono', 'SFMono-Regular', monospace"
+    fontFamily: "'Menlo', 'Monaco', 'Andale Mono', 'Ubuntu Mono', 'SFMono-Regular', monospace",
   },
   sideChipLabelActive: {
     fontSize: '1em', 
@@ -119,7 +119,7 @@ export default function IndexPage(props) {
                         return (
                           <Chip 
                           size="small" 
-                          key={index} 
+                          key={tagIndex} 
                           label={                          
                           <code
                           className={selectedTag.includes(tag) ? classes.sideChipLabelActive : classes.sideChipLabel}
@@ -127,20 +127,12 @@ export default function IndexPage(props) {
                             >{tag}
                             </code>} 
                           variant={selectedTag.includes(tag) ? "default": 'outlined'}
-                          style={{zIndex: 9999,margin: '5px', fontSize: '14px', backgroundColor: selectedTag.includes(tag) ? "hsla(0,0%,0%,0.8)": "white"}} 
+                          style={{zIndex: 9999,margin: '0px 5px', fontSize: '14px', backgroundColor: selectedTag.includes(tag) ? "hsla(0,0%,0%,0.8)": "white"}} 
                           onClick={(e) => {
                             e.stopPropagation(); 
                             handleSelectTag(tag)
                     }}
                           />
-                          // <span key={tagIndex}>
-                          //   {'  '}
-                          //   <code
-                          //   className='language-text'
-                          //   style={{fontSize: '1em'}}
-                          //   >{tag}
-                          //   </code>
-                          // </span>
                         )
                       })
                     }

@@ -1,7 +1,7 @@
 ---
 slug: "/notes/Gatsby-Personal-Website"
 date: "2020-06-27"
-title: "Gatsby-Personal-Website"
+title: 'Gatsby-Personal-Website'
 tags: ['gatsby', '2020']
 abstract: "Can't remember how many times I re-create my personal website. This time I used Gatsby React, a nice framework to do it."
 ---

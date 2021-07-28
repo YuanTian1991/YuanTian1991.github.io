@@ -2,7 +2,7 @@
 slug: '/notes/Using-MethylCIBERSORT-for-Cell-Type-Deconvolution'
 date: '2021-01-18'
 title: 'Using MethylCIBERSORT for Cell Type Deconvolution'
-tags: ['cell-type-deconvolution', "methylation"]
+tags: ["cell-type-deconvolution", "methylation"]
 abstract: 'Cell type deconvolution is an important angel to analysis for DNA methylation or RNA-seq analysis. Compared with previous refbase/reffree method, recently there is a new package called MethylCIBERSORT, which also can do this, and quite easy to use.'
 ---
 

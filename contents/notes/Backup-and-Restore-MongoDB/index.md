@@ -1,7 +1,7 @@
 ---
 slug: "/notes/Backup-and-Restore-MongoDB"
 date: "2020-06-28"
-title: "Backup and Restore MongoDB"
+title: 'Backup and Restore MongoDB'
 tags: ['MongoDB']
 abstract: "Since I am developing GCGR website, constantly I will need to modify the databse. So I may need to transfer the data from online to offline constantly.  Here I want to record a bit the commands I use to dump data and recover them."
 ---

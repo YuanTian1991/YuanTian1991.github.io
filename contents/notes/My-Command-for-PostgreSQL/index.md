@@ -1,7 +1,7 @@
 ---
 slug: "/notes/my-command-for-postgreSQL"
 date: "2020-07-06"
-title: "My Command for PostgreSQL"
+title: 'My Command for PostgreSQL'
 tags: ['postgreSQL']
 abstract: "Recently one of my project is using postgreSQL, here I just record a bit common command I used to manipulate postgreSQL."
 ---

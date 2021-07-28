@@ -2,7 +2,7 @@
 slug: '/notes/Generate-ChAMP-Annotation-from-illumina-manifests'
 date: '2021-01-01'
 title: 'Generate ChAMP Annotation from illumina manifests'
-tags: ["ChAMP", "Annotation"]
+tags: ['ChAMP', 'Annotation']
 abstract: 'I am coding the thrird version of ChAMP, here is the first task I am encounter now. I need to convert the illumina CSV to ChAMP Annotation, previously I only use some random code to achive this, but this time I decided to form them into some script for future usage.'
 ---
 

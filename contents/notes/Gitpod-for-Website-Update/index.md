@@ -1,8 +1,8 @@
 ---
 slug: "/notes/Gitpod-for-Website-Update"
 date: "2020-07-01"
-title: "Gitpod for Website Update"
-tags: ['github', 'gitpod']
+title: 'Gitpod for Website Update'
+tags: ['Github', 'gitpod']
 abstract: "After creating my gatsby website, I need to constantly write notes for it. The normal way I do it, is open the project locally, run gatsby develop .etc. Then after creating new note, deveploy then push. Here I tried a way to modify code online, more quicker and anywhere."
 ---
 

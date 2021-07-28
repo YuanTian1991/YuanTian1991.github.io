@@ -2,7 +2,7 @@
 slug: '/notes/A-ChAMP-function-to-generate-various-Gene-Features'
 date: '2021-01-03'
 title: 'A ChAMP function to generate various Gene Features'
-tags: ["ChAMP", "GeneFeature", "Annotation"]
+tags: ['ChAMP', 'GeneFeature', 'Annotation']
 abstract: 'Recently, when I am working on the latest Mouse Methylation Array, I found that the Manifest does not have gene annotation, like promoter, TSS200, Exon .etc, so here I wrote a function to generate all these gene features from UCSC refgene.'
 ---
 

@@ -2,7 +2,7 @@
 slug: '/notes/Read-count-and-initial-quality-check-plots-on-BAM-files'
 date: '2021-03-14'
 title: 'Read count and initial quality check plots on BAM files'
-tags: ['R', 'MeDIP-seq', 'bam', 'PCA']
+tags: ['R', 'MeDIP-seq', 'BAM', 'PCA']
 abstract: 'I want to quickly check the quality of a set of BAM files, generated from bowtie2. However, I did not see many tools for it, eventually I found multiBamSummary is one solution out. Here I record a bit how I get read count matrix from a set of BAM files, then plot a quick plotly plot for visualisation.'
 ---
 

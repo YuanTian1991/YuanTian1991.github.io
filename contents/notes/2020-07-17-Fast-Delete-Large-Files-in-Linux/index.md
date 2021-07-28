@@ -2,7 +2,7 @@
 slug: '/notes/Fast-Delete-Large-Files-in-Linux'
 date: '2020-07-17'
 title: 'Fast Delete Large Files in Linux'
-tags: ['shell']
+tags: ['Shell']
 abstract: 'A way to quickly delete files in Linux. Faster than rm, it could be used when I have a lot of files to delete.'
 ---
 

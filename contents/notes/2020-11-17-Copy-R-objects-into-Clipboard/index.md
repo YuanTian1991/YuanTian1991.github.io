@@ -2,7 +2,7 @@
 slug: '/notes/Copy-R-objects-into-Clipboard'
 date: '2020-11-17'
 title: 'Copy R objects into Clipboard'
-tags: ['R']
+tags: ["R"]
 abstract: 'This is something I want to do for a long time, to find a way to copy objects from R to clipboard. It is a much better way to export small amount of data in/out R session'
 ---
 

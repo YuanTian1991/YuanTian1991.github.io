@@ -1,8 +1,8 @@
 ---
 slug: "/notes/Deploy-Gatsby-to-Github-User-Page"
 date: "2020-06-28"
-title: "Deploy Gatsby to Github User Page"
-tags: ['gatsby', 'github']
+title: 'Deploy Gatsby to Github User Page'
+tags: ['gatsby', 'Github']
 abstract: "After sometime of development, I now finished a basic version of note. So then I want to deploy it on my github, I like the idea that using XXXX.github.io for domain name, which looks even better than using a bought domain. So I need to find out how to do it"
 ---
 

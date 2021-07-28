@@ -2,7 +2,7 @@
 slug: '/notes/Develop-Gatsby-on-Kindle-Browser'
 date: '2021-02-19'
 title: 'Develop Gatsby on Kindle Browser'
-tags: ['Kindle', 'Gatsby']
+tags: ["Kindle", "Gatsby"]
 abstract: 'Previously I have tested that Gatsby works for Kindle. Now the problem is how can I develop it? I do not want to deploy my code on Github page everytime. Finally I found Gatsby Serve works for Kindle.'
 ---
 

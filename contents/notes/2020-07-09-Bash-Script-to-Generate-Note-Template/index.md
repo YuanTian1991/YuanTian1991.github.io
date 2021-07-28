@@ -2,7 +2,7 @@
 slug: '/notes/Bash-Script-to-Generate-Note-Template'
 date: '2020-07-09'
 title: 'Bash Script to Generate Note Template'
-tags: ['shell','blog']
+tags: ["Shell", "blog"]
 abstract: 'My new personal website is working super well. However, everything I want to create a new note/post, I need to manually create a folder, then an markdown file, then copy-paste head text from other post. Then re-change the name. So I write a simple bash script here to automatically create folder file, text for my initial new notes.'
 ---
 

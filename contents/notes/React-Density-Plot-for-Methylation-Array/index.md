@@ -1,8 +1,8 @@
 ---
 slug: "/notes/React-Density-Plot-for-Methylation-Array"
 date: "2020-06-30"
-title: "React Density Plot for Methylation Array"
-tags: ['react', 'methylation array']
+title: 'React Density Plot for Methylation Array'
+tags: ['React', 'methylation array']
 abstract: "In one of my colaboration project, I need to sometimes show density plot to all members in the team. I think a good way is to deploy the figure online. But most density are just pure R figures, which is hard to identify. So I quickly created a react app, which shows density plot online."
 ---
 

@@ -6,8 +6,6 @@ tags: ["React", "NodeGUI"]
 abstract: 'Recently I want to create a cross-platform Apps, since I only know React, so I am trying to find some possible solutions. Like Electron and React NodeGUI. Today is my first try for React NodeGUI, there are indeed some tricky part behind the start code.'
 ---
 
-<a style="text-decoration: none;border-radius: 4px; background-color: rgba(41,98,255); color: white; padding: 0.3em 1em" href="https://ty.hashnode.dev/create-desktop-apps-with-react-nodegui">Link to my Hashnode Blog </a>
-
 So my task here is to create a cross-platform apps, which means I hope I just need to write the code once, then the created app could be used on Mac, Windows, and Linux. Since I am only good at React, so I start searching possible solutions to create cross-platform Apps with React. There are two options looks appearing to me: [Electron](https://www.electronjs.org/) and [React NodeGUI](https://react.nodegui.org/).
 
 Electron has proved itself for years, there are many cool Apps are build on it, like Slack/VScode. The second one (React NodeGUI) is a new tool, which claim it build native Apps, compared with Hybrid ones from Electron. However, on the home page, React NodeGUI also claimed that it's more suitable for simple small project, while electron is stil more suitable for big projects. Today I took some time to try the Hello World Demo for React NodeGUI.

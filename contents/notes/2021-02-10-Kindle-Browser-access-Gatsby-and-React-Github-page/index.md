@@ -2,7 +2,7 @@
 slug: '/notes/Kindle-Browser-access-Gatsby-and-React-Github-page'
 date: '2021-02-10'
 title: 'Kindle Browser access Gatsby and React Github page'
-tags: ['Github', 'Gatsby', 'React']
+tags: ["Github", "Gatsby", "React"]
 abstract: 'Previously I was working on a cool simple project Feed-Ink, which is a tool to help me to read RSS on my Kindle. However, after nearly all development, I found I can not use Kindle to access the Github deploy static page. Here I want to test a bit.'
 ---
 

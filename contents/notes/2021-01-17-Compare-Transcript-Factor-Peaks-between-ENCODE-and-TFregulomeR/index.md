@@ -2,7 +2,7 @@
 slug: '/notes/Compare-Transcript-Factor-Peaks-between-ENCODE-and-TFregulomeR'
 date: '2021-01-17'
 title: 'Compare Transcript Factor Peaks between ENCODE and TFregulomeR'
-tags: ["TFBS", "TFEA"]
+tags: ['TFBS', 'TFEA']
 abstract: 'Previously I found a very good database TFregulomeR. However, before I move one, I want check the quality of TFregulomeR by comparing the peaks to ENCODE.'
 ---
 
