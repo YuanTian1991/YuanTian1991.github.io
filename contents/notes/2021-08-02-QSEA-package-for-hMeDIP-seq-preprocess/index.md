@@ -56,7 +56,7 @@ Then QSEA need to do some calculation based on the QSEA objects we just created 
 - Calcualte Coverage: `addCoverage()`
 - Copy Number Aberation: `addCNV()`. This step is important, for example, the `normal_idx` parameter should be normal/control samples in my data set, which need to be set by me manually.
 - Scaling Library Factor QSEA accounts for differences in sequencing depth and library: `addLibraryFactors()`
-- The average CpG density per fragment for each genomic window: `addPatternDensity()`. **This function is failed in my test, I am trying to fix it...**
+- The average CpG density per fragment for each genomic window: `addPatternDensity()`.
 - Offset for regions without CpG: `addOffset()`
 
 ```r
