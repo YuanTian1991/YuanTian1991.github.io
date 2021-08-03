@@ -40,3 +40,11 @@ This happens when I want to found out a list of files recursively in a folder, t
 ```bash
 find . -type f  -iname "*cpg.txt.gz" -exec cp {} ../../Data/5mC/ \;
 ```
+
+## 4. Grep recursively for a specific file type on Linux
+
+A good answer from [this post](https://stackoverflow.com/questions/22224719/grep-recursively-for-a-specific-file-type-on-linux?noredirect=1&lq=1).
+
+```bash
+grep -r --include="*.[R]" "NC49" .
+```
