@@ -43,3 +43,11 @@ Another better way to do it:
 ```bash
 samtools merge MergedInput.bam `ls ./myGreyList/*_Inp.grey_filtered.bam`
 ```
+
+### Convert bam files to sam
+
+I encountered this situation when I want need to work on MAnorm2, which requires SAM file to convert into reads.bed.
+
+```bash
+parallel --plus 'samtools view -h {} -o {...}.sam' ::: *.bam
+```
