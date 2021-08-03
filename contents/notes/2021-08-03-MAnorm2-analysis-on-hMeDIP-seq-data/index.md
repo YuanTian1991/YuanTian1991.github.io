@@ -1,7 +1,7 @@
 ---
-slug: '/notes/MAnorm2-analysis-on-hMeDIP-seq-data'
+slug: '/notes/MAnorm2-package-for-hMeDIP-seq-data'
 date: '2021-08-03'
-title: 'MAnorm2 analysis on hMeDIP-seq 1: Preparation'
+title: 'MAnorm2 package for hMeDIP-seq 1: Preparation'
 tags: ['MAnorm2', 'MeDIP-seq', 'Preprocess']
 abstract: 'After working on QSEA and DiffBind, now I want to try the last solution - MAnorm2 for my hMeDIP-seq data. Out of my expectation, it is a bit hard indeed to run it, and this is the first half of my record, which is about preparation of with MAnorm2_utils.'
 ---
