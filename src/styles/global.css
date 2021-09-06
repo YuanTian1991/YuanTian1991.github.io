@@ -74,3 +74,5 @@ a {
     color: #81c2ff;
     font-weight: 700;
 }
+
+.katex { font-size: 0.95em !important; }
