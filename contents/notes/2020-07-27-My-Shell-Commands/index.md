@@ -48,3 +48,11 @@ A good answer from [this post](https://stackoverflow.com/questions/22224719/grep
 ```bash
 grep -r --include="*.[R]" "NC49" .
 ```
+
+## 5. Copy certain file and their folder structure
+
+This command is used when I need to only extract R script from a series of folders, and copy them all into another folder for saving.
+
+```bash
+find . -name '*.R' -exec cp --parents \{\} ../GithubBackup/BathCRC/ \;
+```
