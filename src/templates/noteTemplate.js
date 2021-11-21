@@ -28,9 +28,9 @@ export default function Template({
           <h1
             style={{
               fontSize: "2.5em",
-              fontWeight: "700",
+              fontWeight: "900",
               marginTop: "0.2em",
-              marginBottom: "0.2em",
+              marginBottom: "0.4em",
             }}
           >
             {frontmatter.title}

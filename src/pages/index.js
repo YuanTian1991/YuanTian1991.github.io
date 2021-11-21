@@ -110,7 +110,7 @@ export default function IndexPage(props) {
               onClick={() => handlePageClick(node.frontmatter.slug)}
               >
                 <Box my={1}>
-                  <h2 style={{fontWeight: '700', marginBottom: '0.1em'}} className={classes.title}>
+                  <h2 style={{fontWeight: '900', marginBottom: '0.1em', marginTop: '0'}} className={classes.title}>
                     {node.frontmatter.title} </h2>
                   <Typography  style={{ fontWeight: "100", fontSize: '0.85em', color: 'gray', padding: '10px 0px 0px 0px'}}>
 
