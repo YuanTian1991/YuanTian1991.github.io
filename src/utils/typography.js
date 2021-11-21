@@ -14,12 +14,12 @@ githubTheme.overrideThemeStyles = ({ rhythm }, options) => ({
 //   "pre": {
 //       border: '1px solid lightgrey',
 //   },
-//   "p": {
-//       color: 'black',
-//           marginTop: "0.5em",
-//     marginBottom: '0.5em',
-//     lineHeight: "1.6",
-//   },
+  // "p": {
+  //   color: 'black',
+  //   marginTop: "0.5em",
+  //   marginBottom: '0.5em',
+  //   // lineHeight: "1.6",
+  // },
 //   "a": { 
 //     color: '#00b2ca'
 //   },
@@ -30,11 +30,12 @@ githubTheme.overrideThemeStyles = ({ rhythm }, options) => ({
 
 const typography = new Typography(
   {
-    baseFontSize: '20px',
-    baseLineHeight: 1.2,
+    baseFontSize: '19px',
+    baseLineHeight: 1.6,
+    blockMarginBottom: "0.6em",
     fontWeight: '100',
-    headerFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
-    bodyFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
+    headerFontFamily: ['Segoe UI', 'Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
+    bodyFontFamily: ['Segoe UI', 'Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
     headerColor: 'black',
   },
   githubTheme

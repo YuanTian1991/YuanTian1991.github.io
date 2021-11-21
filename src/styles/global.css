@@ -4,7 +4,7 @@ html {
   /* background-image: url("../assets/image/extra_clean_paper.png"); */
   /* background-color: rgba(248, 245, 239, 1);; */
   background-color: white;
-  font-family: "Avenir Next"
+  /* font-family: "Avenir Next" */
 }
 
 *::selection {
@@ -13,7 +13,7 @@ background: rgba(254, 217, 10, 0.7);
 
 pre[class*="language-"] { 
     font-size: 0.8em; 
-    margin: 2em 0em 2em 0em;
+    margin: 1.2em 0em 1.2em 0em;
     background-color: #1f2937;
     border-radius: 3px;
 }
@@ -79,3 +79,12 @@ a {
 }
 
 .katex { font-size: 0.95em !important; }
+
+p {
+    margin-bottom: 0.5;
+}
+
+h2 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
