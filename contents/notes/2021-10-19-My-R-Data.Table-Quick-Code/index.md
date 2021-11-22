@@ -141,3 +141,12 @@ for(i in phenos) {
     Occupancy.dt[, (paste0(i, "_fraction")) :=  .SD/tmpN, .SDcols=paste0(i, "_ocp")]
 }
 ```
+
+## 6: Update subset of column
+
+This situation happen if I want to just update part of one column, for example only a column show TRUE or FALSE.
+
+```R
+tmpTable[strand == "+", strand := "F"]
+tmpTable[strand == "-", strand := "R"]
+```
