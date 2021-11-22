@@ -34,7 +34,7 @@ const typography = new Typography(
     baseLineHeight: 1.6,
     blockMarginBottom: "0.6em",
     fontWeight: '100',
-    headerFontFamily: ['Avenir Next', , 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
+    headerFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
     bodyFontFamily: ['Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
     headerColor: 'black',
   },
