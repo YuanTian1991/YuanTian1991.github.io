@@ -112,7 +112,7 @@ export default function IndexPage(props) {
                 <Box my={1}>
                   <h2 style={{ marginBottom: '0.1em', marginTop: '0'}} className={classes.title}>
                     {node.frontmatter.title} </h2>
-                  <Typography  style={{ fontWeight: "100", fontSize: '0.85em', color: 'gray', padding: '10px 0px 0px 0px'}}>
+                  <Typography  style={{ fontSize: '0.85em', color: 'grey', padding: '10px 0px 0px 0px'}}>
 
                     {node.frontmatter.date}
 
@@ -129,7 +129,7 @@ export default function IndexPage(props) {
                             >{tag}
                             </code>} 
                           variant={selectedTag.includes(tag) ? "default": 'outlined'}
-                          style={{zIndex: 9999,margin: '0px 5px 3px 5px', fontSize: '13px', backgroundColor: selectedTag.includes(tag) ? "hsla(0,0%,0%,0.8)": "white"}} 
+                          style={{zIndex: 9999,margin: '0px 5px 3px 5px', fontSize: '14.5px', backgroundColor: selectedTag.includes(tag) ? "hsla(0,0%,0%,0.8)": "white"}} 
                           onClick={(e) => {
                             e.stopPropagation(); 
                             handleSelectTag(tag)
@@ -166,7 +166,7 @@ export default function IndexPage(props) {
                   </code>} 
                 variant={selectedTag.includes(tag.tag) ? "default": 'outlined'}
                 avatar={<Avatar style={{fontSize: '10px', color: 'white', fontWeight: '700'}}>{tag.count}</Avatar>}
-                style={{margin: '5px', fontSize: '13px', backgroundColor: selectedTag.includes(tag.tag) ? "hsla(0,0%,0%,0.8)": "white"}} 
+                style={{margin: '5px', fontSize: '14.5px', backgroundColor: selectedTag.includes(tag.tag) ? "hsla(0,0%,0%,0.8)": "white"}} 
                 onClick={() => handleSelectTag(tag.tag)}
                 />
               )
