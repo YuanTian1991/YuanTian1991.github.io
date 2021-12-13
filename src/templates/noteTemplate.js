@@ -4,6 +4,8 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import { Paper, Container, Divider, Typography, Chip } from "@material-ui/core"
 
+import SEO from "../components/seo"
+
 import "katex/dist/katex.min.css"
 
 export default function Template({
@@ -20,6 +22,7 @@ export default function Template({
   return (
     <div className="blog-post-container">
       <Layout>
+      <SEO title={frontmatter.title} />
         <Container maxWidth="md">
           {/* <Paper elevation={2} style={{ padding: '2em', backgroundColor: 'rgba(245, 245, 245, 0)' }}> */}
           <span style={{ marginTop: "1em", marginBottom: "0px" }}>

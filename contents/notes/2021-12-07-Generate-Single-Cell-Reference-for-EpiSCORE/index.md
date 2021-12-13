@@ -200,3 +200,21 @@ AADACL2                       0                       0
 ```
 
 That's is, in the future I can use above solution to generate all cell type reference for EpiSCORE. Still it's too complicate, I think I will try write a script to do it...
+
+---
+
+```R
+> knitr::kable(head(estF.o$estF))
+
+|            |    neuron|     Oligo|     Astro|       OPC|      Endo| Microglia|
+|:-----------|---------:|---------:|---------:|---------:|---------:|---------:|
+|GCGR-E1     | 0.0174422| 0.0380976| 0.4534784| 0.1473080| 0.3436738| 0.0000000|
+|GCGR-E1_PT  | 0.0000000| 0.0000000| 0.3858507| 0.1479975| 0.4661518| 0.0000000|
+|GCGR-E10    | 0.0000000| 0.0000000| 0.1366966| 0.6184098| 0.2200949| 0.0247987|
+|GCGR-E10_PT | 0.0000000| 0.0000000| 0.2124682| 0.2837996| 0.5037322| 0.0000000|
+|GCGR-E12    | 0.0000000| 0.0000000| 0.0740341| 0.5295187| 0.2657846| 0.1306626|
+|GCGR-E12_PT | 0.0407090| 0.0000000| 0.2162089| 0.2263986| 0.5166835| 0.0000000|
+> dim(estF.o$estF)
+[1] 167   6
+> 
+```
