@@ -23,5 +23,5 @@ I think above code can be optimised with `parallel` linux program. I will try wr
 parallel-fastq-dump can be installed with `conda`, then used as below. Note that I found that it will fail sometimes, especially when I set thread high, for example 30.
 
 ```bash
-parallel-fastq-dump --sra-id SRR568016 --threads 10 --outdir out/ --split-files --gzip
+parallel-fastq-dump --sra-id SRR568016 --threads 10 --outdir out/ --split-files --gzip --tmpdir /data/Tian/myTMP
 ```
