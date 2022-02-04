@@ -8,6 +8,8 @@ abstract: "Since I am developing GCGR website, constantly I will need to modify 
 
 My GCGR platform is using MongoDB, so here since I have a new computer, so I need to find a way to Backup and Restore my MongoDB.
 
+## 1. Backup MongoBD database
+
 After searching online, I find below solution works:
 
 ```bash
@@ -23,6 +25,8 @@ After searching online, I find below solution works:
 
 In the command `—db` indicates the database I want to backup, and `—out` indicates the directory I want to place the file. So here I think it's done.
 
+## 2. Restore MongoBD database
+
 Then after fetch data from the online server to my current computer, I need to restore it.
 
 ```bash
@@ -30,3 +34,26 @@ mongorestore mongodump-2013-10-24
 ```
 
 Then everything is restored on my computer that I can continue to develop it. Of course there should have many more parameter I did not clear, but currently, these two lines of code is enough for me to use.
+
+## 3. Linux MongoBD commands
+
+If I am using Linux, I can type `mongo` to enter control command action. Then below command could list all database.
+
+```bash
+db.adminCommand( { listDatabases: 1 } )
+```
+
+Then use one of the two ways to delete database. For mongo command line:
+
+```bash
+use GCGRdb; 
+db.dropDatabase();
+```
+
+Or directly from bash:
+
+```bash
+mongo GCGRdb --eval "db.dropDatabase()"
+```
+
+After dropping, I can use above restore command to update MongoDB.
