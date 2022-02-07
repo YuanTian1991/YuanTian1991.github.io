@@ -58,7 +58,7 @@ Sadly now I don't know why just add the directory to docker.
 
 ### 2.3. Run nf-core command
 
-Finally, below command could trigger sarek. There are some parameters can be used to accelerate like:
+Finally, below command could trigger sarek **for the first step**. There are some parameters can be used to accelerate like:
 
 * `--cpus` as number of CpGs.
 * `-resume` to restart unfinished pipeline.
@@ -66,7 +66,19 @@ Finally, below command could trigger sarek. There are some parameters can be use
 * `--max_memory`, total memory size. For example 1900.GB.
 
 ```bash
-nextflow run nf-core/sarek --input SampleSheet.tsv -profile docker
+nextflow run nf-core/sarek --input SampleSheet.tsv -profile docker --cpus 30
 ```
 
-Finally it works for me, it took me 15h 55m to finish just one WGS data. Well, at least it's a good start.
+It works for me, it took me 15h 55m to finish just one WGS data. Well, at least it's a good start. Out of my expectation, this is just the first step, for the rest, we should step-by-step run other steps. For example, the second step is to do variant calling.
+
+```bash
+nextflow run nf-core/sarek --input /scratch1/Tian/PGP/2.Sarek/results/Preprocessing/TSV/recalibrated.tsv -profile docker -resume --step variant_calling --cpus 30 --tools 'HaplotypeCaller,Manta,Strelka'
+```
+
+After above command, vcf files are generated in different folder in Variant folder. Final step is to annotate them with below command:
+
+```bash
+nextflow run nf-core/sarek --input "results/VariantCalling/*/{HaplotypeCaller,Manta,Strelka}/*.vcf.gz" -profile docker -resume --step annotate --tools merge --cpus 30
+```
+
+That's it, these are commands can be used to run nf-core sarek. It contains so much software/steps that I should spend time to check on them.
