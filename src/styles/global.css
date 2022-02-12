@@ -67,8 +67,10 @@ pre[class*="language-"] {
 
 blockquote {
     margin-top: 5px;
+    margin-left: 0px;
+    margin-right: 0px;
     padding: 20px;
-    background-color: #eeeeee;
+    background-color: #ffe6cc;
     border-radius: 3px;
 }
 
