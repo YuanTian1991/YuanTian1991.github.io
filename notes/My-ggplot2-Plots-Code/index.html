@@ -39,7 +39,7 @@ ggplot<span class="token punctuation">(</span>DEG<span class="token punctuation"
       />
   </a>
     </span></p>
-<h3>PCA plot</h3>
+<h2>PCA plot</h2>
 <p>The <a href="https://cran.r-project.org/web/packages/ggfortify/vignettes/plot_pca.html">ggfortify</a> is a easy to use and beautiful tool for PCA visualisation. However, it seems the origin data must be data.frame format.</p>
 <div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r">library<span class="token punctuation">(</span>ggfortify<span class="token punctuation">)</span>
 
@@ -78,7 +78,7 @@ autoplot<span class="token punctuation">(</span>pca_res<span class="token punctu
       />
   </a>
     </span></p>
-<h3>Simple Boxplot</h3>
+<h2>Simple Boxplot</h2>
 <p>This is non-group boxplot, like showing values across various groups.</p>
 <div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r">library<span class="token punctuation">(</span>ggplot2<span class="token punctuation">)</span>
 
@@ -188,6 +188,64 @@ Epithelial.UCL39 <span class="token number">0.7085020</span> LCNEC LCNEC Epithel
 /static/844793a1b1a619b928ee788cb99331a4/0b533/figure4.png 500w,
 /static/844793a1b1a619b928ee788cb99331a4/ea7fb/figure4.png 788w"
         sizes="(max-width: 788px) 100vw, 788px"
+        style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+        loading="lazy"
+        decoding="async"
+      />
+  </a>
+    </span></p>
+<h2>Boxplot with ggarange, alpha, margin twisted.</h2>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r">    oneDMR<span class="token operator">$</span>middleMethylated <span class="token operator">&lt;-</span> as.numeric<span class="token punctuation">(</span>oneDMR<span class="token operator">$</span>y1 <span class="token operator">>=</span> <span class="token number">0.4</span> <span class="token operator">&amp;</span> oneDMR<span class="token operator">$</span>y1 <span class="token operator">&lt;</span> <span class="token number">0.6</span><span class="token punctuation">)</span>
+
+    pScatter <span class="token operator">&lt;-</span> ggplot<span class="token punctuation">(</span>oneDMR<span class="token punctuation">,</span> aes<span class="token punctuation">(</span>x<span class="token operator">=</span>x0<span class="token punctuation">,</span> y<span class="token operator">=</span>y1<span class="token punctuation">,</span> color<span class="token operator">=</span>cellline<span class="token punctuation">,</span> alpha<span class="token operator">=</span>middleMethylated<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+        geom_point<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+        labs<span class="token punctuation">(</span>title<span class="token operator">=</span><span class="token string">''</span><span class="token punctuation">,</span> x<span class="token operator">=</span>qdapRegex<span class="token operator">::</span>ex_between<span class="token punctuation">(</span>oneDMR<span class="token operator">$</span>chr<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token string">"\n"</span><span class="token punctuation">,</span> <span class="token string">":"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+        scale_color_manual<span class="token punctuation">(</span>values<span class="token operator">=</span>c<span class="token punctuation">(</span><span class="token string">"#6c6c6c"</span><span class="token punctuation">,</span> <span class="token string">"#ff0200"</span><span class="token punctuation">,</span> <span class="token string">"#4ab7ff"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+        scale_alpha<span class="token punctuation">(</span>guide <span class="token operator">=</span> <span class="token string">'none'</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+        theme_bw<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+        theme<span class="token punctuation">(</span>plot.margin<span class="token operator">=</span>unit<span class="token punctuation">(</span>c<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0.5</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">"cm"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    pBoxplot <span class="token operator">&lt;-</span> ggplot<span class="token punctuation">(</span>oneDMR<span class="token punctuation">,</span> aes<span class="token punctuation">(</span>x<span class="token operator">=</span>cellline<span class="token punctuation">,</span> y<span class="token operator">=</span>y1<span class="token punctuation">,</span> color<span class="token operator">=</span>cellline<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+        geom_boxplot<span class="token punctuation">(</span>notch<span class="token operator">=</span><span class="token boolean">FALSE</span><span class="token punctuation">)</span><span class="token operator">+</span>
+        geom_jitter<span class="token punctuation">(</span>shape<span class="token operator">=</span><span class="token number">16</span><span class="token punctuation">,</span> position<span class="token operator">=</span>position_jitter<span class="token punctuation">(</span><span class="token number">0.2</span><span class="token punctuation">)</span><span class="token punctuation">,</span> aes<span class="token punctuation">(</span>alpha <span class="token operator">=</span> middleMethylated<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+        scale_color_manual<span class="token punctuation">(</span>values<span class="token operator">=</span>c<span class="token punctuation">(</span><span class="token string">"#6c6c6c"</span><span class="token punctuation">,</span> <span class="token string">"#ff0200"</span><span class="token punctuation">,</span> <span class="token string">"#4ab7ff"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+        scale_alpha<span class="token punctuation">(</span>guide <span class="token operator">=</span> <span class="token string">'none'</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+        labs<span class="token punctuation">(</span>title<span class="token operator">=</span>i<span class="token punctuation">,</span> x<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">,</span> y <span class="token operator">=</span> <span class="token string">"Methylation Status"</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+        theme_bw<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+        theme<span class="token punctuation">(</span>plot.margin<span class="token operator">=</span>unit<span class="token punctuation">(</span>c<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token operator">-</span><span class="token number">0.5</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span><span class="token string">"cm"</span><span class="token punctuation">)</span><span class="token punctuation">,</span> plot.title <span class="token operator">=</span> element_text<span class="token punctuation">(</span>hjust <span class="token operator">=</span> <span class="token number">0.5</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span>
+        stat_compare_means<span class="token punctuation">(</span>method <span class="token operator">=</span> <span class="token string">"anova"</span><span class="token punctuation">,</span> label.x <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span> label.y <span class="token operator">=</span> <span class="token number">0.2</span><span class="token punctuation">,</span> label <span class="token operator">=</span> <span class="token string">"p.format"</span><span class="token punctuation">)</span>
+
+    A <span class="token operator">&lt;-</span> ggarrange<span class="token punctuation">(</span>pBoxplot<span class="token punctuation">,</span> pScatter<span class="token punctuation">,</span>
+              ncol <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">,</span> nrow <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">,</span>
+              heights <span class="token operator">=</span> c<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0.5</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+              common.legend <span class="token operator">=</span> <span class="token boolean">TRUE</span><span class="token punctuation">,</span> legend <span class="token operator">=</span> <span class="token string">"bottom"</span><span class="token punctuation">)</span></code></pre></div>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 1000px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/c765cc8a1941535d57f701fc720dcdd8/5bb38/figure5.jpg"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 142.8%; position: relative; bottom: 0; left: 0; background-image: url('data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAdABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAECBf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAe/ENIBDSD//xAAUEAEAAAAAAAAAAAAAAAAAAAAw/9oACAEBAAEFAk//xAAUEQEAAAAAAAAAAAAAAAAAAAAg/9oACAEDAQE/AR//xAAUEQEAAAAAAAAAAAAAAAAAAAAg/9oACAECAQE/AR//xAAUEAEAAAAAAAAAAAAAAAAAAAAw/9oACAEBAAY/Ak//xAAZEAADAQEBAAAAAAAAAAAAAAAAEBEBQXH/2gAIAQEAAT8hIo+l9W7Cr//aAAwDAQACAAMAAAAQUMAM/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAwEBPxAf/8QAFBEBAAAAAAAAAAAAAAAAAAAAIP/aAAgBAgEBPxAf/8QAIBAAAwABAwUBAAAAAAAAAAAAAAERITFhgRBBUXGhwf/aAAgBAQABPxB5wJE3rjco/fUlqvbwJRJDejPCIV/HSC7ivn4U/9k='); background-size: cover; display: block;"
+  ></span>
+  <img
+        class="gatsby-resp-image-image"
+        alt="complex boxplot plot"
+        title="complex boxplot plot"
+        src="/static/c765cc8a1941535d57f701fc720dcdd8/a2510/figure5.jpg"
+        srcset="/static/c765cc8a1941535d57f701fc720dcdd8/0479a/figure5.jpg 250w,
+/static/c765cc8a1941535d57f701fc720dcdd8/41099/figure5.jpg 500w,
+/static/c765cc8a1941535d57f701fc720dcdd8/a2510/figure5.jpg 1000w,
+/static/c765cc8a1941535d57f701fc720dcdd8/c58a3/figure5.jpg 1500w,
+/static/c765cc8a1941535d57f701fc720dcdd8/3acf0/figure5.jpg 2000w,
+/static/c765cc8a1941535d57f701fc720dcdd8/5bb38/figure5.jpg 4200w"
+        sizes="(max-width: 1000px) 100vw, 1000px"
         style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
         loading="lazy"
         decoding="async"
