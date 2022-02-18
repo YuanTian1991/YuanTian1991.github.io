@@ -25,7 +25,7 @@ ggplot(DEG, aes(x=pvalue)) + geom_histogram() + theme_minimal() + labs(title="p 
 
 ![P value Histogram](./fig1.png)
 
-### PCA plot
+## PCA plot
 
 The [ggfortify](https://cran.r-project.org/web/packages/ggfortify/vignettes/plot_pca.html) is a easy to use and beautiful tool for PCA visualisation. However, it seems the origin data must be data.frame format.
 
@@ -41,7 +41,7 @@ autoplot(pca_res, data = TPM, colour = 'Mutation', size=5, main="PCA for Transcr
 
 ![PCA plot](./fig2.png)
 
-### Simple Boxplot
+## Simple Boxplot
 
 This is non-group boxplot, like showing values across various groups.
 
@@ -118,3 +118,34 @@ Epithelial.UCL39 0.7085020 LCNEC LCNEC Epithelial
 Note that here the `stat_compare_means()` function is using Anova method.
 
 ![Grouped Boxplot plot](./figure4.png)
+
+## Boxplot with ggarange, alpha, margin twisted.
+
+```R
+    oneDMR$middleMethylated <- as.numeric(oneDMR$y1 >= 0.4 & oneDMR$y1 < 0.6)
+
+    pScatter <- ggplot(oneDMR, aes(x=x0, y=y1, color=cellline, alpha=middleMethylated)) +
+        geom_point() +
+        labs(title='', x=qdapRegex::ex_between(oneDMR$chr[1], "\n", ":")[[1]][1]) +
+        scale_color_manual(values=c("#6c6c6c", "#ff0200", "#4ab7ff")) +
+        scale_alpha(guide = 'none') +
+        theme_bw() +
+        theme(plot.margin=unit(c(-0.5, 1, 0.5, 1),"cm"))
+
+    pBoxplot <- ggplot(oneDMR, aes(x=cellline, y=y1, color=cellline)) +
+        geom_boxplot(notch=FALSE)+
+        geom_jitter(shape=16, position=position_jitter(0.2), aes(alpha = middleMethylated)) +
+        scale_color_manual(values=c("#6c6c6c", "#ff0200", "#4ab7ff")) +
+        scale_alpha(guide = 'none') +
+        labs(title=i, x="", y = "Methylation Status") +
+        theme_bw() +
+        theme(plot.margin=unit(c(1,1,-0.5,1),"cm"), plot.title = element_text(hjust = 0.5)) +
+        stat_compare_means(method = "anova", label.x = 2, label.y = 0.2, label = "p.format")
+
+    A <- ggarrange(pBoxplot, pScatter,
+              ncol = 1, nrow = 2,
+              heights = c(1, 0.5),
+              common.legend = TRUE, legend = "bottom")
+```
+
+![complex boxplot plot](./figure5.jpg)
