@@ -148,4 +148,24 @@ Note that here the `stat_compare_means()` function is using Anova method.
               common.legend = TRUE, legend = "bottom")
 ```
 
+The oneDMR object is below:
+
+```R
+> head(oneDMR)
+                                               chr        x0        x1
+377 MEG3_Upstream_Merge\nchr14:100824186-100828287 100824186 100824186
+379 MEG3_Upstream_Merge\nchr14:100824186-100828287 100824187 100824187
+381 MEG3_Upstream_Merge\nchr14:100824186-100828287 100824188 100824188
+383 MEG3_Upstream_Merge\nchr14:100824186-100828287 100824189 100824189
+385 MEG3_Upstream_Merge\nchr14:100824186-100828287 100824207 100824207
+387 MEG3_Upstream_Merge\nchr14:100824186-100828287 100824208 100824208
+           y1 strand cellline                 dmr middleMethylated
+377 0.3000000      +  GM12878 MEG3_Upstream_Merge                0
+379 0.7058824      -  GM12878 MEG3_Upstream_Merge                0
+381 0.7000000      +  GM12878 MEG3_Upstream_Merge                0
+383 0.7058824      -  GM12878 MEG3_Upstream_Merge                0
+385 0.3333333      +  GM12878 MEG3_Upstream_Merge                0
+387 0.7857143      -  GM12878 MEG3_Upstream_Merge                0
+```
+
 ![complex boxplot plot](./figure5.jpg)
