@@ -62,3 +62,11 @@ This command is used when I need to only extract R script from a series of folde
 ```bash
 find . -name '*.R' -exec cp --parents \{\} ../GithubBackup/BathCRC/ \;
 ```
+
+## 6. Kill all process by certain user
+
+Normally `sudo` is not used here.
+
+```bash
+sudo killall -u ubuntu
+```
