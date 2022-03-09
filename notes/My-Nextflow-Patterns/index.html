@@ -64,4 +64,49 @@ process <span class="token string">'test_tuple'</span> <span class="token punctu
         <span class="token builtin class-name">echo</span> <span class="token variable">${params.fqDIR}</span><span class="token variable">${end1}</span> <span class="token operator">></span> <span class="token function">file</span>
         <span class="token string">""</span>"
 <span class="token punctuation">}</span></code></pre></div>
-<p>Well...I personally don't like to create too many names. Here <code class="language-text">sampleName</code>, <code class="language-text">end1</code>, <code class="language-text">end2</code> are created ONLY based on order of channel group. To me it's a very much not obvious declaration of a new variable name...</p></div></div></main></div><div style="padding-top:3em;padding-bottom:3em;text-align:center"><div class="MuiContainer-root MuiContainer-maxWidthLg" style="margin-bottom:1em;font-size:0.8em;cursor:pointer"><div id="revolvermap" align="center" class="wcustomhtml"><iframe class="adc" scrolling="no" frameBorder="0" allowtransparency="true" width="250px" height="250px" src="//rf.revolvermaps.com/w/6/a/a2.php?i=5ejvbv5pt7h&amp;m=7&amp;c=e63100&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=90&amp;lx=-400&amp;ly=400&amp;hi=20&amp;he=7&amp;hc=a8ddff&amp;rs=80"></iframe></div></div><p variant="body2" color="textSecondary" align="center" style="font-size:0.8em">Copyright © <!-- -->Yuan Tian<!-- --> <!-- -->2022<!-- -->.</p></div></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/notes/My-Nextflow-Patterns";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-20c0bd3c2e06daf91d9f.js"],"app":["/app-60739b7de9235d33ffa2.js"],"component---src-pages-404-js":["/component---src-pages-404-js-767f9e7d686a1d3a823d.js"],"component---src-pages-index-js":["/component---src-pages-index-js-5ac3f9211d205bf780b8.js"],"component---src-pages-page-2-js":["/component---src-pages-page-2-js-3f349d91a1c927cbf5d0.js"],"component---src-pages-using-typescript-tsx":["/component---src-pages-using-typescript-tsx-a43e1ad41422d6ccf7a5.js"],"component---src-templates-note-template-js":["/component---src-templates-note-template-js-c8d52e548d167fcf099b.js"]};/*]]>*/</script><script src="/polyfill-20c0bd3c2e06daf91d9f.js" nomodule=""></script><script src="/component---src-templates-note-template-js-c8d52e548d167fcf099b.js" async=""></script><script src="/a0a122dce25329eef6729a0f7c3ee55af4d9135e-a30f22ac33dd7e411b75.js" async=""></script><script src="/commons-b5df7d38d8cf8f72c2b1.js" async=""></script><script src="/app-60739b7de9235d33ffa2.js" async=""></script><script src="/framework-0b6d5c9e46b5b2e0ad34.js" async=""></script><script src="/webpack-runtime-cdc09020f4eadca3264f.js" async=""></script></body></html>
+<p>Well...I personally don't like to create too many names. Here <code class="language-text">sampleName</code>, <code class="language-text">end1</code>, <code class="language-text">end2</code> are created ONLY based on order of channel group. To me it's a very much not obvious declaration of a new variable name...</p>
+<h2>Concat String (val)</h2>
+<p>Actually it's quite easy...</p>
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token shebang important">#!/usr/bin/env nextflow</span>
+
+params.fqDIR <span class="token operator">=</span> <span class="token string">"../S01_SubsetFQ/subFQ/"</span>
+params.SampleSheet <span class="token operator">=</span> <span class="token string">'../S01_SubsetFQ/SampleSheet.csv'</span>
+
+samples_ch <span class="token operator">=</span> Channel.fromPath<span class="token punctuation">(</span>params.SampleSheet<span class="token punctuation">)</span>.splitCsv<span class="token punctuation">(</span>header: <span class="token boolean">true</span><span class="token punctuation">)</span>
+
+process <span class="token string">'concat_string'</span> <span class="token punctuation">{</span>
+    
+    <span class="token builtin class-name">echo</span> <span class="token boolean">true</span>
+    input:
+        val oneFQ from samples_ch
+    output:
+
+    script:
+      <span class="token string">""</span>"
+      <span class="token builtin class-name">echo</span> <span class="token variable">${file(params.fqDIR + oneFQ.end_1)}</span>
+      <span class="token string">""</span>"
+<span class="token punctuation">}</span></code></pre></div>
+<p>Alternatively, when I fetch each input from channel, I can assign it a new name liks:</p>
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">    input:
+        tuple val<span class="token punctuation">(</span>sampleName<span class="token punctuation">)</span>, val<span class="token punctuation">(</span>file_id<span class="token punctuation">)</span>, val<span class="token punctuation">(</span>end1<span class="token punctuation">)</span>, val<span class="token punctuation">(</span>end2<span class="token punctuation">)</span> from samples_ch</code></pre></div>
+<p>Then in below script, just use this new name... It seems the number of tuple MUST match the number of CSV? I am not too sure...</p>
+<h2>Collect Results into Public Folder</h2>
+<p>I tested it, even if I don't set output, the script will run successfully, and the result would be in a folder in work folder. <strong>However, if I don't set output section, the publishDir will not work</strong>... I don't know why, must I set an output channel then I can export the results?</p>
+<blockquote>
+<p>And yes, the output name must be matched with the script program...</p>
+</blockquote>
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">process <span class="token string">'fastp_trimming'</span> <span class="token punctuation">{</span>
+
+    publishDir <span class="token string">"./result"</span>, mode: <span class="token string">'copy'</span>
+
+    input:
+        val oneFQ from samples_ch
+    output:
+        path <span class="token string">"*_R1.fq.gz"</span> into Trimmed_file1_ch
+        path <span class="token string">"*_R2.fq.gz"</span> into Trimmed_file2_ch
+
+    script:
+        <span class="token string">""</span>"
+        fastp -w <span class="token number">16</span> -i <span class="token variable">${file(params.fqDIR + oneFQ.end_1)}</span> -I <span class="token variable">${file(params.fqDIR + oneFQ.end_2)}</span> -o <span class="token variable">${oneFQ.file_id}</span>_R1.fq.gz -O <span class="token variable">${oneFQ.file_id}</span>_R2.fq.gz -j <span class="token variable">${oneFQ.file_id}</span>.json -h <span class="token variable">${oneFQ.file_id}</span>.html -R <span class="token variable">${oneFQ.file_id}</span> --trim_front1 <span class="token number">0</span> --trim_tail1 <span class="token number">15</span> --trim_front2 <span class="token number">15</span> --trim_tail2 <span class="token number">0</span>
+        <span class="token string">""</span>"
+<span class="token punctuation">}</span></code></pre></div></div></div></main></div><div style="padding-top:3em;padding-bottom:3em;text-align:center"><div class="MuiContainer-root MuiContainer-maxWidthLg" style="margin-bottom:1em;font-size:0.8em;cursor:pointer"><div id="revolvermap" align="center" class="wcustomhtml"><iframe class="adc" scrolling="no" frameBorder="0" allowtransparency="true" width="250px" height="250px" src="//rf.revolvermaps.com/w/6/a/a2.php?i=5ejvbv5pt7h&amp;m=7&amp;c=e63100&amp;cr1=ffffff&amp;f=arial&amp;l=0&amp;bv=90&amp;lx=-400&amp;ly=400&amp;hi=20&amp;he=7&amp;hc=a8ddff&amp;rs=80"></iframe></div></div><p variant="body2" color="textSecondary" align="center" style="font-size:0.8em">Copyright © <!-- -->Yuan Tian<!-- --> <!-- -->2022<!-- -->.</p></div></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/notes/My-Nextflow-Patterns";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-20c0bd3c2e06daf91d9f.js"],"app":["/app-60739b7de9235d33ffa2.js"],"component---src-pages-404-js":["/component---src-pages-404-js-767f9e7d686a1d3a823d.js"],"component---src-pages-index-js":["/component---src-pages-index-js-5ac3f9211d205bf780b8.js"],"component---src-pages-page-2-js":["/component---src-pages-page-2-js-3f349d91a1c927cbf5d0.js"],"component---src-pages-using-typescript-tsx":["/component---src-pages-using-typescript-tsx-a43e1ad41422d6ccf7a5.js"],"component---src-templates-note-template-js":["/component---src-templates-note-template-js-c8d52e548d167fcf099b.js"]};/*]]>*/</script><script src="/polyfill-20c0bd3c2e06daf91d9f.js" nomodule=""></script><script src="/component---src-templates-note-template-js-c8d52e548d167fcf099b.js" async=""></script><script src="/a0a122dce25329eef6729a0f7c3ee55af4d9135e-a30f22ac33dd7e411b75.js" async=""></script><script src="/commons-b5df7d38d8cf8f72c2b1.js" async=""></script><script src="/app-60739b7de9235d33ffa2.js" async=""></script><script src="/framework-0b6d5c9e46b5b2e0ad34.js" async=""></script><script src="/webpack-runtime-cdc09020f4eadca3264f.js" async=""></script></body></html>
