@@ -101,3 +101,62 @@ process 'test_tuple' {
 ```
 
 Well...I personally don't like to create too many names. Here `sampleName`, `end1`, `end2` are created ONLY based on order of channel group. To me it's a very much not obvious declaration of a new variable name...
+
+## Concat String (val)
+
+Actually it's quite easy...
+
+```bash
+#!/usr/bin/env nextflow
+
+params.fqDIR = "../S01_SubsetFQ/subFQ/"
+params.SampleSheet = '../S01_SubsetFQ/SampleSheet.csv'
+
+samples_ch = Channel.fromPath(params.SampleSheet).splitCsv(header: true)
+
+process 'concat_string' {
+    
+    echo true
+    input:
+        val oneFQ from samples_ch
+    output:
+
+    script:
+      """
+      echo ${file(params.fqDIR + oneFQ.end_1)}
+      """
+}
+```
+
+Alternatively, when I fetch each input from channel, I can assign it a new name liks:
+
+```bash
+    input:
+        tuple val(sampleName), val(file_id), val(end1), val(end2) from samples_ch
+```
+
+Then in below script, just use this new name... It seems the number of tuple MUST match the number of CSV? I am not too sure...
+
+## Collect Results into Public Folder
+
+I tested it, even if I don't set output, the script will run successfully, and the result would be in a folder in work folder. **However, if I don't set output section, the publishDir will not work**... I don't know why, must I set an output channel then I can export the results?
+
+> And yes, the output name must be matched with the script program...
+
+```bash
+process 'fastp_trimming' {
+
+    publishDir "./result", mode: 'copy'
+
+    input:
+        val oneFQ from samples_ch
+    output:
+        path "*_R1.fq.gz" into Trimmed_file1_ch
+        path "*_R2.fq.gz" into Trimmed_file2_ch
+
+    script:
+        """
+        fastp -w 16 -i ${file(params.fqDIR + oneFQ.end_1)} -I ${file(params.fqDIR + oneFQ.end_2)} -o ${oneFQ.file_id}_R1.fq.gz -O ${oneFQ.file_id}_R2.fq.gz -j ${oneFQ.file_id}.json -h ${oneFQ.file_id}.html -R ${oneFQ.file_id} --trim_front1 0 --trim_tail1 15 --trim_front2 15 --trim_tail2 0
+        """
+}
+```
