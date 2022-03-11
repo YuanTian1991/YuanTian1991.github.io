@@ -89,6 +89,14 @@ This is a very good way to debug. If I just run `docker run nf_fastp`, it will f
 > docker build -t nf_fastp ./nf-docker/docker_fastp && docker run -it nf_fastp
 > ```
 
+## Name
+
+In the run command, we can set `--name my_nf_fastp` to give the docker container a name. If we don't, a random one will be generated. However, we can't create container with same name, so everytime you run, the old one need to be removed as:
+
+```bahs
+docker rm my_nf_fastp
+```
+
 ## ENV, WORKDIR and ENTRYPOINT
 
 These two thigs are not must needed, but nice to have. The WORKDIR define a folder (create one if not exist) where all Run or CMD will be running. And ENV could be used to define env variable, for example path to software installed.
@@ -125,7 +133,7 @@ docker run nf_fastp fastp --help
 
 The `docker run container` + `shell command` solution is prefered by me.
 
-## Files
+## Files exchange between hostmachine and container &bigstar
 
 So now I get a image with installed software, then I need to get data in it for running. Initially I thought I need `COPY` command here in docker, but after a while COPY is properly used for image building, which means it is something should be copied as a part of the docker functionality. For example, a frontend/backend of a website, a script have been written (but not argument) to be passed into it.
 
@@ -138,10 +146,31 @@ docker run -it -v /scratch1/Tian/Cansor/Nextflow/S03_MyNextFlow/to-be-copied:/ap
 * The **-v /scratch1/Tian/Cansor/Nextflow/S03_MyNextFlow/to-be-copied:/app/data** part is mounting the hostmachine directory to docker-image /app/data. **It MUST be absolute path here.**
 * The **wc -l ./data/SampleSheet.csv** part is a command to run inside the container.
 
-## Name
+Similarly, we can directly export the calcualted result from docker in the `/data`.
 
-In the run command, we can set `--name my_nf_fastp` to give the docker container a name. If we don't, a random one will be generated. However, we can't create container with same name, so everytime you run, the old one need to be removed as:
-
-```bahs
-docker rm my_nf_fastp
+```bash
+docker run -it -v /scratch1/Tian/Cansor/Nextflow/S03_MyNextFlow/to-be-copied:/app/data nf_fastp touch ./data/whatever.txt
 ```
+The `touch ./data/whatever.txt` will driectly exported to host machine.
+
+> &bigstar; Note that commands like `echo 'Hello World' > ./data/helloworld.txt` can't be assigned after docker run. I did not dig too deep. but it looks like `>` will be seens as hostmachine. In this case, after long time google, the solution is to pass the whole command in docker like below.
+
+```bash
+docker build -t nf_fastp ./nf-docker/docker_fastp && docker run --rm  -v /scratch1/Tian/Cansor/Nextflow/S03_MyNextFlow/syncFolder:/app/data nf_fastp bash -c "echo 'Hello World' > ./data/helloworld.txt"
+```
+
+## Docker summary
+
+Until now, I think above are most Essential Knowledge for Docker, I can use docker eventually like a command line:
+1. Wrap all software, installing, setting, path .etc, even middle results in the container.
+2. Pass files, or values as parameter to execue.
+3. Finally received results in host machine.
+
+I think, in theory most bioinformatic analysis can be wraped into a docker like this. **The fundermental principle here is that it simplised the software installation step**.
+
+---
+
+## Integration Nextflow with Docker
+
+Now I have leanred [nextflow](https://yuantian1991.github.io/notes/My-Nextflow-Patterns), and docker. The next task is to integrate them. My purpose is to write each docker for each process. So call "componentization", or "modularization". So that in the future, I can "form" or "assembly" nextflow pipeline quickly with these components. This is possibly a bad idea, as Bioinformatics softwares have ton's of parameters, it's may not work to have just a container to run everydata...
+
