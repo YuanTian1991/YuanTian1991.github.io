@@ -1,7 +1,7 @@
 ---
-slug: '/notes/Write-a-Docker-for-Nextflow-Process'
+slug: '/notes/Essential-Docker-Knowledge'
 date: '2022-03-10'
-title: 'Write a Docker for Nextflow Process'
+title: 'Essential Docker Knowledge'
 tags: ['docker', 'nextflow']
 abstract: 'I am working on a nextflow pipeline recently, which contains a couple of process in the pipeline. We want to use docker to run each process, so here I am writing my coding report of how to create a docker for process, run it, and collect results .etc'
 ---
@@ -167,10 +167,3 @@ Until now, I think above are most Essential Knowledge for Docker, I can use dock
 3. Finally received results in host machine.
 
 I think, in theory most bioinformatic analysis can be wraped into a docker like this. **The fundermental principle here is that it simplised the software installation step**.
-
----
-
-## Integration Nextflow with Docker
-
-Now I have leanred [nextflow](https://yuantian1991.github.io/notes/My-Nextflow-Patterns), and docker. The next task is to integrate them. My purpose is to write each docker for each process. So call "componentization", or "modularization". So that in the future, I can "form" or "assembly" nextflow pipeline quickly with these components. This is possibly a bad idea, as Bioinformatics softwares have ton's of parameters, it's may not work to have just a container to run everydata...
-

@@ -1,9 +1,9 @@
 ---
-slug: '/notes/My-Nextflow-Patterns'
+slug: '/notes/Essential-Nextflow-Knowledge'
 date: '2022-03-09'
-title: 'My Nextflow Patterns'
+title: 'Essential Nextflow knowledge'
 tags: ["nextflow"]
-abstract: 'I am trying to collect some nextflow pattern I will frequently use here.'
+abstract: 'I am now learning nextflow. I feel that there are too many parameters, syntax that I will actually not needed from tutorial. Thus, here I just record key patterns I will be used in my work.'
 ---
 
 ## Input SampleSheet
