@@ -89,6 +89,8 @@ docker {
 
 The important here is runOption, the `-v` parameter means mounting volumn of host machine to consider, as a shared space. The `/app/data`  is the folder in container, that's where the first `cp` command target for. Then run the nextflow script as:
 
+## Run nextflow and check results
+
 ```bash
 nextflow -log ./log/debugLog run main.nf -resume
 ```

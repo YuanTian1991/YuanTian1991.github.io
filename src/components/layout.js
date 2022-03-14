@@ -46,7 +46,10 @@ class Layout extends React.Component {
               </Grid>
             </Grid>
 
-            <div className={classes.toolbarButtons}>
+            <div className={classes.toolbarButtons} style={{width: '200px'}}>
+            <Link to="/life-in-month" className={classes.Link} style={{fontWeight: '300', fontSize: '0.85em'}}>
+                  Life in Month
+                </Link>
               {/* <Avatar size="large" style={{ position: "absolute", padding: '0.2em' }}></Avatar> */}
               {/* <img className={classes.imageIcon} src={Mountain} /> */}
 
