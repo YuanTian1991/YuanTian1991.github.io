@@ -22,7 +22,7 @@ export default function Template({
   return (
     <div className="blog-post-container">
       <Layout>
-      <SEO title={frontmatter.title} />
+        <SEO title={frontmatter.title} />
         <Container maxWidth="md">
           {/* <Paper elevation={2} style={{ padding: '2em', backgroundColor: 'rgba(245, 245, 245, 0)' }}> */}
           <span style={{ marginTop: "1em", marginBottom: "0px" }}>
@@ -30,7 +30,7 @@ export default function Template({
           </span>
           <h1
             style={{
-              fontSize: "2.5em",
+              fontSize: "2.2em",
               // fontWeight: "700",
               marginTop: "0.2em",
               marginBottom: "0.4em",
@@ -68,7 +68,7 @@ export default function Template({
   )
 }
 export const pageQuery = graphql`
-  query($slug: String!) {
+  query ($slug: String!) {
     markdownRemark(frontmatter: { slug: { eq: $slug } }) {
       html
       frontmatter {

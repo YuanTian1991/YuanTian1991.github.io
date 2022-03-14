@@ -2,7 +2,7 @@
   "name": "tian-site",
   "private": true,
   "description": "Tian's personal website",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Tian <tianyuan1991HIT@gmail.com>",
   "dependencies": {
     "@deckdeckgo/highlight-code": "^3.3.1",
