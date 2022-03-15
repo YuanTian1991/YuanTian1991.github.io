@@ -139,6 +139,7 @@ export default function LifeInMonth(props) {
                         height: squreLength - 2 + "px",
                       }}
                       onMouseOver={() => handleBlockHover(m)}
+                      onMouseLeave={() => setHoverText("Make Every Month Count")}
                     ></Paper>
                   </li>
                 )
