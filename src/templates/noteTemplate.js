@@ -24,7 +24,7 @@ export default function Template({
       <Layout>
         <SEO title={frontmatter.title} />
         <Container maxWidth="md">
-          {/* <Paper elevation={2} style={{ padding: '2em', backgroundColor: 'rgba(245, 245, 245, 0)' }}> */}
+          {/* <Paper elevation={1} style={{ padding: '2em', backgroundColor: 'rgba(245, 245, 245, 0)' }}> */}
           <span style={{ marginTop: "1em", marginBottom: "0px" }}>
             {frontmatter.date}
           </span>

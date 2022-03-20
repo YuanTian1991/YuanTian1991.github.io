@@ -11,6 +11,7 @@ const useStyles = makeStyles(theme => ({
     // minWidth: 275,
     padding: "1em",
     margin: "0.5em",
+    // border: "0.1px solid white",
     // marginBottom: '2em',
     cursor: "pointer",
     backgroundColor: "rgba(255, 0, 0, 0)",
@@ -19,6 +20,7 @@ const useStyles = makeStyles(theme => ({
       "-webkit-transition": "background-color 100ms linear",
       "-ms-transition": "background-color 100ms linear",
       transition: "background-color 100ms linear",
+      // border: '0.1px solid lightgrey'
     },
   },
   tag: {
@@ -155,7 +157,7 @@ export default function IndexPage(props) {
                               selectedTag.includes(tag) ? "default" : "outlined"
                             }
                             style={{
-                              zIndex: 9999,
+                              zIndex: 999,
                               margin: "0px 5px 3px 5px",
                               fontSize: "14.5px",
                               backgroundColor: selectedTag.includes(tag)

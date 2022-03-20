@@ -58,7 +58,7 @@ export default function LifeInMonth(props) {
   const classes = useStyles()
   const pannelRef = useRef(null)
   const [squreLength, setSqureLength] = useState(0)
-  const [hoverText, setHoverText] = useState("Make Every Month Count")
+  const [hoverText, setHoverText] = useState("")
 
   const monthBlocks = Array.from(
     {
@@ -75,8 +75,13 @@ export default function LifeInMonth(props) {
       let tmpLength = Math.sqrt(
         (pannelRef.current.offsetWidth * pannelRef.current.offsetHeight) / 960
       )
+
+      console.log(pannelRef.current.offsetWidth)
+      console.log(pannelRef.current.offsetHeight)
+      
       let A = Math.floor(pannelRef.current.offsetWidth / tmpLength)
       tmpLength = pannelRef.current.offsetWidth / (A + 2)
+
       setSqureLength(tmpLength)
     }
   }, [pannelRef.current])
@@ -111,11 +116,7 @@ export default function LifeInMonth(props) {
           // alignItems="center"
         >
           <Grid item xs={12} sm={8} md={6} ref={pannelRef}>
-            <p
-              style={{ margin: "0px", textAlign: "center", fontSize: "0.85em" }}
-            >
-              {hoverText}
-            </p>
+
             <ul className={classes.pannel}>
               {monthBlocks.map(m => {
                 return (
@@ -139,13 +140,20 @@ export default function LifeInMonth(props) {
                         height: squreLength - 2 + "px",
                       }}
                       onMouseOver={() => handleBlockHover(m)}
-                      onMouseLeave={() => setHoverText("Make Every Month Count")}
+                      onMouseLeave={() => setHoverText("")}
                     ></Paper>
                   </li>
                 )
               })}
             </ul>
           </Grid>
+          <Grid item xs={12} sm={2} >
+          <p
+              style={{ margin: "1em", textAlign: "center", fontSize: "0.8em" }}
+            >
+              {hoverText}
+            </p>
+            </Grid>
         </Grid>
       </Container>
     </Layout>
