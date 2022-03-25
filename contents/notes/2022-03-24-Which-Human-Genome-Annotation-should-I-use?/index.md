@@ -158,7 +158,7 @@ A more detail explaination is [here on UCSC F&Q](https://genome.ucsc.edu/FAQ/FAQ
 
 For a long time I though this is the official version of GENCOD, but actually maybe it's not. As I compared the origin GTF file, which contains more transcript than this one. This file have very similar number of transcript with origin GENCOD, but still some are missing.
 
-![GENCODComp](./figure_GENCODComp.png)
+![GENCODComp](./figure_gencodeComp.png)
 
 I don't know why it's named as wGENCODGENCOD...The track name is `ALL GENCOD V39`, I guess it's related to GENCOD, but not sure what the relationship is...
 
