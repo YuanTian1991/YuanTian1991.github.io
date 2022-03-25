@@ -34,8 +34,8 @@ const typography = new Typography(
     baseLineHeight: 1.6,
     blockMarginBottom: "0.6em",
     fontWeight: '100',
-    headerFontFamily: ["Ubuntu",'Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
-    bodyFontFamily: ["Ubuntu",'Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],
+    headerFontFamily: ['Helvetica', "Ubuntu",'Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Arial', 'sans-serif'],
+    bodyFontFamily: ['Helvetica', "Ubuntu",'Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Arial', 'sans-serif'],
     headerColor: 'black',
   },
   githubTheme
