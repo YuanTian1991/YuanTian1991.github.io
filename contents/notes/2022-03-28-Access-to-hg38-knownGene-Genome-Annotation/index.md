@@ -161,4 +161,6 @@ In short, I will in the future merely (hopefully only) use knownGene for all Bio
 
 The limitations are:
 1. I need to code myself, and maintain the code if one day knownGene get updated.
-2. The knownGene table may get updated, which will cause reproducible problem. In this case, actually wgEncodeXXXXV39 have some advantage.
+2. The knownGene table may get updated, which will cause reproducible problem. In this case, actually wgEncodeGencodeCompV39 have some advantage.
+
+> Actually, wgEncodeGencodeCompV39 is very similar to knownGene. **Common transcripts are identical**. Thus it's better to allow the script to support both of them, one for latest, and the other for reproducibility.
