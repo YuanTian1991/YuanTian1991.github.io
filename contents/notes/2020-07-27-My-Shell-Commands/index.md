@@ -70,3 +70,39 @@ Normally `sudo` is not used here.
 ```bash
 sudo killall -u ubuntu
 ```
+
+## 7. Create SSH key for Server Login
+
+Firstly create a ssh key.
+
+```bash
+ssh-keygen -t ed25519
+```
+
+Then change the key name as below: `/Users/tian/.ssh/Anatra`
+
+```bash
+tian@Yuans-Mac-mini ~ $ ssh-keygen -t ed25519
+Generating public/private ed25519 key pair.
+Enter file in which to save the key (/Users/tian/.ssh/id_ed25519): /Users/tian/.ssh/Anatra
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+```
+
+Then copy the content of `Anatra.pub` to a file named `authorized_keys` in `~/.ssh`. If this file not exist, just create it.
+
+Then modify `config` file in `~/.ssh` folder, add below information:
+
+```bash
+Host Anatra
+  HostName linux.bath.ac.uk
+  User ty456
+  ForwardX11Trusted yes
+  IdentityFile ~/.ssh/Anatra
+```
+
+That's it, not I can login Aantra as:
+
+```bash
+ssh Anatra
+```
