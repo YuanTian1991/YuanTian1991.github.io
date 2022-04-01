@@ -79,30 +79,43 @@ Firstly create a ssh key.
 ssh-keygen -t ed25519
 ```
 
-Then change the key name as below: `/Users/tian/.ssh/Anatra`
+Then change the key name as below: `/Users/tian/.ssh/BathLinux
 
 ```bash
 tian@Yuans-Mac-mini ~ $ ssh-keygen -t ed25519
 Generating public/private ed25519 key pair.
-Enter file in which to save the key (/Users/tian/.ssh/id_ed25519): /Users/tian/.ssh/Anatra
+Enter file in which to save the key (/Users/tian/.ssh/id_ed25519): /Users/tian/.ssh/BathLinux
 Enter passphrase (empty for no passphrase):
 Enter same passphrase again:
 ```
 
-Then copy the content of `Anatra.pub` to a file named `authorized_keys` in `~/.ssh`. If this file not exist, just create it.
+Then copy the content of `BathLinux.pub` to a file named `authorized_keys` in `~/.ssh`. If this file not exist, just create it.
 
 Then modify `config` file in `~/.ssh` folder, add below information:
 
 ```bash
-Host Anatra
+Host BathLinux
   HostName linux.bath.ac.uk
   User ty456
   ForwardX11Trusted yes
-  IdentityFile ~/.ssh/Anatra
+  IdentityFile ~/.ssh/BathLinux
 ```
 
 That's it, not I can login Aantra as:
 
 ```bash
-ssh Anatra
+ssh BathLinux
 ```
+
+If I need to SSH twice. I need to create another ssh key named: `AnatraFromMacMini`. Then write as below:
+
+```bash
+Host Anatra
+    Hostname anatra.bath.ac.uk
+    ProxyJump ty456@BathLinux
+    User ty456
+    ForwardX11Trusted yes
+    IdentityFile ~/.ssh/AnatraFromMacMini
+```
+
+So, now I can log into Anatra directly as `ssh Anatra`
