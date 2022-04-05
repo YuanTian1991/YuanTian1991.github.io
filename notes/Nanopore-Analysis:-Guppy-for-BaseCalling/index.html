@@ -30,27 +30,16 @@ Tue Apr  <span class="token number">5</span> 00:48:41 <span class="token number"
 +-----------------------------------------------------------------------------+
 tian@slms-ci-beck-02 ~ $</code></pre></div>
 <p>There are some preparation work should be done before using Guppy. For example find <code class="language-text">flowcell</code> type and <code class="language-text">kit</code> type. In other word, I think Guppy pre-trained a lot of ML models for different combinations of flowcell and kit, so when use Guppy, we should find out what is our Nanopore data setting. Or another solution is to set default config file. In my case it’s dna_r9.4.1_450bps_hac_prom.</p>
+<h2>Installation of Guppy</h2>
+<p>I don't know why but <a href="https://community.nanoporetech.com/docs/prepare/library_prep_protocols/Guppy-protocol/v/gpb_2003_v1_revad_14dec2018/linux-guppy">the installation page</a> is hidden in Nanpore Community, seems I need to register to see it. I guess there is some patant protection here, so I won't paste the command here.</p>
 <h2>Command for Guppy</h2>
-<p>I am using version 5.0.16+b9fcd7b5b for Guppy here.</p>
-<p>CPU Mode.</p>
+<p>I am using version 6.1.1+1f6bfa7f8 for Guppy here.</p>
 <div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">guppy_basecaller -i ../S01_subFast5 \
   -s ./guppyResult \
   -c dna_r9.4.1_450bps_hac_prom.cfg \
-  --gpu_runners_per_device 10 \
-  –-cpu_threads_per_caller 10 \
-  –-num_callers 5 \
+  --compress_fastq \
   -a ../S02_Minimap2/MT-human-ont.mmi \
-  --bam_out
-</code></pre></div>
-<p>CPU Mode. GPU is much much much faster. It basically just take 1 min to run a 2.8GB fast5 file.</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">guppy_basecaller -i ../S01_subFast5 \
-  -s ./guppyResult \
-  -c dna_r9.4.1_450bps_hac_prom.cfg \
-  --gpu_runners_per_device 10 \
-  –-cpu_threads_per_caller 10 \
-  –-num_callers 5 \
-  -a ../S02_Minimap2/MT-human-ont.mmi \
-  -x 'cuda:0 cuda:1' \
+  -x 'auto' \
   --bam_out
 </code></pre></div>
 <p>It seems those runner and number caller is not working now...I need to debug more.</p>
