@@ -45,35 +45,21 @@ tian@slms-ci-beck-02 ~ $
 
 There are some preparation work should be done before using Guppy. For example find `flowcell` type and `kit` type. In other word, I think Guppy pre-trained a lot of ML models for different combinations of flowcell and kit, so when use Guppy, we should find out what is our Nanopore data setting. Or another solution is to set default config file. In my case it’s dna_r9.4.1_450bps_hac_prom.
 
+## Installation of Guppy
+
+I don't know why but [the installation page](https://community.nanoporetech.com/docs/prepare/library_prep_protocols/Guppy-protocol/v/gpb_2003_v1_revad_14dec2018/linux-guppy) is hidden in Nanpore Community, seems I need to register to see it. I guess there is some patant protection here, so I won't paste the command here.
+
 ## Command for Guppy
 
-I am using version 5.0.16+b9fcd7b5b for Guppy here.
-
-CPU Mode.
+I am using version 6.1.1+1f6bfa7f8 for Guppy here.
 
 ```
 guppy_basecaller -i ../S01_subFast5 \
   -s ./guppyResult \
   -c dna_r9.4.1_450bps_hac_prom.cfg \
-  --gpu_runners_per_device 10 \
-  –-cpu_threads_per_caller 10 \
-  –-num_callers 5 \
+  --compress_fastq \
   -a ../S02_Minimap2/MT-human-ont.mmi \
-  --bam_out
-
-```
-
-CPU Mode. GPU is much much much faster. It basically just take 1 min to run a 2.8GB fast5 file.
-
-```
-guppy_basecaller -i ../S01_subFast5 \
-  -s ./guppyResult \
-  -c dna_r9.4.1_450bps_hac_prom.cfg \
-  --gpu_runners_per_device 10 \
-  –-cpu_threads_per_caller 10 \
-  –-num_callers 5 \
-  -a ../S02_Minimap2/MT-human-ont.mmi \
-  -x 'cuda:0 cuda:1' \
+  -x 'auto' \
   --bam_out
 
 ```
