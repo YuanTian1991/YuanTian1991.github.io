@@ -27,39 +27,57 @@ Tue Apr  <span class="token number">5</span> 00:48:41 <span class="token number"
 <span class="token operator">|</span>    <span class="token number">0</span>   N/A  N/A      <span class="token number">2846</span>      G   /usr/lib/xorg/Xorg                  9MiB <span class="token operator">|</span>
 <span class="token operator">|</span>    <span class="token number">0</span>   N/A  N/A      <span class="token number">3059</span>      G   /usr/bin/gnome-shell                8MiB <span class="token operator">|</span>
 <span class="token operator">|</span>    <span class="token number">1</span>   N/A  N/A      <span class="token number">2846</span>      G   /usr/lib/xorg/Xorg                  4MiB <span class="token operator">|</span>
-+-----------------------------------------------------------------------------+
-tian@slms-ci-beck-02 ~ $</code></pre></div>
++-----------------------------------------------------------------------------+</code></pre></div>
 <p>There are some preparation work should be done before using Guppy. For example find <code class="language-text">flowcell</code> type and <code class="language-text">kit</code> type. In other word, I think Guppy pre-trained a lot of ML models for different combinations of flowcell and kit, so when use Guppy, we should find out what is our Nanopore data setting. Or another solution is to set default config file. In my case it’s dna_r9.4.1_450bps_hac_prom.</p>
 <h2>Installation of Guppy</h2>
 <p>I don't know why but <a href="https://community.nanoporetech.com/docs/prepare/library_prep_protocols/Guppy-protocol/v/gpb_2003_v1_revad_14dec2018/linux-guppy">the installation page</a> is hidden in Nanpore Community, seems I need to register to see it. I guess there is some patant protection here, so I won't paste the command here.</p>
-<h2>Command for Guppy</h2>
-<p>I am using version 6.1.1+1f6bfa7f8 for Guppy here.</p>
-<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">guppy_basecaller -i ../S01_subFast5 \
-  -s ./guppyResult \
-  -c dna_r9.4.1_450bps_hac_prom.cfg \
-  --compress_fastq \
-  -a ../S02_Minimap2/MT-human-ont.mmi \
-  -x 'auto' \
+<h2>Prepare Minimap2</h2>
+<p>Seems to me Minimap2 is a way to prepare reference index, similar to <code class="language-text">bowtie2 index</code> .etc. It's super quick, just run below command:</p>
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">minimap2 -x map-ont -d MT-human-ont.mmi ./hg38.fa.gz</code></pre></div>
+<p>The <code class="language-text">MT-human-ont.mmi</code> index file is what it's going to be used for later alignment.</p>
+<h2>General Simple Command for Guppy</h2>
+<p>I am using version 6.1.1+1f6bfa7f8 for Guppy here. This command also works for older version Guppy.</p>
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">guppy_basecaller -i <span class="token punctuation">..</span>/S01_subFast5 <span class="token punctuation">\</span>
+  -s ./guppyResult <span class="token punctuation">\</span>
+  -c dna_r9.4.1_450bps_hac_prom.cfg <span class="token punctuation">\</span>
+  --compress_fastq <span class="token punctuation">\</span>
+  -a <span class="token punctuation">..</span>/S02_Minimap2/MT-human-ont.mmi <span class="token punctuation">\</span>
+  -x <span class="token string">'auto'</span> <span class="token punctuation">\</span>
   --bam_out
 </code></pre></div>
-<p>It seems those runner and number caller is not working now...I need to debug more.</p>
-<h2>Output Result</h2>
+<blockquote>
+<p>Actually in this step, I also provided <code class="language-text">-a</code> reference, I guess the minium version I don't even need to provide this, then it will only return fastq file. That's really what exactly <code class="language-text">base_calling</code> mean.</p>
+</blockquote>
 <p>In above code, I set <code class="language-text">-s</code> as “guppyResult”, that’s where all result will be written into. One important file is <code class="language-text">sequencing_summary.txt</code>. It contains informations like chr, start, end, alignment_accuracy, alignment_coverage .etc for each reads. In this file, each row is one read, so totally there are 24000 row. which is exactly what I counted as before. For example, I found out the mean read length in my subset fast5 file is 7930.</p>
 <p>Another important thing is <code class="language-text">pass</code> folder.</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">tian@slms-ci-beck-02 /scratch1/Tian/Nanopore/S03_Guppy/guppyResult/pass $ <span class="token function">ls</span> -lha
-total 529M
-drwxrwxr-x <span class="token number">2</span> tian tian <span class="token number">4</span>.0K Apr  <span class="token number">5</span> 01:00 <span class="token builtin class-name">.</span>
-drwxrwxr-x <span class="token number">5</span> tian tian  <span class="token number">264</span> Apr  <span class="token number">5</span> 01:00 <span class="token punctuation">..</span>
--rw-rw-r-- <span class="token number">1</span> tian tian  21M Apr  <span class="token number">5</span> 00:59 bam_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_0_0.bam
--rw-rw-r-- <span class="token number">1</span> tian tian  34M Apr  <span class="token number">5</span> 00:59 bam_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_1_0.bam
--rw-rw-r-- <span class="token number">1</span> tian tian  35M Apr  <span class="token number">5</span> 00:59 bam_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_2_0.bam
--rw-rw-r-- <span class="token number">1</span> tian tian  33M Apr  <span class="token number">5</span> 01:00 bam_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_3_0.bam
--rw-rw-r-- <span class="token number">1</span> tian tian  35M Apr  <span class="token number">5</span> 01:00 bam_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_4_0.bam
--rw-rw-r-- <span class="token number">1</span> tian tian  34M Apr  <span class="token number">5</span> 01:00 bam_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_5_0.bam
--rw-rw-r-- <span class="token number">1</span> tian tian  36M Apr  <span class="token number">5</span> 00:59 fastq_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_0_0.fastq
--rw-rw-r-- <span class="token number">1</span> tian tian  60M Apr  <span class="token number">5</span> 00:59 fastq_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_1_0.fastq
--rw-rw-r-- <span class="token number">1</span> tian tian  63M Apr  <span class="token number">5</span> 00:59 fastq_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_2_0.fastq
--rw-rw-r-- <span class="token number">1</span> tian tian  60M Apr  <span class="token number">5</span> 00:59 fastq_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_3_0.fastq
--rw-rw-r-- <span class="token number">1</span> tian tian  63M Apr  <span class="token number">5</span> 01:00 fastq_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_4_0.fastq
--rw-rw-r-- <span class="token number">1</span> tian tian  61M Apr  <span class="token number">5</span> 01:00 fastq_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_5_0.fastq</code></pre></div>
-<p>So for the output, it looks like it’s based on file index, which means one fast5 file could eventually leads to one bam file. So, I guess if for one folder, there are 100 fast5 files, they all belong to one person (sample), after this step, we actually get 100 small bam files for this person, we should be able to merge them into one large bam file. Here I think Guppy did not take methylation information into consideration? Need to explore more...</p></div></div></main><div style="padding-top:1em;padding-bottom:1em;text-align:center"><div class="MuiContainer-root MuiContainer-maxWidthLg" style="margin-bottom:1em;font-size:0.8em;cursor:pointer"><div id="revolvermap" align="center" class="wcustomhtml"></div></div><p variant="body2" color="textSecondary" align="center" style="font-size:0.8em">Copyright © <!-- -->Yuan Tian <!-- -->2022<!-- -->.</p></div></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/notes/Nanopore-Analysis:-Guppy-for-BaseCalling";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-20c0bd3c2e06daf91d9f.js"],"app":["/app-27d875ab2e32ebd364d1.js"],"component---src-pages-404-js":["/component---src-pages-404-js-ae416296925cd8c0b09b.js"],"component---src-pages-index-js":["/component---src-pages-index-js-d68972ae5d9e5890a342.js"],"component---src-pages-life-in-month-js":["/component---src-pages-life-in-month-js-085ae833f3394bb243a0.js"],"component---src-pages-page-2-js":["/component---src-pages-page-2-js-d167accc303fe3625f63.js"],"component---src-pages-using-typescript-tsx":["/component---src-pages-using-typescript-tsx-e5beea293ec185c99b16.js"],"component---src-templates-note-template-js":["/component---src-templates-note-template-js-ad28f8ae57604ff4424a.js"]};/*]]>*/</script><script src="/polyfill-20c0bd3c2e06daf91d9f.js" nomodule=""></script><script src="/component---src-templates-note-template-js-ad28f8ae57604ff4424a.js" async=""></script><script src="/commons-00b32028ec58594e8648.js" async=""></script><script src="/app-27d875ab2e32ebd364d1.js" async=""></script><script src="/framework-54fd75ed5c02585bc0b9.js" async=""></script><script src="/webpack-runtime-ba0eb50be20ee1f5c791.js" async=""></script></body></html>
+total 356M
+drwxrwxr-x <span class="token number">2</span> tian tian <span class="token number">4</span>.0K Apr  <span class="token number">5</span> <span class="token number">13</span>:06 <span class="token builtin class-name">.</span>
+drwxrwxr-x <span class="token number">5</span> tian tian  <span class="token number">264</span> Apr  <span class="token number">5</span> <span class="token number">13</span>:06 <span class="token punctuation">..</span>
+-rw-rw-r-- <span class="token number">1</span> tian tian  21M Apr  <span class="token number">5</span> <span class="token number">13</span>:05 bam_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_0_0.bam
+-rw-rw-r-- <span class="token number">1</span> tian tian  34M Apr  <span class="token number">5</span> <span class="token number">13</span>:05 bam_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_1_0.bam
+-rw-rw-r-- <span class="token number">1</span> tian tian  35M Apr  <span class="token number">5</span> <span class="token number">13</span>:05 bam_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_2_0.bam
+-rw-rw-r-- <span class="token number">1</span> tian tian  33M Apr  <span class="token number">5</span> <span class="token number">13</span>:06 bam_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_3_0.bam
+-rw-rw-r-- <span class="token number">1</span> tian tian  35M Apr  <span class="token number">5</span> <span class="token number">13</span>:06 bam_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_4_0.bam
+-rw-rw-r-- <span class="token number">1</span> tian tian  34M Apr  <span class="token number">5</span> <span class="token number">13</span>:06 bam_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_5_0.bam
+-rw-rw-r-- <span class="token number">1</span> tian tian  18M Apr  <span class="token number">5</span> <span class="token number">13</span>:05 fastq_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_0_0.fastq.gz
+-rw-rw-r-- <span class="token number">1</span> tian tian  30M Apr  <span class="token number">5</span> <span class="token number">13</span>:05 fastq_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_1_0.fastq.gz
+-rw-rw-r-- <span class="token number">1</span> tian tian  31M Apr  <span class="token number">5</span> <span class="token number">13</span>:05 fastq_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_2_0.fastq.gz
+-rw-rw-r-- <span class="token number">1</span> tian tian  30M Apr  <span class="token number">5</span> <span class="token number">13</span>:06 fastq_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_3_0.fastq.gz
+-rw-rw-r-- <span class="token number">1</span> tian tian  31M Apr  <span class="token number">5</span> <span class="token number">13</span>:06 fastq_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_4_0.fastq.gz
+-rw-rw-r-- <span class="token number">1</span> tian tian  30M Apr  <span class="token number">5</span> <span class="token number">13</span>:06 fastq_runid_dc2ac203adf3e034d363fe1208fc805805ace1f5_5_0.fastq.gz</code></pre></div>
+<p>So for the output, it looks like it’s based on file index, which means one fast5 file could eventually leads to one bam file. So, I guess if for one folder, there are 100 fast5 files, they all belong to one person (sample), after this step, we actually get 100 small bam files for this person, we should be able to merge them into one large bam file. Here I think Guppy did not take methylation information into consideration? Need to explore more...</p>
+<h2>Guppy with Barcode, Triming and Alignment</h2>
+<p>There is more complex version of Guppy can be run, like this:</p>
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">guppy_basecaller -i <span class="token punctuation">..</span>/S01_subFast5 <span class="token punctuation">\</span>
+  -s ./guppyResult_2 <span class="token punctuation">\</span>
+  -c dna_r9.4.1_450bps_hac_prom.cfg <span class="token punctuation">\</span>
+  --detect_barcodes <span class="token punctuation">\</span>
+  --trim_barcodes <span class="token punctuation">\</span>
+  --detect_adapter <span class="token punctuation">\</span>
+  --trim_adapters <span class="token punctuation">\</span>
+  --compress_fastq <span class="token punctuation">\</span>
+  -a <span class="token punctuation">..</span>/S02_Minimap2/MT-human-ont.mmi <span class="token punctuation">\</span>
+  -x <span class="token string">'auto'</span> <span class="token punctuation">\</span>
+  --bam_out</code></pre></div>
+<p>This command will run barcode detection (and trimming), adapter detection. I have not fully figure out what is "barcode" mean here....</p></div></div></main><div style="padding-top:1em;padding-bottom:1em;text-align:center"><div class="MuiContainer-root MuiContainer-maxWidthLg" style="margin-bottom:1em;font-size:0.8em;cursor:pointer"><div id="revolvermap" align="center" class="wcustomhtml"></div></div><p variant="body2" color="textSecondary" align="center" style="font-size:0.8em">Copyright © <!-- -->Yuan Tian <!-- -->2022<!-- -->.</p></div></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/notes/Nanopore-Analysis:-Guppy-for-BaseCalling";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-20c0bd3c2e06daf91d9f.js"],"app":["/app-27d875ab2e32ebd364d1.js"],"component---src-pages-404-js":["/component---src-pages-404-js-ae416296925cd8c0b09b.js"],"component---src-pages-index-js":["/component---src-pages-index-js-d68972ae5d9e5890a342.js"],"component---src-pages-life-in-month-js":["/component---src-pages-life-in-month-js-085ae833f3394bb243a0.js"],"component---src-pages-page-2-js":["/component---src-pages-page-2-js-d167accc303fe3625f63.js"],"component---src-pages-using-typescript-tsx":["/component---src-pages-using-typescript-tsx-e5beea293ec185c99b16.js"],"component---src-templates-note-template-js":["/component---src-templates-note-template-js-ad28f8ae57604ff4424a.js"]};/*]]>*/</script><script src="/polyfill-20c0bd3c2e06daf91d9f.js" nomodule=""></script><script src="/component---src-templates-note-template-js-ad28f8ae57604ff4424a.js" async=""></script><script src="/commons-00b32028ec58594e8648.js" async=""></script><script src="/app-27d875ab2e32ebd364d1.js" async=""></script><script src="/framework-54fd75ed5c02585bc0b9.js" async=""></script><script src="/webpack-runtime-ba0eb50be20ee1f5c791.js" async=""></script></body></html>
