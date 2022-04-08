@@ -119,3 +119,13 @@ Host Anatra
 ```
 
 So, now I can log into Anatra directly as `ssh Anatra`
+
+## 8. Find recursively then create soft link
+
+This is particularly useful when I get a folder contain recursive files, then I need to "falt" them for software input.
+
+```bash
+find /scratch1/folder -name "*.fq.gz" -exec ln -s {} ./ \;
+```
+
+In above command, I search folder to recursively find `.fq.gz` file, then create a link for each of them (`{}`) to current folder.
