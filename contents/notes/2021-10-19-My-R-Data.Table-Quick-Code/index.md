@@ -78,7 +78,13 @@ RegionAggre <- RegionCollapse[, .(chr[1], min(start), max(end),
                                 sum(LT_fraction >= 0.75)), by = .(cl)]
 ```
 
-> Note that I have not find a way to dynamically set columns into function, that's why in above code, I have to write `sum(NC_fraction >= 0.75)`, `sum(NC_fraction >= 0.75)` ... one by one. I think there must be a way. I will udpate this part later.
+I found a nice way for dynamic columns, which just need to use `get` function, like:
+
+```R
+ovAnno.dt[, "tmpColumn" := ovAnno.dt[, get("columnName")]]
+```
+
+This is a very important and useful feature.
 
 ## 3. Create new column
 
