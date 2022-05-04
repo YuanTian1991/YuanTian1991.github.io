@@ -30,6 +30,12 @@ getConversionRate <- function(path) {
 conversionResult <- mclapply(df$path, function(x) getConversionRate(x), mc.cores = 80)
 ```
 
+Sometimes I noticed that with `mclapply`, if the R program is killed in the middle of running (for example, due to lack of disk space), the threads are still runnning. In that case, I directly kill all threads with:
+
+```bash
+sudo killall -u tian
+```
+
 ## doParallel
 
 The `detectCores()` function is useful to find out total number of cores can be used on the machine.
