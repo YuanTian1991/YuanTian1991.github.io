@@ -15,6 +15,8 @@ getConversionRate <span class="token operator">&lt;-</span> <span class="token k
 <span class="token punctuation">}</span>
 
 conversionResult <span class="token operator">&lt;-</span> mclapply<span class="token punctuation">(</span>df<span class="token operator">$</span>path<span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span> getConversionRate<span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">,</span> mc.cores <span class="token operator">=</span> <span class="token number">80</span><span class="token punctuation">)</span></code></pre></div>
+<p>Sometimes I noticed that with <code class="language-text">mclapply</code>, if the R program is killed in the middle of running (for example, due to lack of disk space), the threads are still runnning. In that case, I directly kill all threads with:</p>
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">killall</span> -u tian</code></pre></div>
 <h2>doParallel</h2>
 <p>The <code class="language-text">detectCores()</code> function is useful to find out total number of cores can be used on the machine.</p>
 <div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># load Package</span>
