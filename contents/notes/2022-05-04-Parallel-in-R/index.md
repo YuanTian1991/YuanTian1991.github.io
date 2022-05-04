@@ -54,8 +54,10 @@ getDoParWorkers()
 
 
 library(foreach)
-x <- foreach(i = 1:3) %dopar% sqrt(i)
+x <- foreach(i = df$path, .combine='rbind', .packages=c('data.table', "glue")) %dopar% getConversionRate(i)
 
 registerDoSEQ()
 on.exit(stopCluster(cl))
 ```
+
+The `.package` is vital sine in many case functions for parallel depend on some other packages, so it MUST be exported into each thread.
