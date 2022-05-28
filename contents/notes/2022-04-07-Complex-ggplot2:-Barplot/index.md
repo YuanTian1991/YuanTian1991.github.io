@@ -9,6 +9,50 @@ abstract: 'ggplot2 is nice, but can be quite complex...Here are some nice ggplot
 
 Here are some nice figure I draw with ggplot2, I collect them here for future copy-paste.
 
+## Basic Barplot
+
+Below is an example of quick and simply barplot, which:
+
+A good example for me to copy-paste in the future.
+
+```R
+> df
+           V1           V2      V3 Genes
+1 0.038144115 0.0015615045 GM12878  IGF2
+2 0.063070041 0.0076605731 GM12878   H19
+3 1.032926070 0.0630352717  IMR-90  IGF2
+4 0.003074519 0.0004062534  IMR-90   H19
+5 1.215367031 0.0874954574     HB2  IGF2
+6 2.305351688 0.1178677524     HB2   H19
+7 0.538315946 0.0097037059 H1-hESC  IGF2
+8 0.350083002 0.1079638997 H1-hESC   H19
+>
+```
+
+```R
+library("ggplot2")
+
+df <- read.csv("./data1.csv", head=F, sep="\t")
+df$V1 <- df$V1 * 10000
+df$V2 <- df$V2 * 10000
+df$V3 <- factor(df$V3 , c("GM12878", "IMR-90", "HB2", "H1-hESC"))
+df$V4 <- factor(df$V4, c("IGF2", "H19"))
+colnames(df)[4] <- "Genes"
+
+p <- ggplot(df, aes(x=V3, y=V1, fill=Genes)) +
+     geom_bar(stat="identity", position=position_dodge(), color="black") +
+     geom_errorbar(aes(ymin=V1-V2, ymax=V1+V2), width=.2, position=position_dodge(.9)) +
+     xlab("") + ylab("Relative Expression (x10^4)") +
+     theme(strip.text.x = element_blank()) +
+     theme_bw(base_size=22)
+
+pdf("BaiscBarplot.pdf", width=10, height=6)
+print(p)
+dev.off()
+```
+
+![BasicBarplot](./figure2.png)
+
 ## Barplot with both Stack and Besides
 
 In my project, I need to draw a barplot with both Stack and Besides bars. I never thought it's so hard but eventually I made it work. And also I added pattern on it.
