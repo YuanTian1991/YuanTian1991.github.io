@@ -129,3 +129,9 @@ find /scratch1/folder -name "*.fq.gz" -exec ln -s {} ./ \;
 ```
 
 In above command, I search folder to recursively find `.fq.gz` file, then create a link for each of them (`{}`) to current folder.
+
+## 9. Sync only new or modified files
+
+```bash
+rsync -avz  --progress ./oldFolder /data3/newFolder
+```
