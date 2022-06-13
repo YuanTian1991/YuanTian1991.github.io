@@ -135,3 +135,11 @@ In above command, I search folder to recursively find `.fq.gz` file, then create
 ```bash
 rsync -avz  --progress ./oldFolder /data3/newFolder
 ```
+
+## 10. Find and delete all folder created by certain user in one folder
+
+In `/tmp` folder, there are many folders, some are created by certain user (for example, tian), then I want to only delete folder created by me. So I need to firstly find out what folders are created by me, then delete them. In below find command. I firstly set `-maxdepth 1` to only search for one layer. Then I define `-type d` for only directory. Thirdly, I define `-user tian` to find folders created by me. Then delete them with -exec command.
+
+```bash
+find ./ -maxdepth 1 -type d -user tian -exec rm -rf {} \;
+```
