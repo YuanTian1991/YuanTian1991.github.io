@@ -66,4 +66,44 @@ htmlwidgets<span class="token operator">::</span>saveWidget<span class="token pu
 <ul>
 <li>Learn how to modify colour, especially line colour has to be set along with width.</li>
 <li>Learn how to export it into HTML. I will later see if I can merge multiple plotly interactive figures into one big HTML like fastQC do. If it works, it would be very cool...</li>
-</ul></div></div></main><div style="padding-top:1em;padding-bottom:1em;text-align:center"><div class="MuiContainer-root MuiContainer-maxWidthLg" style="margin-bottom:1em;font-size:0.8em;cursor:pointer"><div id="revolvermap" align="center" class="wcustomhtml"></div></div><p variant="body2" color="textSecondary" align="center" style="font-size:0.8em">Copyright © <!-- -->Yuan Tian <!-- -->2022<!-- -->.</p></div></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/notes/R-Plotly-Quick-Code";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-7fa52d69643013caa83f.js"],"app":["/app-27d875ab2e32ebd364d1.js"],"component---src-pages-404-js":["/component---src-pages-404-js-ae416296925cd8c0b09b.js"],"component---src-pages-index-js":["/component---src-pages-index-js-d68972ae5d9e5890a342.js"],"component---src-pages-life-in-month-js":["/component---src-pages-life-in-month-js-085ae833f3394bb243a0.js"],"component---src-pages-page-2-js":["/component---src-pages-page-2-js-d167accc303fe3625f63.js"],"component---src-pages-using-typescript-tsx":["/component---src-pages-using-typescript-tsx-e5beea293ec185c99b16.js"],"component---src-templates-note-template-js":["/component---src-templates-note-template-js-ad28f8ae57604ff4424a.js"]};/*]]>*/</script><script src="/polyfill-7fa52d69643013caa83f.js" nomodule=""></script><script src="/component---src-templates-note-template-js-ad28f8ae57604ff4424a.js" async=""></script><script src="/commons-0251f23e3f117052692c.js" async=""></script><script src="/app-27d875ab2e32ebd364d1.js" async=""></script><script src="/framework-54fd75ed5c02585bc0b9.js" async=""></script><script src="/webpack-runtime-b00a01a6e4f8bcd6fdc8.js" async=""></script></body></html>
+</ul>
+<h2>Multiple Line Plot</h2>
+<p>Below I draw the miltiple line plot. The key thing for below plot is, in a big df, there is a column indicates each sample, which need to be specified in <code class="language-text">split</code> parameter, then the colour need to specified in <code class="language-text">color</code>. However, the legend is still not very right... thus I am hiding it.</p>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r">figCpGNumber <span class="token operator">&lt;-</span> plot_ly<span class="token punctuation">(</span>df<span class="token punctuation">,</span> x <span class="token operator">=</span> <span class="token operator">~</span>frac<span class="token punctuation">,</span> y <span class="token operator">=</span> <span class="token operator">~</span>value<span class="token punctuation">,</span> split<span class="token operator">=</span><span class="token operator">~</span>sample<span class="token punctuation">,</span> color<span class="token operator">=</span><span class="token operator">~</span>run<span class="token punctuation">,</span> type <span class="token operator">=</span> <span class="token string">'scatter'</span><span class="token punctuation">,</span> mode <span class="token operator">=</span> <span class="token string">'lines+markers'</span><span class="token punctuation">)</span> <span class="token percent-operator operator">%>%</span>      
+    layout<span class="token punctuation">(</span>yaxis <span class="token operator">=</span> list<span class="token punctuation">(</span>title <span class="token operator">=</span> <span class="token string">'Number of CpG remained'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>                    
+           title <span class="token operator">=</span> <span class="token string">'CpG Coverage Filtering'</span><span class="token punctuation">,</span>                                  
+           showlegend <span class="token operator">=</span> <span class="token boolean">FALSE</span><span class="token punctuation">)</span>                                                
+                                                                              
+htmlwidgets<span class="token operator">::</span>saveWidget<span class="token punctuation">(</span>as_widget<span class="token punctuation">(</span>figCpGNumber<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"CpGNumberCoverage.html"</span><span class="token punctuation">)</span></code></pre></div>
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 1000px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/4486ec6d36fa082c944ca68d3126d704/985a9/multipleLinePlot.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 47.199999999999996%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAACXBIWXMAAAsTAAALEwEAmpwYAAABl0lEQVQoz4WSz2sTQRTH8x970IMH9SBIT4IggiDiQQ/axDSatEtjGwpJtE2kJpSSGNrYH1qzy26zu213NrM785FZG5JKqQ++M1/ePD4z7zE5rTVKKaILn0RGmDA5rVXm0zRFCJHJ+Nn59coZmDHheUhv6w2x3WUa8+CruRuAZkkSmRXvbjfovF9g3H9NEgxQCvQc+H+wDDjfiuvaVJcKNPIvOdq6jxg8Q3q7qOSy1SmcG4BRFGUzNOUilnxr11jOWzSLFX40nxC2byP2XhF7PZQI0H9LZ6/+B56bTCZM55hq+HW4R33DorK0SmN5nc7ndzhfHhB0H3K28xgxLCLHfZS4QCdcXqCuztC0bHYTp37IYKfFp7UqVrnKWrlGu2Zx2HnLcespJ817uF/vEPQXECcV1NkBWkp0yjXAzCvs3yM6mxusrnzE+lBgPb9IrVCiXirTKi3SLb7ge+kRw5Vb2PW7+L3nCG9z9m2klBl0qslEEvghp46DMzrGdYe4zj7eaIg3OmBs/yQwGh1xbu8Tu9vEfp80TfgD0wCiIImhdDwAAAAASUVORK5CYII='); background-size: cover; display: block;"
+  ></span>
+  <img
+        class="gatsby-resp-image-image"
+        alt="MultipleLinePlot"
+        title="MultipleLinePlot"
+        src="/static/4486ec6d36fa082c944ca68d3126d704/00d43/multipleLinePlot.png"
+        srcset="/static/4486ec6d36fa082c944ca68d3126d704/63868/multipleLinePlot.png 250w,
+/static/4486ec6d36fa082c944ca68d3126d704/0b533/multipleLinePlot.png 500w,
+/static/4486ec6d36fa082c944ca68d3126d704/00d43/multipleLinePlot.png 1000w,
+/static/4486ec6d36fa082c944ca68d3126d704/aa440/multipleLinePlot.png 1500w,
+/static/4486ec6d36fa082c944ca68d3126d704/985a9/multipleLinePlot.png 1512w"
+        sizes="(max-width: 1000px) 100vw, 1000px"
+        style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+        loading="lazy"
+        decoding="async"
+      />
+  </a>
+    </span></p></div></div></main><div style="padding-top:1em;padding-bottom:1em;text-align:center"><div class="MuiContainer-root MuiContainer-maxWidthLg" style="margin-bottom:1em;font-size:0.8em;cursor:pointer"><div id="revolvermap" align="center" class="wcustomhtml"></div></div><p variant="body2" color="textSecondary" align="center" style="font-size:0.8em">Copyright © <!-- -->Yuan Tian <!-- -->2022<!-- -->.</p></div></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/notes/R-Plotly-Quick-Code";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-7fa52d69643013caa83f.js"],"app":["/app-27d875ab2e32ebd364d1.js"],"component---src-pages-404-js":["/component---src-pages-404-js-ae416296925cd8c0b09b.js"],"component---src-pages-index-js":["/component---src-pages-index-js-d68972ae5d9e5890a342.js"],"component---src-pages-life-in-month-js":["/component---src-pages-life-in-month-js-085ae833f3394bb243a0.js"],"component---src-pages-page-2-js":["/component---src-pages-page-2-js-d167accc303fe3625f63.js"],"component---src-pages-using-typescript-tsx":["/component---src-pages-using-typescript-tsx-e5beea293ec185c99b16.js"],"component---src-templates-note-template-js":["/component---src-templates-note-template-js-ad28f8ae57604ff4424a.js"]};/*]]>*/</script><script src="/polyfill-7fa52d69643013caa83f.js" nomodule=""></script><script src="/component---src-templates-note-template-js-ad28f8ae57604ff4424a.js" async=""></script><script src="/commons-0251f23e3f117052692c.js" async=""></script><script src="/app-27d875ab2e32ebd364d1.js" async=""></script><script src="/framework-54fd75ed5c02585bc0b9.js" async=""></script><script src="/webpack-runtime-b00a01a6e4f8bcd6fdc8.js" async=""></script></body></html>
