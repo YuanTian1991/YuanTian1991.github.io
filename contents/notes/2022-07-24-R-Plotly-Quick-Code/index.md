@@ -58,3 +58,17 @@ Some key point for this figure:
 
 * Learn how to modify colour, especially line colour has to be set along with width.
 * Learn how to export it into HTML. I will later see if I can merge multiple plotly interactive figures into one big HTML like fastQC do. If it works, it would be very cool...
+
+## Multiple Line Plot
+
+Below I draw the miltiple line plot. The key thing for below plot is, in a big df, there is a column indicates each sample, which need to be specified in `split` parameter, then the colour need to specified in `color`. However, the legend is still not very right... thus I am hiding it.
+
+```R
+figCpGNumber <- plot_ly(df, x = ~frac, y = ~value, split=~sample, color=~run, type = 'scatter', mode = 'lines+markers') %>%      
+    layout(yaxis = list(title = 'Number of CpG remained'),                    
+           title = 'CpG Coverage Filtering',                                  
+           showlegend = FALSE)                                                
+                                                                              
+htmlwidgets::saveWidget(as_widget(figCpGNumber), "CpGNumberCoverage.html")
+```
+![MultipleLinePlot](./multipleLinePlot.png)
