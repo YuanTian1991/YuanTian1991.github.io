@@ -143,3 +143,45 @@ In `/tmp` folder, there are many folders, some are created by certain user (for 
 ```bash
 find ./ -maxdepth 1 -type d -user tian -exec rm -rf {} \;
 ```
+
+## 11. Clear linux SWAP
+
+The swap error always show up in my PGP project code. Here is code I used to clear swap.
+
+Firstly, below command shows me if there is a SWAP area, something it may be switched off. For example my below example shows:
+```bash
+(base) tian@slms-ci-beck-02 ~ $ free -mh
+              total        used        free      shared  buff/cache   available
+Mem:          251Gi       128Gi       1.6Gi       5.0Mi       121Gi       120Gi
+Swap:            0B          0B          0B
+```
+
+If the swap area exist, we should try find it, for example use this command:
+
+```bash
+cat /proc/swaps
+```
+
+In this case, I need to create a new SWAP file. I am following [this post](https://linuxize.com/post/create-a-linux-swap-file/).
+
+```bash
+# Create swap file
+sudo fallocate -l 20G /swapfile
+
+# Grant access for the swap file
+sudo chmod 600 /swapfile
+
+# Make swap. I don't quite know what it is...
+sudo mkswap /swapfile
+
+# Active swapfile
+sudo swapon /swapfile
+```
+
+**Note these command can also be used for other swap file you can find:**
+
+Then below command could show it the swap is working as expected.
+
+```bash
+sudo swapon --show
+```

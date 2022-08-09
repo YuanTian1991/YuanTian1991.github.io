@@ -100,3 +100,57 @@ ggplot(data=df, aes(x=PhenoType, y=Count, fill=PhenoType)) +
 Below is the nice plot.
 
 ![Barplot with both stack and beside](./figure1.png)
+
+### Another Example
+
+```R
+> PromoterCompare
+   count  group     method pheno
+1   2245 Common bin-Enrich    NC
+2   6764 Unique bin-Enrich    NC
+3   2245 Common NarrowPeak    NC
+4   1146 Unique NarrowPeak    NC
+5     52 Common bin-Enrich    TC
+6   1146 Unique bin-Enrich    TC
+7     52 Common NarrowPeak    TC
+8     56 Unique NarrowPeak    TC
+9    243 Common bin-Enrich    LT
+10  2859 Unique bin-Enrich    LT
+11   243 Common NarrowPeak    LT
+12   207 Unique NarrowPeak    LT
+13  2842 Common bin-Enrich    NL
+14  5287 Unique bin-Enrich    NL
+15  2842 Common NarrowPeak    NL
+16  1382 Unique NarrowPeak    NL
+>
+```
+
+```R
+library(ggplot2)
+library(ggpattern)
+library(ggpubr)
+
+myCol <- c(NC="#f4bb4a", TC="#0892a5", LT="#30475e", NL="#e84855")
+
+PromoterCompare$group <- factor(PromoterCompare$group, levels = c("Unique", "Common"))
+PromoterCompare$pheno <- factor(PromoterCompare$pheno, levels = c("NC", "TC", "LT", "NL"))
+
+
+ggplot(PromoterCompare, aes(x = method, y = count, fill = pheno)) +
+  geom_bar(stat = 'identity', position = 'stack', color="black") +
+  scale_fill_manual(values=myCol) +
+   geom_bar_pattern(aes(pattern = group), stat = "identity",
+                   pattern_color = "white", color = "black") +
+  scale_pattern_manual(values = c(Common = "stripe", Unique = "none"), labels = c("Common", "Unique")) +
+  guides(pattern = guide_legend(override.aes = list(fill = "grey",
+                                                       pattern=c("stripe", "none"),
+                                                       pattern_spacing=0.01))) + # The "pattern_spacing" is vital here, otherwise the legend is wrong.
+  facet_grid(~ pheno) +
+  ylab("Number of 5hmC enriched Promoters") + xlab("") +
+  theme_bw(base_size=18) +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust=1))
+  theme(axis.title.x=element_blank(), axis.text.x=element_blank(), axis.ticks.x=element_blank(), axis.line.x.bottom=element_blank(),
+        strip.text = element_text(size=16, colour="black"), strip.background = element_rect(colour="white", fill="white"))
+```
+
+![Barplot with both stack and beside - Example 2](./figure3.png)
