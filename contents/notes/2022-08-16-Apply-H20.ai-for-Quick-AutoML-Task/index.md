@@ -120,12 +120,6 @@ After training, we can collect some results.
 >
 ```
 
-Also, there are some plots to for "explaination":
-
-```R
-
-```
-
 ## 4. AutoML Testing
 
 After getting the best model, now it's time to test the performance with the `testData` data previously splitted. Then, the best model will be used for prediction. 
