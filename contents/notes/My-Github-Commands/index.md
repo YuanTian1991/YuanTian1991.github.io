@@ -112,3 +112,11 @@ This happens when I need to fetch a remote branch which was not exist in my loca
 git fetch
 git checkout remote_new_branch
 ```
+
+## 9. Keep changes but delete previous commits
+
+This happens when I have committed 2-3 times locally, then I found some file is too large to transfer to Github. Then I have to delete the commit contains those large files. The soft reset works for me.
+
+```bash
+git reset --soft HEAD~1
+```
