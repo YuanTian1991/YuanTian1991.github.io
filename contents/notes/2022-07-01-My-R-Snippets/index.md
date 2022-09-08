@@ -34,3 +34,20 @@ strsplit(x, "\\/|\\_| ")
 [5,] "5A" "5B" "5C" "5D" "5E"
 >
 ```
+
+## Remove outliers for ggplot2 boxplot
+
+I am suprised that there is no simple way to remove outliers from data.frame for ggplot2. So I wrote below [github gist](https://gist.github.com/YuanTian1991/3ff121238caf4e335dae37e7dc14fd16) to do this job. A quite simple function.
+
+The usage is below:
+
+```R
+source("https://gist.githubusercontent.com/YuanTian1991/3ff121238caf4e335dae37e7dc14fd16/raw/c52f4700f8245de9dbf78478402a5523e8620b7e/removeOutlier.R")
+
+newDF <- removeOutlier(df, "Methylation", "Group")
+
+library("ggplot2")
+
+ggplot(data = newDF, mapping = aes(x = Group, y = Methylation)) +
+    geom_line()
+```
