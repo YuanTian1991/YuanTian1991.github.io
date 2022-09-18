@@ -59,6 +59,11 @@ export default function Layout(props) {
         style={{marginTop: '2.2em', zIndex: 1000}}
 
       >
+                <MenuItem 
+        onClick={handleClose} 
+        style={{fontSize: '0.75em', height:30}} 
+        component={Link}
+        to={"https://yuantian1991.github.io/Travel/"}>Tian&Yi's TravelMap</MenuItem>
         <MenuItem 
         onClick={handleClose} 
         style={{fontSize: '0.75em', height:30}} 
