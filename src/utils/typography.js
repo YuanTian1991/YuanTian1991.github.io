@@ -30,8 +30,8 @@ githubTheme.overrideThemeStyles = ({ rhythm }, options) => ({
 
 const typography = new Typography(
   {
-    baseFontSize: '19px',
-    baseLineHeight: 1.6,
+    baseFontSize: '18px',
+    baseLineHeight: 1.5,
     blockMarginBottom: "0.6em",
     fontWeight: '100',
     headerFontFamily: ['Helvetica', "Ubuntu",'Avenir Next', 'Helvetica Neue', 'Segoe UI', 'Arial', 'sans-serif'],

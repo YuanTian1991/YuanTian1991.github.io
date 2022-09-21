@@ -1,4 +1,9 @@
-@font-face {
+/* @font-face {
     font-family: "Avenir Next";
     src: url("./font/AvenirNext-Regular.ttf");
+  } */
+
+  @font-face {
+    font-family: "Wotfard";
+    src: url("./font/wotfard-regular-webfont.ttf");
   }
