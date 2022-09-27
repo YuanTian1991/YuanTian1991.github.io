@@ -31,6 +31,15 @@ brew update
 brew install mongodb-community@4.4
 ```
 
+After this command, there will be some output, like this:
+
+```
+If you need to have mongodb-community@4.4 first in your PATH, run:
+  echo 'export PATH="/opt/homebrew/opt/mongodb-community@4.4/bin:$PATH"' >> ~/.zshrc
+```
+
+So do as the instruction do, the `mongo` command is in it.
+
 That's it, the installation is done. Below are 3 key command to start/stop/restart mongoDB in Mac:
 
 ```shell
@@ -48,8 +57,6 @@ $ brew services list
 Name                  Status  User File
 mongodb-community@4.4 started tian ~/Library/LaunchAgents/homebrew.mxcl.mongodb-community@4.4.plist
 ```
-
-Then, I encountered an unexpected situation, that there is no `mongo` command after above installation, luckily I don't normally use that command. I normally used `mongodump` and `mongorestore`, glad to see these two command exist.
 
 After everything is done, I can successfully conncect the mongoDB with the [MongoDB Compass](https://www.mongodb.com/products/compass).
 
