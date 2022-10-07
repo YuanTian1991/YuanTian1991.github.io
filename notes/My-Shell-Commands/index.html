@@ -13,16 +13,18 @@
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token function">find</span> <span class="token builtin class-name">.</span> -type f  -iname <span class="token string">"*cpg.txt.gz"</span> -exec <span class="token function">cp</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token punctuation">..</span>/<span class="token punctuation">..</span>/Data/5mC/ <span class="token punctuation">\</span><span class="token punctuation">;</span></code></pre></div>
 <p>Similarlly, below code can move correponding files to target folder:</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token function">find</span> <span class="token builtin class-name">.</span> -name <span class="token string">"*AAA*"</span> -exec <span class="token function">mv</span> <span class="token punctuation">{</span><span class="token punctuation">}</span> target/path <span class="token punctuation">\</span><span class="token punctuation">;</span></code></pre></div>
-<h2>4. Grep recursively for a specific file type on Linux</h2>
+<h2>4. Find file and estimate their size</h2>
+<div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token function">find</span> <span class="token builtin class-name">.</span> -name <span class="token string">'*.bam'</span> -exec <span class="token function">du</span> -sh <span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token punctuation">\</span><span class="token punctuation">;</span></code></pre></div>
+<h2>5. Grep recursively for a specific file type on Linux</h2>
 <p>A good answer from <a href="https://stackoverflow.com/questions/22224719/grep-recursively-for-a-specific-file-type-on-linux?noredirect=1&#x26;lq=1">this post</a>.</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token function">grep</span> -r --include<span class="token operator">=</span><span class="token string">"*.[R]"</span> <span class="token string">"NC49"</span> <span class="token builtin class-name">.</span></code></pre></div>
-<h2>5. Copy certain file and their folder structure</h2>
+<h2>6. Copy certain file and their folder structure</h2>
 <p>This command is used when I need to only extract R script from a series of folders, and copy them all into another folder for saving.</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token function">find</span> <span class="token builtin class-name">.</span> -name <span class="token string">'*.R'</span> -exec <span class="token function">cp</span> --parents <span class="token punctuation">\</span><span class="token punctuation">{</span><span class="token punctuation">\</span><span class="token punctuation">}</span> <span class="token punctuation">..</span>/GithubBackup/BathCRC/ <span class="token punctuation">\</span><span class="token punctuation">;</span></code></pre></div>
-<h2>6. Kill all process by certain user</h2>
+<h2>7. Kill all process by certain user</h2>
 <p>Normally <code class="language-text">sudo</code> is not used here.</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">killall</span> -u ubuntu</code></pre></div>
-<h2>7. Create SSH key for Server Login</h2>
+<h2>8. Create SSH key for Server Login</h2>
 <p>Firstly create a ssh key.</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">ssh-keygen -t ed25519</code></pre></div>
 <p>Then change the key name as below: `/Users/tian/.ssh/BathLinux</p>
@@ -48,16 +50,16 @@ Enter same passphrase again:</code></pre></div>
     ForwardX11Trusted <span class="token function">yes</span>
     IdentityFile ~/.ssh/AnatraFromMacMini</code></pre></div>
 <p>So, now I can log into Anatra directly as <code class="language-text">ssh Anatra</code></p>
-<h2>8. Find recursively then create soft link</h2>
+<h2>9. Find recursively then create soft link</h2>
 <p>This is particularly useful when I get a folder contain recursive files, then I need to "falt" them for software input.</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token function">find</span> /scratch1/folder -name <span class="token string">"*.fq.gz"</span> -exec <span class="token function">ln</span> -s <span class="token punctuation">{</span><span class="token punctuation">}</span> ./ <span class="token punctuation">\</span><span class="token punctuation">;</span></code></pre></div>
 <p>In above command, I search folder to recursively find <code class="language-text">.fq.gz</code> file, then create a link for each of them (<code class="language-text">{}</code>) to current folder.</p>
-<h2>9. Sync only new or modified files</h2>
+<h2>10. Sync only new or modified files</h2>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token function">rsync</span> -avz  --progress ./oldFolder /data3/newFolder</code></pre></div>
-<h2>10. Find and delete all folder created by certain user in one folder</h2>
+<h2>11. Find and delete all folder created by certain user in one folder</h2>
 <p>In <code class="language-text">/tmp</code> folder, there are many folders, some are created by certain user (for example, tian), then I want to only delete folder created by me. So I need to firstly find out what folders are created by me, then delete them. In below find command. I firstly set <code class="language-text">-maxdepth 1</code> to only search for one layer. Then I define <code class="language-text">-type d</code> for only directory. Thirdly, I define <code class="language-text">-user tian</code> to find folders created by me. Then delete them with -exec command.</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token function">find</span> ./ -maxdepth <span class="token number">1</span> -type d -user tian -exec <span class="token function">rm</span> -rf <span class="token punctuation">{</span><span class="token punctuation">}</span> <span class="token punctuation">\</span><span class="token punctuation">;</span></code></pre></div>
-<h2>11. Clear linux SWAP</h2>
+<h2>12. Clear linux SWAP</h2>
 <p>The swap error always show up in my PGP project code. Here is code I used to clear swap.</p>
 <p>Firstly, below command shows me if there is a SWAP area, something it may be switched off. For example my below example shows:</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token punctuation">(</span>base<span class="token punctuation">)</span> tian@slms-ci-beck-02 ~ $ <span class="token function">free</span> -mh
