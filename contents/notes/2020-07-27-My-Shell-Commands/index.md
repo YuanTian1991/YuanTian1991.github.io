@@ -47,7 +47,13 @@ Similarlly, below code can move correponding files to target folder:
 find . -name "*AAA*" -exec mv {} target/path \;
 ```
 
-## 4. Grep recursively for a specific file type on Linux
+## 4. Find file and estimate their size
+
+```bash
+find . -name '*.bam' -exec du -sh {} \;
+```
+
+## 5. Grep recursively for a specific file type on Linux
 
 A good answer from [this post](https://stackoverflow.com/questions/22224719/grep-recursively-for-a-specific-file-type-on-linux?noredirect=1&lq=1).
 
@@ -55,7 +61,7 @@ A good answer from [this post](https://stackoverflow.com/questions/22224719/grep
 grep -r --include="*.[R]" "NC49" .
 ```
 
-## 5. Copy certain file and their folder structure
+## 6. Copy certain file and their folder structure
 
 This command is used when I need to only extract R script from a series of folders, and copy them all into another folder for saving.
 
@@ -63,7 +69,7 @@ This command is used when I need to only extract R script from a series of folde
 find . -name '*.R' -exec cp --parents \{\} ../GithubBackup/BathCRC/ \;
 ```
 
-## 6. Kill all process by certain user
+## 7. Kill all process by certain user
 
 Normally `sudo` is not used here.
 
@@ -71,7 +77,7 @@ Normally `sudo` is not used here.
 sudo killall -u ubuntu
 ```
 
-## 7. Create SSH key for Server Login
+## 8. Create SSH key for Server Login
 
 Firstly create a ssh key.
 
@@ -120,7 +126,7 @@ Host Anatra
 
 So, now I can log into Anatra directly as `ssh Anatra`
 
-## 8. Find recursively then create soft link
+## 9. Find recursively then create soft link
 
 This is particularly useful when I get a folder contain recursive files, then I need to "falt" them for software input.
 
@@ -130,13 +136,13 @@ find /scratch1/folder -name "*.fq.gz" -exec ln -s {} ./ \;
 
 In above command, I search folder to recursively find `.fq.gz` file, then create a link for each of them (`{}`) to current folder.
 
-## 9. Sync only new or modified files
+## 10. Sync only new or modified files
 
 ```bash
 rsync -avz  --progress ./oldFolder /data3/newFolder
 ```
 
-## 10. Find and delete all folder created by certain user in one folder
+## 11. Find and delete all folder created by certain user in one folder
 
 In `/tmp` folder, there are many folders, some are created by certain user (for example, tian), then I want to only delete folder created by me. So I need to firstly find out what folders are created by me, then delete them. In below find command. I firstly set `-maxdepth 1` to only search for one layer. Then I define `-type d` for only directory. Thirdly, I define `-user tian` to find folders created by me. Then delete them with -exec command.
 
@@ -144,7 +150,7 @@ In `/tmp` folder, there are many folders, some are created by certain user (for 
 find ./ -maxdepth 1 -type d -user tian -exec rm -rf {} \;
 ```
 
-## 11. Clear linux SWAP
+## 12. Clear linux SWAP
 
 The swap error always show up in my PGP project code. Here is code I used to clear swap.
 
