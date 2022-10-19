@@ -191,3 +191,19 @@ Then below command could show it the swap is working as expected.
 ```bash
 sudo swapon --show
 ```
+
+## 13. xargs command
+
+xargs can create a look based on the output. I currently just learned one usage of it:
+
+Below is an example, the first command output ID in a list, then the xargs take these ids as input into the second command.
+
+```bash
+bs list projects --template='{{.Name}}' | xargs -I % sh -c "bs get project property -n '%' --terse"
+```
+
+<b style="background-color: yellow">Importantly, below is a way to parse just a character list into xargs, then into commands afterwords</b>:
+
+```bash
+echo 'AAA\nBBB' | xargs -I % sh -c "bs get project property -n '%' --terse"
+```

@@ -51,3 +51,22 @@ library("ggplot2")
 ggplot(data = newDF, mapping = aes(x = Group, y = Methylation)) +
     geom_line()
 ```
+
+## Store system output as Variable
+
+Jsut set parameter `intern` = TRUE works. Importantly, here I am using xargs command, to parse a pipe result into a set of command.
+
+```R
+> system("bs list projects --template='{{.Name}}' | xargs -I % sh -c \"bs get project property -n '%' --terse\"", intern = TRUE)
+ [1] "47639625"  "51883832"  "105426321" "140324187" "142581440" "146425284"
+ [7] "148976842" "160653503" "164725561" "166285132" "169014854" "184223040"
+[13] "184524340" "185048864" "193621447" "193627451" "257187934" "345541198"
+[19] "346771432"
+>
+```
+
+Importantly, below is a command to parse a long character into commands
+
+```R
+system("echo 'AAA\nBBB' | xargs -I % sh -c \"bs get project property -n '%' --terse\"", intern = TRUE)
+```
