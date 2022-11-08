@@ -207,3 +207,24 @@ bs list projects --template='{{.Name}}' | xargs -I % sh -c "bs get project prope
 ```bash
 echo 'AAA\nBBB' | xargs -I % sh -c "bs get project property -n '%' --terse"
 ```
+
+## 14. Modify colours in zsh
+
+I normally use the `clean.zsh-theme` theme from oh-my-zsh, but also did some modification, which is in the first line basically:
+
+```
+# change
+PROMPT='%{$fg[$NCOLOR]%}%B%n%b%{$reset_color%}:%{$fg[blue]%}%B%c/%b%{$reset_color%} $(git_prompt_info)%(!.#.$) '
+# to
+PROMPT='%{$fg[$NCOLOR]%}%B%n%b%{$reset_color%}-$fg[magenta]%}[$DEST_ENV]$reset_color%}:%{$fg[blue]%}%B%~/%b%{$reset_color%} $(git_prompt_info)%(!.#.$) '
+```
+
+It will show both the the DEST_ENV variablem and the full path on my terminal.
+
+## 15. Set env variable in ssh
+
+Also, to achive the above colour effect, everytime I log into a server, I need to set a env variable `DEST_ENV` to tell my zsh theme command which server I am in, so after google around, the solution is below command:
+
+```zsh
+alias .GP="ssh -t GrantaParkPro 'export DEST_ENV=\"Granta Park\"; zsh'"
+```
