@@ -84,7 +84,27 @@ I found a nice way for dynamic columns, which just need to use `get` function, l
 ovAnno.dt[, "tmpColumn" := ovAnno.dt[, get("columnName")]]
 ```
 
-This is a very important and useful feature.
+This is a very important and useful feature. Note that this code is very similar to the one to **modify column values by groups**. See below example:
+
+```R
+A <- data.table(value=c(1,2,3,4,5,4), group=c("A", "A", "A", "B", "B", "B"))
+> A[, newValue:=mean(value), by=c("group")]
+> A
+   value group newValue
+1:     1     A 2.000000
+2:     2     A 2.000000
+3:     3     A 2.000000
+4:     4     B 4.333333
+5:     5     B 4.333333
+6:     4     B 4.333333
+> A[, .(newValue=mean(value)), by=c("group")]
+   group       V1
+1:     A 2.000000
+2:     B 4.333333
+> 
+```
+
+**The above two code are similar, but one is aggregate data, and the other is modifying value by groups.**
 
 ## 3. Create new column
 
