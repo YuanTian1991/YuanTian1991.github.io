@@ -52,7 +52,7 @@
 <h2>9. Keep changes but delete previous commits</h2>
 <p>This happens when I have committed 2-3 times locally, then I found some file is too large to transfer to Github. Then I have to delete the commit contains those large files. The soft reset works for me.</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token function">git</span> reset --soft HEAD~1</code></pre></div>
-<h3>10. Stach code then pull</h3>
+<h2>10. Stach code then pull</h2>
 <p>It happens when I have modified something in local branch, then realised I need to pull and merge a remote version that has been modified. The solution is to use <code class="language-text">stach</code>:</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token function">git</span> stash
 <span class="token function">git</span> pull --rebase origin main
