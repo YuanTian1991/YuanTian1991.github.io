@@ -120,3 +120,15 @@ This happens when I have committed 2-3 times locally, then I found some file is 
 ```bash
 git reset --soft HEAD~1
 ```
+
+### 10. Stach code then pull
+
+It happens when I have modified something in local branch, then realised I need to pull and merge a remote version that has been modified. The solution is to use `stach`:
+
+```bash
+git stash
+git pull --rebase origin main
+git stash apply
+```
+
+Then I can add/commit/push.
