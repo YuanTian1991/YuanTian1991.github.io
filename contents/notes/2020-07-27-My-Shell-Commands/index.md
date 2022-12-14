@@ -103,11 +103,13 @@ Then modify `config` file in `~/.ssh` folder, add below information:
 Host BathLinux
   HostName linux.bath.ac.uk
   User ty456
+  ServerAliveInterval 120
+  ForwardX11 yes
   ForwardX11Trusted yes
   IdentityFile ~/.ssh/BathLinux
 ```
 
-That's it, not I can login Aantra as:
+That's it, not I can login the Linux system as:
 
 ```bash
 ssh BathLinux
