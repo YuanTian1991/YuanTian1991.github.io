@@ -38,9 +38,11 @@ Enter same passphrase again:</code></pre></div>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">Host BathLinux
   HostName linux.bath.ac.uk
   User ty456
+  ServerAliveInterval <span class="token number">120</span>
+  ForwardX11 <span class="token function">yes</span>
   ForwardX11Trusted <span class="token function">yes</span>
   IdentityFile ~/.ssh/BathLinux</code></pre></div>
-<p>That's it, not I can login Aantra as:</p>
+<p>That's it, not I can login the Linux system as:</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash"><span class="token function">ssh</span> BathLinux</code></pre></div>
 <p>If I need to SSH twice. I need to create another ssh key named: <code class="language-text">AnatraFromMacMini</code>. Then write as below:</p>
 <div class="gatsby-highlight" data-language="bash"><pre class="language-bash"><code class="language-bash">Host Anatra
