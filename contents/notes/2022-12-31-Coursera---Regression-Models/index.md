@@ -65,6 +65,68 @@ In the course, I just know that:
 
 ## Residuals
 
-For a long time, I only know about the slope, but not very sure about those residuals. Firstly there is a concept here, residuals are in theory not errors, errors are unobservable among population, thus we use residual as an estimation of error.
+For a long time, I only know about the slope, but not very sure about those residuals. Firstly there is a concept here, residuals are in theory, not errors, errors are unobservable among population, thus we use residual as an estimation of error. In most case, the mean of residuals is 0, because we assume in nature, errors are normal distributed.
+
+**Residuals are useful for investigating poor model fit.**
+
+Also, **residuals can be seen as the outcome of Y, with linear association of predictor(X) removed.** This is the principle to use regression to remove the cell type effect. The the coursera, the author said it's very common to use this method, to remove a effect of X, and get the new outcome of Y, which contains other information.
+
+Finally, residual variance somewhat represents the model bias or not. Then, the lecture shows some key figures from residual for regression diagnose.
+
+The R function to get residual is `resid()`.
+<br>
+Compared with an intuitive solution that draw residual along the line, a better way to draw a plot is like below, which shows the variation of residual along the whole X. Blow are three figures can be used for residual analysis:
+
+<div>
+<div style="display:inline-block; width: 30%">
+
+![Regression line Plot](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/01_06_residualVariation/assets/fig/unnamed-chunk-1.png)
+</div>
+<div style="display:inline-block; width: 30%">
+
+![Residual Plot](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/01_06_residualVariation/assets/fig/unnamed-chunk-4.png)
+</div>
+<div style="display:inline-block; width: 30%">
+
+![Scatter Plot](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/01_06_residualVariation/assets/fig/unnamed-chunk-10.png)
+</div>
+</div>
 
 
+The first one (left) shows us if the regression line match the data well. The second one shows us if the residuals are normal distributed, if not, there could be other hidden patterns inside. The third one shows we how many variants were explained by the current X since the left boxplot is residual against the mean value.
+
+
+The above figure is a typical normal distributed regression line, which is good. However, in many cases, by using the above residual plot, we can find some pattern indicates there are other patterns in the data. For example, the below figure shows that the apart from regression model, there could have some other model hidden behind the data.
+
+<div style="text-align: center">
+
+![sparsed residual plot](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/01_06_residualVariation/assets/fig/unnamed-chunk-8.png)
+</div>
+
+So, the above residual come from a code like this:
+
+```R
+# The SD of y is larged with larger X.
+x <- runif(100, 0, 6); y <- x + rnorm(100, mean = 0, sd = 0.001 * x)
+```
+
+A metrics for residual is **residual variation**, which is $\frac{1}{n}\sum_{i=1}^{n}e_{i}^{2}$. It's a metrics to estimate the "nice" of regression model, this value is also called "sigma"($\sigma$). In R, below result can see in `summary()` function.
+
+Then, here comes another important metric, **R Squared**. So what is R2 exactly? It represent the fraction of variability explained by X and explained by Residual (error).
+
+$$
+\sum_{i=1}^{n}(Y_i - \bar{Y})^2 = \sum_{i=1}^{n}(Y_i-\hat{Y}_i)^2 + \sum_{i=1}^{n}(\hat{Y}_i - \bar{Y})^2
+$$
+
+In the equation, the left represent all the variable each Y have, against the mean Y. The middle part represent $\sigma$, the variant explained by error. And the right side is variant explained by X.
+
+So, in our model, we hope that X could be strongly related with Y, in other word, most of the value variant in Y can be explained by X, thus, the higher fraction of variant explained by X (when compared with explained error), the better. 
+
+The above is an intuitive explanation for R2. And since it's faction, the R2 must be between 0 and 1. Though it looks like the higher R2 is, the better model we get. However, the below figure shows that even totaly wrong and improper regressions can have the same R2 score. Thus, R2 is just one metric, but not the only one we can reply one in regression model assessment.
+
+<div style="text-align: center">
+
+![R2](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/01_06_residualVariation/assets/fig/unnamed-chunk-12.png)
+</div>
+
+## Inference in Regression
