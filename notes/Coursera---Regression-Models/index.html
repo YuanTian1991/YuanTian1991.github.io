@@ -476,4 +476,98 @@ sprayF <span class="token number">16.666667</span>   <span class="token number">
 </blockquote>
 <p>One more thing is, actually Linear Regression assume in a dataset, the variant is constant. However, in Dummy-type regression, the variants are not constant, which is not actually match the requirement of linear regression, the result of it is: The estimate (coef, slop) is correct, but the inferences are <strong>assuredly</strong> not. To draw correct conclusion from categorical-type regresssion, more advanced trick need to be applied.</p>
 <h2>Analysis of Covariance (ANCOVA) Regression</h2>
-<p>What is ANCOVA regression? It's exactly what I need, which allows us to blend analysis of mixed numeric variables and categorical (factor) variables.</p></div></div></main><div style="padding-top:1em;padding-bottom:1em;text-align:center"><div class="MuiContainer-root MuiContainer-maxWidthLg" style="margin-bottom:1em;font-size:0.8em;cursor:pointer"><div id="revolvermap" align="center" class="wcustomhtml"></div></div><p variant="body2" color="textSecondary" align="center" style="font-size:0.8em">Copyright © <!-- -->Yuan Tian <!-- -->2023<!-- -->.</p></div></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/notes/Coursera---Regression-Models";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-7fa52d69643013caa83f.js"],"app":["/app-27d875ab2e32ebd364d1.js"],"component---src-pages-404-js":["/component---src-pages-404-js-ae416296925cd8c0b09b.js"],"component---src-pages-index-js":["/component---src-pages-index-js-d68972ae5d9e5890a342.js"],"component---src-pages-life-in-month-js":["/component---src-pages-life-in-month-js-085ae833f3394bb243a0.js"],"component---src-pages-page-2-js":["/component---src-pages-page-2-js-d167accc303fe3625f63.js"],"component---src-pages-using-typescript-tsx":["/component---src-pages-using-typescript-tsx-e5beea293ec185c99b16.js"],"component---src-templates-note-template-js":["/component---src-templates-note-template-js-ad28f8ae57604ff4424a.js"]};/*]]>*/</script><script src="/polyfill-7fa52d69643013caa83f.js" nomodule=""></script><script src="/component---src-templates-note-template-js-ad28f8ae57604ff4424a.js" async=""></script><script src="/commons-73b05ec723875d5e16bd.js" async=""></script><script src="/app-27d875ab2e32ebd364d1.js" async=""></script><script src="/framework-54fd75ed5c02585bc0b9.js" async=""></script><script src="/webpack-runtime-031425e5d4c29264fe0a.js" async=""></script></body></html>
+<p>What is ANCOVA regression? It's exactly what I need, allowing us to blend analysis of mixed numeric and categorical (factor) variables.</p>
+<h3>Interaction or Not?</h3>
+<p>Here Brian is using the Siss data above, to show an important concept, the interaction between variables. Here he is regression the fertility (y) for two variables, agriculture (x1) and bined Catholic (x2), one numeric and one binary. So interaction is a effect that X1 * X2 in regression model. <strong>In another word, if two variables have interaction, the regression model for two variables, actually has three coef (if intercept not count) to estimate: for X1, for X2, and and for X1 * X2.</strong></p>
+<p>Like before, below is an intuitive understanding of the coefs, by separately fit two lines to the two value (0,1) in factor variable.</p>
+<div>
+<div style="display:inline-block; width: 40%; margin: 10px">
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 1000px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/d0a36a24e117d52d9afee642d118b593/263f4/equation_2.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 56.8%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAABYlAAAWJQFJUiTwAAABrklEQVQoz42Sa4/SUBCG+f8/xA9uNH7eKFkDUhdDoQiUcFkMt3bBlrbQG708Zo5bQlaMTnJ6Tk5nnnln5tQ0TWM0GnE8HnEch/P5TFmWiKVpSp7n/K9JXE3XdbrdLq1Wi+l0qvbVasVsNsM0TZbLJePxGMMwcF1X+c7nc5U8DEMlZjKZYNu2Sl6r6EmSKHWiNI5jTqcT+/2eoigUVECe5zEYDLAsS/n5vq/uO52OSr7b7ahJgKxKspjARGEURUp19f9fJn4KKKAKLGfp3WKxwLaf2Ww2/HR92t0JjhewMr4zrH/GEfVlqcq8jq3J53q9ViMBzcc+d3fvaWo9+vefaNcf0O8/krwMsAIqha9hsmdZRhAEv53ynK3tsrYPeKczxDGZvaeMEwpKipdSq/ibQBmOTH+9XvNs22qaflgQRBlemJGXl6ZBnFz699eSr89B4GMMn9AedSxrR6PxlW+6SRTFbI0hjXcf2Cx+UFZDuQW7nvzh4NI3n/jSbGFttxi9Hg+NNqcwYdrUqL95y2w0wg8C5f8H8Bb0nBWqf0lacgxzAumlPLNUeppenpwo/AUGSkcaBL5iZAAAAABJRU5ErkJggg=='); background-size: cover; display: block;"
+  ></span>
+  <img
+        class="gatsby-resp-image-image"
+        alt="Variables without Interaction"
+        title="Variables without Interaction"
+        src="/static/d0a36a24e117d52d9afee642d118b593/00d43/equation_2.png"
+        srcset="/static/d0a36a24e117d52d9afee642d118b593/63868/equation_2.png 250w,
+/static/d0a36a24e117d52d9afee642d118b593/0b533/equation_2.png 500w,
+/static/d0a36a24e117d52d9afee642d118b593/00d43/equation_2.png 1000w,
+/static/d0a36a24e117d52d9afee642d118b593/aa440/equation_2.png 1500w,
+/static/d0a36a24e117d52d9afee642d118b593/263f4/equation_2.png 1996w"
+        sizes="(max-width: 1000px) 100vw, 1000px"
+        style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+        loading="lazy"
+        decoding="async"
+      />
+  </a>
+    </span></p>
+</div>
+<div style="display:inline-block; width: 42%; margin: 10px">
+<p><span
+      class="gatsby-resp-image-wrapper"
+      style="position: relative; display: block; margin-left: auto; margin-right: auto; max-width: 1000px; "
+    >
+      <a
+    class="gatsby-resp-image-link"
+    href="/static/7b1780645ef57528293375dc2b4ee574/81386/equation_3.png"
+    style="display: block"
+    target="_blank"
+    rel="noopener"
+  >
+    <span
+    class="gatsby-resp-image-background-image"
+    style="padding-bottom: 54.800000000000004%; position: relative; bottom: 0; left: 0; background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAALCAYAAAB/Ca1DAAAACXBIWXMAABYlAAAWJQFJUiTwAAABhklEQVQoz4WTWWsCQRCE9///Eh8F9U1FfRJ0UVdFRcUDTzxivO8KX4cJiyakoXdm5+iuqu7xIpGIOp2Oer2eRqORttutjsejDoeD7ve7nk9pud7p4/Mg7HK56Ha72fzJpqR+v69Wq6XT6SRvPB4Lr1Qqtsi82Wyq3W5bklwuJ98vKggqms/nymazSqVSdpZAsVhMtVpNg8HAznv6xUAASjJuNhudz2f7v16vWiwWqtfrWq1W2u12KpVKKhaLSiaTmkwm8h6Ph5xDEVsul4ZwOp0axf8MeYIgsLkFRIvwiDGCxvd9C1woFAwZSfFXEKDnvsfHuQsGTSjt93vTEK3wbrdr9MN3XGEciF8DQgHxZ7OZ6RiuqDvjEIGQJN8d8YLwlTIHERtkdAGUqeZ6vVY+n1e1WtVwODQW7LP+hjA8goI2gjpr/LtESELlmdMVjPifAZ3Y0WjUENAa6XTaerHRaBhy1jKZjMrl8o8sb5TDgXGqG4/HlUgkLBCo6D9eFZSRgNcFSgJ+AVA+QGHxBfhKAAAAAElFTkSuQmCC'); background-size: cover; display: block;"
+  ></span>
+  <img
+        class="gatsby-resp-image-image"
+        alt="Variables with Interaction"
+        title="Variables with Interaction"
+        src="/static/7b1780645ef57528293375dc2b4ee574/00d43/equation_3.png"
+        srcset="/static/7b1780645ef57528293375dc2b4ee574/63868/equation_3.png 250w,
+/static/7b1780645ef57528293375dc2b4ee574/0b533/equation_3.png 500w,
+/static/7b1780645ef57528293375dc2b4ee574/00d43/equation_3.png 1000w,
+/static/7b1780645ef57528293375dc2b4ee574/aa440/equation_3.png 1500w,
+/static/7b1780645ef57528293375dc2b4ee574/e8950/equation_3.png 2000w,
+/static/7b1780645ef57528293375dc2b4ee574/81386/equation_3.png 2640w"
+        sizes="(max-width: 1000px) 100vw, 1000px"
+        style="width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;"
+        loading="lazy"
+        decoding="async"
+      />
+  </a>
+    </span></p>
+</div>
+</div>
+<p>The left figure shows the situation that X1 and X2 have no interaction, thus, there is no third efficient B3 for X1X2. In this case, since X2 is categorical variable, we can fit the value to 0 and 1 separately. The result shows us, the two regression line has the same slope, but different intercept. In another word, in this situation, the Catholic factor variable act like a constant, and only modified the intercept.</p>
+<p>The right figure shows that X1 and X2 have an interaction. Thus, our regression line need to include a third slope (B3), in this case, we can see that the intercept is exactly the same as the left figure, but the slope of X1 is changed, because of the interaction effect between X1 and X2.</p>
+<p>An intuitive summary is if we have both numeric and factor variables in one regression, the factor variables coef change the intercept as a constant, and if there are interaction effects between factor variable and numeric variables, there is an additional slope to count for this kind of interaction.</p>
+<p>Below is the R code for above two situation:</p>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># Without Interaction</span>
+<span class="token operator">></span> summary<span class="token punctuation">(</span>fit<span class="token punctuation">)</span><span class="token operator">$</span>coef
+                       Estimate Std. Error   t value     Pr<span class="token punctuation">(</span><span class="token operator">></span><span class="token operator">|</span>t<span class="token operator">|</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span>Intercept<span class="token punctuation">)</span>          <span class="token number">60.8322366</span>  <span class="token number">4.1058630</span> <span class="token number">14.815944</span> <span class="token number">1.032493e-18</span>
+Agriculture           <span class="token number">0.1241776</span>  <span class="token number">0.0810977</span>  <span class="token number">1.531210</span> <span class="token number">1.328763e-01</span>
+factor<span class="token punctuation">(</span>CatholicBin<span class="token punctuation">)</span><span class="token number">1</span>  <span class="token number">7.8843292</span>  <span class="token number">3.7483622</span>  <span class="token number">2.103406</span> <span class="token number">4.118221e-02</span></code></pre></div>
+<p>Below is the example for <strong>interactive effect</strong> situation.</p>
+<div class="gatsby-highlight" data-language="r"><pre class="language-r"><code class="language-r"><span class="token comment"># With Interaction</span>
+<span class="token operator">></span> fit <span class="token operator">&lt;-</span> lm<span class="token punctuation">(</span>Fertility <span class="token operator">~</span> Agriculture <span class="token operator">*</span> factor<span class="token punctuation">(</span>CatholicBin<span class="token punctuation">)</span><span class="token punctuation">,</span> data <span class="token operator">=</span> swiss<span class="token punctuation">)</span>
+<span class="token operator">></span> summary<span class="token punctuation">(</span>fit<span class="token punctuation">)</span><span class="token operator">$</span>coef
+                                    Estimate  Std. Error    t value     Pr<span class="token punctuation">(</span><span class="token operator">></span><span class="token operator">|</span>t<span class="token operator">|</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span>Intercept<span class="token punctuation">)</span>                      <span class="token number">62.04993019</span>  <span class="token number">4.78915566</span> <span class="token number">12.9563402</span> <span class="token number">1.919379e-16</span>
+Agriculture                       <span class="token number">0.09611572</span>  <span class="token number">0.09881204</span>  <span class="token number">0.9727127</span> <span class="token number">3.361364e-01</span>
+factor<span class="token punctuation">(</span>CatholicBin<span class="token punctuation">)</span><span class="token number">1</span>              <span class="token number">2.85770359</span> <span class="token number">10.62644275</span>  <span class="token number">0.2689238</span> <span class="token number">7.892745e-01</span>
+Agriculture<span class="token operator">:</span>factor<span class="token punctuation">(</span>CatholicBin<span class="token punctuation">)</span><span class="token number">1</span>  <span class="token number">0.08913512</span>  <span class="token number">0.17610660</span>  <span class="token number">0.5061430</span> <span class="token number">6.153416e-01</span>
+<span class="token operator">></span> </code></pre></div></div></div></main><div style="padding-top:1em;padding-bottom:1em;text-align:center"><div class="MuiContainer-root MuiContainer-maxWidthLg" style="margin-bottom:1em;font-size:0.8em;cursor:pointer"><div id="revolvermap" align="center" class="wcustomhtml"></div></div><p variant="body2" color="textSecondary" align="center" style="font-size:0.8em">Copyright © <!-- -->Yuan Tian <!-- -->2023<!-- -->.</p></div></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/notes/Coursera---Regression-Models";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-7fa52d69643013caa83f.js"],"app":["/app-27d875ab2e32ebd364d1.js"],"component---src-pages-404-js":["/component---src-pages-404-js-ae416296925cd8c0b09b.js"],"component---src-pages-index-js":["/component---src-pages-index-js-d68972ae5d9e5890a342.js"],"component---src-pages-life-in-month-js":["/component---src-pages-life-in-month-js-085ae833f3394bb243a0.js"],"component---src-pages-page-2-js":["/component---src-pages-page-2-js-d167accc303fe3625f63.js"],"component---src-pages-using-typescript-tsx":["/component---src-pages-using-typescript-tsx-e5beea293ec185c99b16.js"],"component---src-templates-note-template-js":["/component---src-templates-note-template-js-ad28f8ae57604ff4424a.js"]};/*]]>*/</script><script src="/polyfill-7fa52d69643013caa83f.js" nomodule=""></script><script src="/component---src-templates-note-template-js-ad28f8ae57604ff4424a.js" async=""></script><script src="/commons-73b05ec723875d5e16bd.js" async=""></script><script src="/app-27d875ab2e32ebd364d1.js" async=""></script><script src="/framework-54fd75ed5c02585bc0b9.js" async=""></script><script src="/webpack-runtime-031425e5d4c29264fe0a.js" async=""></script></body></html>
