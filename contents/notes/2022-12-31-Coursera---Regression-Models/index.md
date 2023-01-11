@@ -259,13 +259,13 @@ A perfect step-by-step guild for my regression task. The Github link is [here](h
 
 Here the lecture included an example of the relationship between fertility of provinces and socie-economic indicators from a Switzerland database from 1888. It includes some interesting factors like the percentage of male jobs (agriculture or not), examination score, education level, and Catholic or not.etc. We want to find out if these factors are related to the fertility rate of provinces.
 
-**Step1: use `ggpair` to draw regression plots for each two variables**
+### Step1: use `ggpair` to draw regression plots for each two variables**
 
 ![ggpair plot](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/02_02_multivariateExamples/fig/unnamed-chunk-1.png)
 
 The above plot clearly shows us the relation between any two variables. **I need to find out how to do the similar thing to categorical variables.**
 
-**Step 2: Through everything into the regression model**
+### Step 2: Through everything into the regression model**
 
 The code is simple:
 ```R
@@ -298,7 +298,7 @@ It looks like we get a list of significant factors. Remember that the Estimate (
 
 <b style=" background-color: #fcfaa7"> Based one Step 1 and 2, one key question is, how we can decide what factors should be put into the model? And why? </b>
 
-**Step 3: Change Models, use smaller number of factors**
+### Step 3: Change Models, use smaller number of factors**
 
 In below example, it only take Agriculture as X.
 
@@ -358,4 +358,57 @@ Intuitively, the slope of X1 actually means the effect between **X1's residual f
 
 > Here is a summary, it's pretty suspective to draw causal based on 1v1 regression, because their slope direction may even change if we include other factors.
 
-There is one additional point, if in MR, we include unnecessary variables (combination of other variables), the R will return NA for it.
+There is one additional point, if in MR, we include unnecessary (redundent) variables (a combination of other variables), the R will return NA for it.
+
+## Dummy Variables and Example
+
+In the above example, all variables are numeric, so how about categorical variables, like case/control .etc? The idea is to label them as two columns ($X_{case}$ nad $X_{control}$) with 0, and 1. Then apply the regression to them. On thing I don't know before is that after the regression, the P value (T test) for $\beta_{case}$, is exactly the same as the T test performed between the two group case/control. That's why sometimes I see people mixing using linear regression and T-test.
+
+Here Brian is showing another example: InsectSprays, which shows the effect of 5 types of spray. There are only two variables in it, the plot looks like below:
+
+![Dummuy Variable](./dummy_variable.png)
+
+### Compare each group to a Reference group
+
+Then below is the typical regression analysis:
+
+```R
+> summary(lm(count ~ spray, data=InsectSprays))$coef
+               Estimate Std. Error    t value     Pr(>|t|)
+(Intercept)  14.5000000   1.132156 12.8074279 1.470512e-19
+sprayB        0.8333333   1.601110  0.5204724 6.044761e-01
+sprayC      -12.4166667   1.601110 -7.7550382 7.266893e-11
+sprayD       -9.5833333   1.601110 -5.9854322 9.816910e-08
+sprayE      -11.0000000   1.601110 -6.8702352 2.753922e-09
+sprayF        2.1666667   1.601110  1.3532281 1.805998e-01
+> 
+```
+
+In the above coef (slope) table, every group is compared with group A. The estimate is the changed mean value between A and B, and the t value/p value are equal to the t test if we apply between thesew two groups. In another word, we get a list of T test for each group against A. The Intercept column is exactly A, the P value for group A is comparing group A value to 0.
+
+At this point, we call A group as "level" group, or "reference" group, because it is set as a benchmark for other groups to compare. R function `relevel()` can be used to reset another group as a reference if you want to get other T-test results for each group against a certain group.
+
+### Compare each group to Zero
+
+What if we want to include A into the analysis? If you want to show group A result as well, just use the below code:
+
+```R
+> summary(lm(count ~ spray - 1, data=InsectSprays))$coef
+        Estimate Std. Error   t value     Pr(>|t|)
+sprayA 14.500000   1.132156 12.807428 1.470512e-19
+sprayB 15.333333   1.132156 13.543487 1.001994e-20
+sprayC  2.083333   1.132156  1.840148 7.024334e-02
+sprayD  4.916667   1.132156  4.342749 4.953047e-05
+sprayE  3.500000   1.132156  3.091448 2.916794e-03
+sprayF 16.666667   1.132156 14.721181 1.573471e-22
+```
+
+Now, the estimate is the mean value for each group. **The P value then shows if the mean value of each group is or equal to 0, which is not very useful in most cases. In intuitive this result just tell people if one spray works (compare with 0).**
+
+> Brian emphasised here multiple times the reference level is important since the coef/p-value means totally different things, wrongly apply of the model and reckless interpretation leads to totally wrong results.
+
+One more thing is, actually Linear Regression assume in a dataset, the variant is constant. However, in Dummy-type regression, the variants are not constant, which is not actually match the requirement of linear regression, the result of it is: The estimate (coef, slop) is correct, but the inferences are **assuredly** not. To draw correct conclusion from categorical-type regresssion, more advanced trick need to be applied.
+
+## Analysis of Covariance (ANCOVA) Regression
+
+What is ANCOVA regression? It's exactly what I need, which allows us to blend analysis of mixed numeric variables and categorical (factor) variables.
