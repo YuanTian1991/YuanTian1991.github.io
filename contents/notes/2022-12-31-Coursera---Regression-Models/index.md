@@ -10,7 +10,7 @@ I am following the [Regression Model Course on Coursera](https://www.coursera.or
 
 Why we still need to learn regression in nowadays where machine learning (ML) is surging up? One key advantage of regression against machine learning is the highly interpretable model fits.
 
-## Some types of Regressions
+## Some Types of Regressions
 
 Three common concepts: **Least Squares Regression (LSR)**, **Multivariable Regression (MVR)** and **Generalized Linear Models (GLM)**. The difference between them is subtle: 
 
@@ -37,7 +37,7 @@ Three common concepts: **Least Squares Regression (LSR)**, **Multivariable Regre
 > In R, correlation function is `cor(x, y)`, and covariance function is `cov(x, y)`. I think I actually never use the covariance function at all...
 
 
-## The famous linear Least Squares
+## The Famous Linear Least Squares
 
 The most famous and commonly used regression, I intuitively understand the principle of this regression method, which is to minimize below euqation:
 
@@ -78,15 +78,15 @@ The R function to get residual is `resid()`.
 Compared with an intuitive solution that draw residual along the line, a better way to draw a plot is like below, which shows the variation of residual along the whole X. Blow are three figures can be used for residual analysis:
 
 <div>
-<div style="display:inline-block; width: 30%">
+<div style="display:inline-block; width: 30%; margin: 10px">
 
 ![Regression line Plot](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/01_06_residualVariation/assets/fig/unnamed-chunk-1.png)
 </div>
-<div style="display:inline-block; width: 30%">
+<div style="display:inline-block; width: 30%; margin: 10px">
 
 ![Residual Plot](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/01_06_residualVariation/assets/fig/unnamed-chunk-4.png)
 </div>
-<div style="display:inline-block; width: 30%">
+<div style="display:inline-block; width: 30%; margin: 10px">
 
 ![Scatter Plot](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/01_06_residualVariation/assets/fig/unnamed-chunk-10.png)
 </div>
@@ -129,4 +129,183 @@ The above is an intuitive explanation for R2. And since it's faction, the R2 mus
 ![R2](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/01_06_residualVariation/assets/fig/unnamed-chunk-12.png)
 </div>
 
+> Note that, even if your regression model does not perfect fit the origin data, for example you can clearly see a hidden pattern in residual, regression still have value since it captured a certain level of trend in origin data.
+
 ## Inference in Regression
+
+The inference is the step of drawing a conclusion. Basically, it means for example hypothesis validation. We can get some inferences from those parameters. For example, the variance of $B_1$ can be expressed as below, which represent the "confidential" of our estimated $B1$.
+
+$$
+\sigma_{\hat{B}_1}^{2} = Var(\hat{B}_1) = \sigma^2 / \sum_{i=1}^n (X_i - \bar{X})^2
+$$
+
+So, how to intuitively understand it? Firstly, the $\sigma^2$ represents the variant of error, the smaller this value is, it means most dots $Y$ are close to the regression line we get, Like below example:
+
+```R
+> library("ggplot2")
+> A <- data.frame(x=1:100, y=rnorm(100, 0, 10) + 1:100)
+> ggplot(A, aes(x, y)) + 
+    geom_point() + 
+    geom_smooth(method="lm", aes(x, y)) +
+    geom_smooth()
+>
+> A <- data.frame(x=1:100, y=rnorm(100, 0, 40) + 1:100)
+> ggplot(A, aes(x, y)) + 
+    geom_point() + 
+    geom_smooth(method="lm", aes(x, y)) +
+    geom_smooth()
+> 
+```
+
+In the below plot, the two regression lines have the same slope (1), but the left one has a smaller error variance ($\sigma^2$), while the right one has a larger one. **This is the intuitive explanation of the $\sigma^2$ in above equation, smaller error variance means higher confidence for the slope.**
+
+<div>
+<div style="display:inline-block; width: 40%; margin: 10px">
+
+![small error sigma](./small_error_sigma.png)
+</div>
+<div style="display:inline-block; width: 40%; margin: 10px">
+
+![large error sigma](./large_error_sigma.png)
+</div>
+</div>
+
+The second part is $\sum_{i=1}^n (X_i - \bar{X})^2$, which is very interesting since it represents the distance of each X to the mean X. Intuitively, it means the X better to be evenly distributed. Below are some examples.
+
+```R
+> library("ggplot2")
+> x <- rnorm(100, 50, 5)
+> A <- data.frame(x=x, y=rnorm(100, 0, 10) + x)
+> ggplot(A, aes(x, y)) + 
+    geom_point() + 
+    geom_smooth(method="lm", aes(x, y)) + xlim(0, 100) +
+    geom_smooth()
+> 
+> x <- 1:100
+> A <- data.frame(x=x, y=rnorm(100, 0, 5) + x)
+> ggplot(A, aes(x, y)) + 
+    geom_point() + 
+    geom_smooth(method="lm", aes(x, y)) + xlim(0, 100) +
+    geom_smooth()
+> 
+```
+
+In below two figures, the slope is the same (1), but in the left figure, X are crowded together, but in the right X are evenly distributed. Intuitively we know the right one more reliable.
+
+<div>
+<div style="display:inline-block; width: 40%; margin: 10px">
+
+![consolidated X](./consolidated_x.png)
+</div>
+<div style="display:inline-block; width: 40%; margin: 10px">
+
+![even X](./even_x.png)
+</div>
+</div>
+
+This is the meaning of variance of slope, it's decided by the distribution of X, and variance of error.
+
+## Multivariable Regression (MR)
+
+Finally, in the third week, we started to learn multi-variable regression. This is what exactly what I need to learn. A famous case here is insurance prediction. So insurance company have a huge dataset from a customer, their age, BMI, job, gender, race... And, what they want to predict is only one thing: The number of times the customer go to the hospital next year. In another word, we have multiple X here, but only one y.
+
+There are at least a couple of challenges here:
+
+1. **Model Search**, how to select the best and most suitable model? There are so many different types of regression models, like fixed-effect. etc.
+
+2. **Feather Selection**, what variables (predictors) should we select into the model?
+
+3. **Overfitting**, If we put enough variables into MR, we may get 0 residual, but that means some useless variables in the model, and **this will lead us to miss the actually-important variables.** Thus, in MR, it's not the more the better.
+
+4. **[I added] Multicollinearity** is a statistical concept where several independent variables in a model are correlated. Two variables are considered to be perfectly collinear if their correlation coefficient is +/- 1.0. Multicollinearity among independent variables will result in less reliable statistical inferences.
+
+> Here Brian mentioned two things: One if another useful Coursera class is Practical Machine Learning, which contains a lot more detail about model selection, feature selection .etc
+>
+> Another important thing is: Brian mentioned that in many Kaggle competitions, MR can already lead you to a pretty good result, though in general models like RandomForest, Boosting can do a bit better, but just really a little bit.
+>
+> **Thus, it is worth using MR as the starting point for most ML problems.**
+
+Below is the starting equation for MR:
+
+$$
+Y_i = \beta_1X_{1i} + \beta_2X_{2i} + ... + \beta_pX_{pi} + \epsilon = \sum_{k=1}^pX_{ik}\beta_k + \epsilon_i
+$$
+
+Note that $X_{1i}$ is normally 1, so $\beta_1$ is intercept. So just like a one variable situation, the principle of this regression, is to minimise the residual:
+
+$$
+\sum_{i=1}^{n}(Y_i-\sum_{k=1}^{n}X_{ki}\beta_k)^2
+$$
+
+How to intuitively understand the above equation? If we have two variables, what the above equation estimating is the distance for each dot in a 3D space, to a flat plate we "insert" though them. Blew is an example I found online.
+
+<div style="text-align: center; width: 60%">
+
+![Two variable regression](https://www.palass.org/sites/default/files/media/palaeomath_101/article_4/figure_2.jpg)
+
+</div>
+
+Brian did a beautiful deduction to explain intuitively what $\beta_k$, is by exampling two variables. <b style=" background-color: #fcfaa7">That for one variable $X_{i}$, its slope $\beta_i$ is actually the slope(coef) estimated, by other variables' linear effect are removed. In another word, in MR, each variable's coef (slope) is adjusted for other variables (residuals).</b>
+
+Below is the example of R code for MR:
+
+```R
+coef(lm(y ~ x + x2 + x3))
+```
+
+## Swiss Fertility Example
+
+A perfect step-by-step guild for my regression task. The Github link is [here](https://github.com/bcaffo/courses/blob/master/07_RegressionModels/02_02_multivariateExamples/index.md).
+
+Here the lecture included an example of the relationship between fertility of provinces and socie-economic indicators from a Switzerland database from 1888. It includes some interesting factors like the percentage of male jobs (agriculture or not), examination score, education level, and Catholic or not.etc. We want to find out if these factors are related to the fertility rate of provinces.
+
+**Step1: use `ggpair` to draw regression plots for each two variables**
+
+![ggpair plot](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/02_02_multivariateExamples/fig/unnamed-chunk-1.png)
+
+The above plot clearly shows us the relation between any two variables. **I need to find out how to do the similar thing to categorical variables.**
+
+**Step 2: Through everything into the regression model**
+
+The code is simple:
+```R
+> summary(lm(Fertility ~ . , data = swiss))
+
+Call:
+lm(formula = Fertility ~ ., data = swiss)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-15.2743  -5.2617   0.5032   4.1198  15.3213 
+
+Coefficients:
+                 Estimate Std. Error t value Pr(>|t|)    
+(Intercept)      66.91518   10.70604   6.250 1.91e-07 ***
+Agriculture      -0.17211    0.07030  -2.448  0.01873 *  
+Examination      -0.25801    0.25388  -1.016  0.31546    
+Education        -0.87094    0.18303  -4.758 2.43e-05 ***
+Catholic          0.10412    0.03526   2.953  0.00519 ** 
+Infant.Mortality  1.07705    0.38172   2.822  0.00734 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+Residual standard error: 7.165 on 41 degrees of freedom
+Multiple R-squared:  0.7067,	Adjusted R-squared:  0.671 
+F-statistic: 19.76 on 5 and 41 DF,  p-value: 5.594e-10
+```
+
+It looks like we get a list of significant factors. Remember that the Estimate (slope, coef) above represent the meaning of units of Y change, while one unit of X change, with all other variable's linear effect removed.
+
+<b style=" background-color: #fcfaa7"> Based one Step 1 and 2, one key question is, how we can decide what factors should be put into the model? And why? </b>
+
+**Step 3: Change Models, use smaller number of factors**
+
+In below example, it only take Agriculture as X.
+
+```R
+> summary(lm(Fertility ~ Agriculture, data = swiss))$coefficients
+              Estimate Std. Error   t value     Pr(>|t|)
+(Intercept) 60.3043752 4.25125562 14.185074 3.216304e-18
+Agriculture  0.1942017 0.07671176  2.531577 1.491720e-02
+```
+And, we found that for Agriculture, the direction changed to positive, which means if we take other effect into consideration, Agriculture have negative effect on fertility, but if we only regression on it only, it's positive! This is called "Simpson's Paradox"
