@@ -245,7 +245,7 @@ How to intuitively understand the above equation? If we have two variables, what
 
 </div>
 
-Brian did a beautiful deduction to explain intuitively what $\beta_k$, is by exampling two variables. <b style=" background-color: #fcfaa7">That for one variable $X_{i}$, its slope $\beta_i$ is actually the slope(coef) estimated, by other variables' linear effect are removed. In another word, in MR, each variable's coef (slope) is adjusted for other variables (residuals).</b>
+Brian did a beautiful deduction to explain intuitively what $\beta_k$, is by exampling two variables. <b style="background-color: #fcfaa7">That for one variable $X_{i}$, its slope $\beta_i$ is actually the slope(coef) estimated, by other variables' linear effect are removed. In another word, in MR, each variable's coef (slope) is adjusted for other variables (residuals).</b>
 
 Below is the example of R code for MR:
 
@@ -308,4 +308,54 @@ In below example, it only take Agriculture as X.
 (Intercept) 60.3043752 4.25125562 14.185074 3.216304e-18
 Agriculture  0.1942017 0.07671176  2.531577 1.491720e-02
 ```
-And, we found that for Agriculture, the direction changed to positive, which means if we take other effect into consideration, Agriculture have negative effect on fertility, but if we only regression on it only, it's positive! This is called "Simpson's Paradox"
+And, we found that for Agriculture, the direction changed to positive, which means if we take other effect into consideration, Agriculture have negative effect on fertility, but if we only regression on it only, it's positive! This is called "Simpson's Paradox". So, we should think deeper about why it will happen. Below is Brian's example.
+
+In the below example, X1 is negatively related to y since we know the true formula. We get correct result when we put both X into regression, however, if we just regression X1, it shows positive correlation with Y.
+
+```R
+> n <- 100
+> x2 <- 1 : n
+> x1 <- .01 * x2 + runif(n, -.1, .1)
+> y = -x1 + x2 + rnorm(n, sd = .01)
+> summary(lm(y ~ x1))$coef
+            Estimate Std. Error t value  Pr(>|t|)
+(Intercept)    1.454      1.079   1.348 1.807e-01
+x1            96.793      1.862  51.985 3.707e-73
+> 
+> summary(lm(y ~ x1 + x2))$coef
+             Estimate Std. Error  t value   Pr(>|t|)
+(Intercept)  0.001933  0.0017709    1.092  2.777e-01
+x1          -1.020506  0.0163560  -62.393  4.211e-80
+x2           1.000133  0.0001643 6085.554 1.544e-272
+```
+The reason is, the slope (coef) of X1 from regression, is the effect X1 to Y, after removing the linear effect of other Xs (in this case, X2). So we know that the effect of X2 to Y is positive with slope of 1 (exactly as the above code show), after removing the effect of X2, the slope of X1 represent its true effect on Y, which is -1. In the first example, we identified positive effect for X1, because X1 is dependent on X2, so in front of Y, X1 also shows the "positive" trend. 
+
+Below I draw the 3D and 2D plot to show this, in the plot both X1 (x-axis) and X2 (y-axis) show a positive trend with Y (z-axis). <b style="background-color: #fcfaa7"> This means, we can't use 3D or 2D plots to visually detect slop for MR, because the real slope needs to be adjusted for other variables' linear effects. It's totally wrong to look at figures from raw data to find the correlation effect. </b>
+
+<div>
+<div style="display:inline-block; width: 40%; margin: 10px">
+
+![3D plot](./3Dplot.png)
+</div>
+
+<div style="display:inline-block; width: 42%; margin: 10px">
+
+![ggpare_plot](./ggpair_plot.png)
+</div>
+
+</div>
+
+So, what plot we should draw and look? **Use the Residual Plot.**
+
+```R
+> ey <- resid(lm(y ~ x2)) # Remove effect of X2 to Y, so the residual should be of X1 to Y
+> ex1 <- resid(lm(x1 ~ x2)) # Remove effect of X2 to X1, so residual should be the X1 to X
+```
+
+![Residual Plot](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/02_02_multivariateExamples/fig/unnamed-chunk-6.png)
+
+Intuitively, the slope of X1 actually means the effect between **X1's residual from X2**, and **Y's Residual from X2**.
+
+> Here is a summary, it's pretty suspective to draw causal based on 1v1 regression, because their slope direction may even change if we include other factors.
+
+There is one additional point, if in MR, we include unnecessary variables (combination of other variables), the R will return NA for it.
