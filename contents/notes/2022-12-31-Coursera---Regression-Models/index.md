@@ -411,4 +411,55 @@ One more thing is, actually Linear Regression assume in a dataset, the variant i
 
 ## Analysis of Covariance (ANCOVA) Regression
 
-What is ANCOVA regression? It's exactly what I need, which allows us to blend analysis of mixed numeric variables and categorical (factor) variables.
+What is ANCOVA regression? It's exactly what I need, allowing us to blend analysis of mixed numeric and categorical (factor) variables.
+
+### Interaction or Not?
+
+Here Brian is using the Siss data above, to show an important concept, the interaction between variables. Here he is regression the fertility (y) for two variables, agriculture (x1) and bined Catholic (x2), one numeric and one binary. So interaction is a effect that X1 * X2 in regression model. **In another word, if two variables have interaction, the regression model for two variables, actually has three coef (if intercept not count) to estimate: for X1, for X2, and and for X1 * X2.**
+
+Like before, below is an intuitive understanding of the coefs, by separately fit two lines to the two value (0,1) in factor variable.
+
+<div>
+<div style="display:inline-block; width: 40%; margin: 10px">
+
+![Variables without Interaction](./equation_2.png)
+</div>
+
+<div style="display:inline-block; width: 42%; margin: 10px">
+
+![Variables with Interaction](./equation_3.png)
+</div>
+
+</div>
+
+The left figure shows the situation that X1 and X2 have no interaction, thus, there is no third efficient B3 for X1X2. In this case, since X2 is categorical variable, we can fit the value to 0 and 1 separately. The result shows us, the two regression line has the same slope, but different intercept. In another word, in this situation, the Catholic factor variable act like a constant, and only modified the intercept.
+
+The right figure shows that X1 and X2 have an interaction. Thus, our regression line need to include a third slope (B3), in this case, we can see that the intercept is exactly the same as the left figure, but the slope of X1 is changed, because of the interaction effect between X1 and X2.
+
+An intuitive summary is if we have both numeric and factor variables in one regression, the factor variables coef change the intercept as a constant, and if there are interaction effects between factor variable and numeric variables, there is an additional slope to count for this kind of interaction.
+
+Below is the R code for above two situation:
+
+```R
+# Without Interaction
+> summary(fit)$coef
+                       Estimate Std. Error   t value     Pr(>|t|)
+(Intercept)          60.8322366  4.1058630 14.815944 1.032493e-18
+Agriculture           0.1241776  0.0810977  1.531210 1.328763e-01
+factor(CatholicBin)1  7.8843292  3.7483622  2.103406 4.118221e-02
+```
+
+Below is the example for **interactive effect** situation.
+
+```R
+# With Interaction
+> fit <- lm(Fertility ~ Agriculture * factor(CatholicBin), data = swiss)
+> summary(fit)$coef
+                                    Estimate  Std. Error    t value     Pr(>|t|)
+(Intercept)                      62.04993019  4.78915566 12.9563402 1.919379e-16
+Agriculture                       0.09611572  0.09881204  0.9727127 3.361364e-01
+factor(CatholicBin)1              2.85770359 10.62644275  0.2689238 7.892745e-01
+Agriculture:factor(CatholicBin)1  0.08913512  0.17610660  0.5061430 6.153416e-01
+> 
+```
+
