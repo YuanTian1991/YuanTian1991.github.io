@@ -61,7 +61,10 @@ In the course, I just know that:
 3. If we do normalisation for both X and Y, then do regression, both two new data have 0 as mean and 1 and SD, the slope would not be the original one, instead it will be the $Cor(Y, X)$. Intuitively, I can understand that after normalisation, both two data list are around 0 point, and with same SD, thus the slope we can estimate then just represent some changing of angles between them...
 
 > The regression function for R is `lm(y ~ x)`, by default it includes a intercept. Then we use `summary` or `coef` function to get slopes.
+> 
 > In ggplot2, to code to add regression line into plot is `g + geom_smooth(method="lm", formula=y~x)`
+> 
+> To put all variables into the regression model, use `lm(y ~ ., data=dataset)`.
 
 ## Residuals
 
@@ -442,6 +445,7 @@ Below is the R code for above two situation:
 
 ```R
 # Without Interaction
+> fit <- lm(Fertility ~ Agriculture + factor(CatholicBin), data = swiss)
 > summary(fit)$coef
                        Estimate Std. Error   t value     Pr(>|t|)
 (Intercept)          60.8322366  4.1058630 14.815944 1.032493e-18
@@ -449,7 +453,10 @@ Agriculture           0.1241776  0.0810977  1.531210 1.328763e-01
 factor(CatholicBin)1  7.8843292  3.7483622  2.103406 4.118221e-02
 ```
 
-Below is the example for **interactive effect** situation.
+To visualise the result, below is the plot for each CatholicBin, we can see that the only difference is on intercept. More precisely, the difference in intercept is B2.
+![Without Interaction](./without_interaction.png)
+
+Below is the example for **interactive effect** situation. **The different is the sign, from `+` to `*`, which include the interaction between factors.**
 
 ```R
 # With Interaction
@@ -461,5 +468,152 @@ Agriculture                       0.09611572  0.09881204  0.9727127 3.361364e-01
 factor(CatholicBin)1              2.85770359 10.62644275  0.2689238 7.892745e-01
 Agriculture:factor(CatholicBin)1  0.08913512  0.17610660  0.5061430 6.153416e-01
 > 
+```
+![With Interaction](./with_interaction.png)
+
+The above figure shows, that if two variables have interaction with each other, the difference between two lines with CatholicBin 0 or 1, lies on both intercept and slope.
+
+## Adjustment (Relation between a Factor and a Continues variable)
+
+According to the course instruction: "Adjustment, is the idea of putting regressors into a linear model to investigate the role of a third variable on the relationship between another two. Since it is often the case that a third variable can distort, or confound if you will, the relationship between two others."\
+
+**However, in [Brian's lecture and GitHub Markdown](https://github.com/bcaffo/courses/blob/master/07_RegressionModels/02_03_adjustment/index.md), looks like it is actually focused on assessing the effect of a factor variable on a continues variable. This is particularly useful in Bioinformatic analysis, like comparing case/control, cancer/normal .etc ($T$ in below figures)**
+
+Below are some possible effect regressions. Basically we focus on a coupe of metrics like:
+
+* **Marginal Effect**: the difference between mean between two groups.
+* **Intercept Difference:** the difference between two intercept lines.
+
+Let's assume X is age, T is the drug or not (0,1), and Y is the effect of drug. I wil try to use this example to explain each each figure:
+
+<div style="font-size: 0.7em">
+<div style="display:inline-block; vertical-align:top; width: 40%; margin: 10px">
+
+![Simulation 1](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/02_03_adjustment/fig/unnamed-chunk-1.png)
+
+
+$\beta_1$ is the marginal effect between groups, while $\beta_2$ is the slop. And importantly, the intercept of the two lines is the same as the marginal effect, which indicates there is no effect between X and T, so we can assume there is no interaction effect between them in the below equation:
+$$
+Y = \beta_0 + \beta_1T + \beta_2X + \epsilon
+$$
+
+
+* The X variable is unrelated to group status
+* The X variable is related to Y, but the intercept depends on group status.
+* The group variable is related to Y.
+    * The relationship between group status and Y is constant depending on X.
+    * The relationship between group and Y disregarding X is about the same as holding X constant
+
+In my example, it means the drug has a constant improvement effect despite of age. This is possible the best/perfect solution we want to see in reality.
+
+</div>
+
+<div style="display:inline-block; vertical-align:top; width: 40%; margin: 10px">
+
+![Simulation 2](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/02_03_adjustment/fig/unnamed-chunk-2.png)
+
+The large marginal effect, but small intercept effect. This example shows the importance to check the figure and not rely on metrics.
+
+* The X variable is highly related to group status. [Note, this is data feature, not regression conclusion.]
+* The X variable is related to Y, the intercept doesn't depend on the group variable.
+    * The X variable remains related to Y holding group status constant
+* The group variable is marginally related to Y disregarding X.
+* The model would estimate no adjusted effect due to group.
+    * There isn't any data to inform the relationship between group and Y.
+    * This conclusion is entirely based on the model.
+
+Brian did not see what model is most suitable here. However, it shows that there is no way to do "adjusted" on T or X, as they are related.
+
+In my example, it means the drug are totally applied to two groups of age people, thus we can't assess if drugs have effect on final outcome. It could be totally be the reason of age X.
+
+</div>
+
+</div>
+
+<div style="font-size: 0.7em">
+<div style="display:inline-block; vertical-align:top; width: 40%; margin: 10px">
+
+![Simulation 3](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/02_03_adjustment/fig/unnamed-chunk-3.png)
+
+The marginal effect red is higher than blue, but the intercept red is lower than blue, this is Simpton's Paradox, which means, add/minus variable here will change the direction.
+
+* Group status related to X.
+* There is some direct evidence for comparing red and blue holding X fixed.
+
+Note that this example is the same as the second one, which lack of X that have two groups together, thus we don't know if X have effect with T.
+
+In my example, it means that if we only compare mean between two groups, red group is better (higher), however this is wrong because blue group testers are younger, thus if we apply the model, we could know that actually, the drug effect is blue group is higher. This example shows the effect of unbalanced X to final outcome Y.
+
+</div>
+
+<div style="display:inline-block; vertical-align:top; width: 40%; margin: 10px">
+
+![Simulation 4](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/02_03_adjustment/fig/unnamed-chunk-4.png)
+
+No marginal effect, but a huge intercept effect, showing an "adjustment effect" (in other words, adding X or not will change the conclusion).
+
+* Strong adjusted relationship.
+* Group status not related to X. [Parallel line we can see]
+* There is lots of direct evidence for comparing red and blue holding X fixed. [How we visualise check relation between T and X].
+
+In my example, it means that the two drugs initially looks like have no different between two groups, however, that's because their X are not balanced as well, if we consider the X (age), and use regression to adjust X into balance one (intercept), the drug shows the effect we are expecting!
+
+</div>
+
+</div>
+
+<div style="font-size: 0.7em">
+<div style="display:inline-block; vertical-align:top; width: 40%; margin: 10px">
+
+![Simulation 5](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/02_03_adjustment/fig/unnamed-chunk-5.png)
+
+This is special, initially, we see the two groups have the same marginal effect, and balanced X distribution. However, remember that the first figure have the same two feature right? So the reverse trend shows that there is an interaction between these two T and X.
+
+* There is no such thing as a group effect [effect of group] here.
+    * The impact of group reverses itself depending on X.
+    * Both intercept and slope depends on group.
+* Group status and X unrelated.
+    * There's lots of information about group effects holding X fixed.
+
+In my example, it means the drug have effect with X, the young people would show reverse effect as old people. And the Y (outcome of both age and drug) is decided by 1):age, and 2): the drug's relation with X, not constant this time.
+
+Thus, for this situation, the regression model is:
+
+$$
+Y = \beta_0 + \beta_1T + \beta_2X + \beta_3TX + \epsilon
+$$
+
+And, importantly, the $$\beta_1$$ should not be interpreted here, even if it will sill be calculated by R. **This is not only an adjustment, this is a modification**.
+
+</div>
+
+</div>
+
+> In summary, what we should look to assess the performance of a continuous variable and a factor variable?
+> 1. Compare mean group difference (project all dots to Y axis).
+> 2. Check if the two groups have an unbalanced X. If X are unbalanced, we need to reply on model (extended regression line) to make final decision,
+> 3. Compare intercept difference with marginal effect, if they are the same and two lines looks parallel, we can assume there is no adjustment effect between T and X, they are independent and unrelated. If not, there are certain level of interaction between T and X.
+> 4. Remember the Intercept difference normally is the final conclusion for T, however, this can be wrong in figure 5.
+
+
+## Model Selection
+
+This part is to address one important question: “How do we choose what variables to include in a regression model?”. Firstly Brian introduced the how to include or exclude a variable.
+
+**1. What if I omit an important variable?**
+Not good. If you regression cancer outcome without age, that's not good. How to define an important variable? Check the correlation between age and cancer. Also, if a variable you omit does not have a correlation with Y, that's maybe fine you ignored it.
+
+**2. What if I include variables not important?**
+If the variables you included does not related with Y, they will not influence the coef and P value, but will inflate the SD, thus the R^2 will looks better if you included a lot of unrelated variables.
+
+
+**3. What if I included variables correlated with my top-interested variable X?**
+The standard deviation of the slope of X will increase (in another word, less accurate), that's why we should not include highly-correlated variable into the model.
+
+Here there is an important metric called [Variance Inflation Factor(VIF)](https://www.statology.org/multicollinearity-in-r/). Te way to estimate is using `vif()` function:
+
+```R
+fit <- lm(Fertility ~ . , data=swiss)
+vif(fit)
 ```
 

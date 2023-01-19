@@ -70,9 +70,10 @@ blockquote {
     margin-left: 0px;
     margin-right: 0px;
     padding: 20px;
-    background-color: whitesmoke;
+    background-color: #e8eaf6;
     border: 0.5px solid darkgray;
     border-radius: 3px;
+    font-size: 0.87em; 
 }
 
 a {
