@@ -6,6 +6,8 @@ tags: ['Coursera', 'Regression', 'R']
 abstract: 'Regression is am important tool that I should have dug into years ago. Here are just some key notes I write done during my learning with the Coursera course Regression Model.'
 ---
 
+"All models are wrong, some models are useful" -- George Box
+
 I am following the [Regression Model Course on Coursera](https://www.coursera.org/learn/regression-models). This note is just a collection of high-dense knowledge I absorbed from the course, and my understanding/key-code .etc. A super-mini summary. Also, One book I should read along with the course is [this one](https://leanpub.com/regmods) (maybe later one day 😅), which can be freely downloaded.
 
 Why we still need to learn regression in nowadays where machine learning (ML) is surging up? One key advantage of regression against machine learning is the highly interpretable model fits.
@@ -262,13 +264,13 @@ A perfect step-by-step guild for my regression task. The Github link is [here](h
 
 Here the lecture included an example of the relationship between fertility of provinces and socie-economic indicators from a Switzerland database from 1888. It includes some interesting factors like the percentage of male jobs (agriculture or not), examination score, education level, and Catholic or not.etc. We want to find out if these factors are related to the fertility rate of provinces.
 
-### Step1: use `ggpair` to draw regression plots for each two variables**
+### Step1: use `ggpair` to draw regression plots for each two variables
 
 ![ggpair plot](https://raw.githubusercontent.com/bcaffo/courses/master/07_RegressionModels/02_02_multivariateExamples/fig/unnamed-chunk-1.png)
 
 The above plot clearly shows us the relation between any two variables. **I need to find out how to do the similar thing to categorical variables.**
 
-### Step 2: Through everything into the regression model**
+### Step 2: Through everything into the regression model
 
 The code is simple:
 ```R
@@ -301,7 +303,7 @@ It looks like we get a list of significant factors. Remember that the Estimate (
 
 <b style=" background-color: #fcfaa7"> Based one Step 1 and 2, one key question is, how we can decide what factors should be put into the model? And why? </b>
 
-### Step 3: Change Models, use smaller number of factors**
+### Step 3: Change Models, use smaller number of factors
 
 In below example, it only take Agriculture as X.
 
@@ -600,20 +602,76 @@ And, importantly, the $$\beta_1$$ should not be interpreted here, even if it wil
 
 This part is to address one important question: “How do we choose what variables to include in a regression model?”. Firstly Brian introduced the how to include or exclude a variable.
 
+### What if I include/exclude an important/not-important variable?
+
 **1. What if I omit an important variable?**
-Not good. If you regression cancer outcome without age, that's not good. How to define an important variable? Check the correlation between age and cancer. Also, if a variable you omit does not have a correlation with Y, that's maybe fine you ignored it.
+Not good, causes bias. If you regression cancer outcome without age, that's not good. How to define an important variable? Check the correlation between age and cancer. Also, if a variable you omit does not have a correlation with Y, that's maybe fine you ignored it.
 
 **2. What if I include variables not important?**
-If the variables you included does not related with Y, they will not influence the coef and P value, but will inflate the SD, thus the R^2 will looks better if you included a lot of unrelated variables.
+If the variables you included do not relate with Y, they will **NOT** influence the coef and P-value but will inflate the SD, thus the $R^2$ will look better if you included a lot of unrelated variables. Brian's simulation shows that the effect of the norm variable in a regression model is **negligible**.
+
+Also, this will cause overfitting, which means the model captured too detailed information from your data, which is not necessary.
+
+> Also, $R^2$ is not a good indicator for the regression model, as if you put as more as variable into the model, this value would definitly goes up.
 
 
 **3. What if I included variables correlated with my top-interested variable X?**
-The standard deviation of the slope of X will increase (in another word, less accurate), that's why we should not include highly-correlated variable into the model.
+The standard deviation of the slope of X will increase (in other words, less accurate), that's why we should not include highly-correlated variable into the model. Ths detailed explaination is [here](https://www.coursera.org/learn/regression-models/lecture/Rrlrj/model-selection-part-ii). **The higher correlation the additional variable is with the target variable, the higher the inflation variant will be.** For example, if you have diastolic blood pressure in the model, and then put systolic blood pressure on my model, they are basically the same and will increase the variant.
 
-Here there is an important metric called [Variance Inflation Factor(VIF)](https://www.statology.org/multicollinearity-in-r/). Te way to estimate is using `vif()` function:
+> Importantly, if you have to include both of them, and you believe both have an effect on your outcome, you can just do it and eat the bullet. The cost is you will have extra Standard Deviation and Standard Error.
+>
+> There is no free lunch, if you omic important variable, you get bias (after all you missed an important factor actually related with Y), however, if you add etra variables into the regression, your coef variant is larger (in another word, less accurate a,d true).
+
+### Variance Inflation Factor(VIF)
+
+Here there is an important metric called [Variance Inflation Factor(VIF)](https://www.statology.org/multicollinearity-in-r/). **This value represents the ratio that the variant of coef calculated by one variable against other variables, and a orthogonal variable against other variables.** 
+
+How to understand this sentence?
+
+If you have students' scores and scores of Math and English.  Now you get a new variable, biology. Then this method will estimate the variant of coef when you add biology into the model, with another automatic-simulated variable that is definitely not related to Math or English. Then ratio represent the effect of Biology will have to Math and English. If this value is 1, which means Biology is basiclaly nothing related with those two subject, so we can add if into the model if we can see the correlation between Biology and final scores.
+
+So, this value indicates how much correlation effect each variable have, to other variables, but it will not tell you who this variable is correlated with. In theory, we would really like those variables with VIF as 1, since they are so independent, and if they are correlated with Y, they should definitly be our top selection of variables.
+
+The way to estimate is using `vif()` function:
 
 ```R
-fit <- lm(Fertility ~ . , data=swiss)
-vif(fit)
+> library(car)
+> fit <- lm(Fertility ~ . , data=swiss)
+> vif(fit)
+     Agriculture      Examination        Education         Catholic Infant.Mortality 
+        2.284129         3.675420         2.774943         1.937160         1.107542
+```
+
+So, based on the above result, we can see:
+1. Infant.Mortality is basically nothing related to any other variables. So it's an independent variable, safe to put in a regression model if they are really useful.
+
+2. Examination and Education show high VIF, which means they have a strong correlation (or similar) effect with other variables. The model did not tell us who they are related to, but based on your common sense, Examination is higher related to Education. So, you better just select one of them into the model.
+
+3. For Agriculture and Catholicism, we also can see they have an effect on other variables, but we don't know who, and to what degree. Actually, based on the `ggpair` above, we can see Catholicism shows a certain level of correlation with all Agriculture, Examination and Education. That's the source of it's VIF.
+
+In summary, by looking at above VIF and `ggpair` plot, we can roughly think Infant.Mortality is highly related with Fertility and nothing related with other variables, must include. Examination and Education show a high correlation and based on our knowledge, so we only select one. For Catholic and Agriculture, they have certain level of regression with other variables, we need to dig further, to check it's potential interaction, and add it one by one for potential Simpson's Paradox.
+
+### Use Nested Model Tesing
+
+Nested model testing is to add additional variables into mode, then use ANOVA to compare between model, to see if new variables have effect on old models. Below is a simple example, however, still we should use above knowledges, more specifically, VIF, domain knowledge and `ggpair` plot, to first select variables we want, then we add them one by one.
+
+```R
+> fit1 <- lm(Fertility ~ Agriculture, data = swiss)
+> fit3 <- update(fit, Fertility ~ Agriculture + Examination + Education)
+> fit5 <- update(fit, Fertility ~ Agriculture + Examination + Education + Catholic + Infant.Mortality)
+> anova(fit1, fit3, fit5)
+
+Analysis of Variance Table
+
+Model 1: Fertility ~ Agriculture
+Model 2: Fertility ~ Agriculture + Examination + Education
+Model 3: Fertility ~ Agriculture + Examination + Education + Catholic + 
+    Infant.Mortality
+  Res.Df  RSS Df Sum of Sq    F  Pr(>F)    
+1     45 6283                              
+2     43 3181  2      3102 30.2 8.6e-09 ***
+3     41 2105  2      1076 10.5 0.00021 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ```
 
