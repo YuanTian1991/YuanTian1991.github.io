@@ -80,6 +80,22 @@ In ChAMP's previous annotation, I need to know information like TSS200, TSS1500,
 
 So one key piece of information lost is `Body`... without body, I can't correctly annotate what CpGs are in IGR (Intergenic Gene Regions). This issue need to be solved. Also, I quickly checked the GENCODEv41 version feature annotation, it varies a lot when compared with UCSC one...
 
+### SNP Mask
+
+As always, I am looking for the population-based SNP mask data from [Zhou's website](http://zwdzwd.github.io/InfiniumAnnotation). However, for the EPICv2 Manifest, I only found 5 populations: AFR, AMR, EAS, EUR and SAS. Previous version of EPICv1 provided much more population. Again previously I put the general mask and population-based mask in two different files. It should be changed.
+
+Based on my summary:
+
+```r
+> table(EPICv2_Mask$MASK_general) # General mask
+
+FALSE  TRUE 
+49844 32896 
+> table(EPICv2_Mask$MASK_general_AFR) # AFR population mask
+
+FALSE  TRUE 
+41532 41208 
+```
 
 ---
 
