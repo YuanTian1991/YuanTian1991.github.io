@@ -95,3 +95,130 @@ g++ hello.cpp -o hello -I /path/to//compiled/bamtools/include/bamtools -L /path/
 ```
 
 The final flag `-lbamtools` means my `hello.cpp` code will "link" with bamtools, so in the compile stage, the separately compiled third-party library - bamtools - will be linked togather with my code. Each third-party library will have it's own flag, mostly it should be like "-l\[LibraryName\]".
+
+## MakeFile vs CMakeFile.txt
+
+This are compiled object file, which is not executable, and need later to be linked. Each .cpp file will be compiled into one .o file, and then linkage process will be applied to join them.
+
+Below is an example of MakeFile to compile them all:
+
+```MakeFile
+CXX = g++
+CXXFLAGS = -std=c++11 -Wall
+
+# List of source files
+SRCS = main.cpp math.cpp
+
+# Generate object file names from source file names
+OBJS = $(SRCS:.cpp=.o)
+
+# Executable name
+TARGET = myprogram
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS)
+    $(CXX) $(CXXFLAGS) -o $@ $^
+
+# Rule to generate object files
+%.o: %.cpp
+    $(CXX) $(CXXFLAGS) -c $< -o $@
+
+clean:
+    rm -f $(OBJS) $(TARGET)
+```
+
+Below is an example of Cmake's CMakeLists.txt::
+
+```CMakeLists.txt
+cmake_minimum_required(VERSION 3.10)
+
+project(MyProgram)
+
+# Set the path to the C++ compiler (g++)
+set(CMAKE_CXX_COMPILER "/path/to/g++")
+
+# Add your source files
+add_executable(myprogram main.cpp math.cpp)
+
+# Specify include directories
+target_include_directories(myprogram PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+```
+
+Then, the compile and run step is:
+
+```shell
+mkdir build
+cd build
+cmake ..
+make
+```
+
+**In the above comparison, it looks like cmake have a significant advantage in doing this job.**
+
+## A typical C++ Project Structure
+
+Below is a typical C++ project strucuture.
+
+```shell
+/project
+|-- build_and_test.sh
+|-- CMakeLists.txt
+|-- include
+|   |-- project_name
+|       |-- header1.h
+|       |-- header2.h
+|       |-- ...
+|-- src
+|   |-- main.cpp
+|   |-- source1.cpp
+|   |-- source2.cpp
+|   |-- ...
+|-- tests
+|   |-- test_main.cpp
+|   |-- test_source1.cpp
+|   |-- test_source2.cpp
+|   |-- ...
+|-- build
+|-- bin
+|-- lib
+|-- docs
+|-- .gitignore
+```
+
+The `build_and_test.sh` would be like below:
+
+```shell
+#!/bin/bash
+
+# Create build directory if it doesn't exist
+mkdir -p build
+
+# Run CMake to configure the project
+cmake -S . -B build
+
+# Build the project using make
+cmake --build build
+
+# Run the tests (assuming you have a test executable)
+./build/tests
+
+# Run the main program (replace 'myprogram' with your actual executable name)
+./build/myprogram
+```
+
+Well, I guess I will need to use print as the debug solution then 😄.
+
+## Syntax
+
+### head file
+
+head file can be used for anything, but I think a better implementation is to couple it with a cpp file, which will be compiled into .o file, and later linked with the main.cpp program. So in hte .cpp program, there are two ways to include .h file:
+
+```cpp
+#include <something.h>
+
+#include "something.h"
+```
+
+The angle bracket should be used for 3 situations: Standard Library Headers, External Library Headers, and Compiled Object Modules. The `""` will be used to find header file in this exact location.
