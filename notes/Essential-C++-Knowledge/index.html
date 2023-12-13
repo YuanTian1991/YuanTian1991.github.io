@@ -106,28 +106,31 @@ cmake <span class="token punctuation">..</span>
 <h2>A typical C++ Project Structure</h2>
 <p>Below is a typical C++ project strucuture.</p>
 <div class="gatsby-highlight" data-language="shell"><pre class="language-shell"><code class="language-shell">/project
-<span class="token operator">|</span>-- build_and_test.sh
 <span class="token operator">|</span>-- CMakeLists.txt
 <span class="token operator">|</span>-- include
 <span class="token operator">|</span>   <span class="token operator">|</span>-- project_name
 <span class="token operator">|</span>       <span class="token operator">|</span>-- header1.h
 <span class="token operator">|</span>       <span class="token operator">|</span>-- header2.h
-<span class="token operator">|</span>       <span class="token operator">|</span>-- <span class="token punctuation">..</span>.
 <span class="token operator">|</span>-- src
 <span class="token operator">|</span>   <span class="token operator">|</span>-- main.cpp
 <span class="token operator">|</span>   <span class="token operator">|</span>-- source1.cpp
 <span class="token operator">|</span>   <span class="token operator">|</span>-- source2.cpp
-<span class="token operator">|</span>   <span class="token operator">|</span>-- <span class="token punctuation">..</span>.
 <span class="token operator">|</span>-- tests
 <span class="token operator">|</span>   <span class="token operator">|</span>-- test_main.cpp
 <span class="token operator">|</span>   <span class="token operator">|</span>-- test_source1.cpp
 <span class="token operator">|</span>   <span class="token operator">|</span>-- test_source2.cpp
-<span class="token operator">|</span>   <span class="token operator">|</span>-- <span class="token punctuation">..</span>.
+<span class="token operator">|</span>-- external
+<span class="token operator">|</span>   <span class="token operator">|</span>-- lib
+<span class="token operator">|</span>   <span class="token operator">|</span>   <span class="token operator">|</span>-- external_lib.a
+<span class="token operator">|</span>   <span class="token operator">|</span>-- include
+<span class="token operator">|</span>       <span class="token operator">|</span>-- external_header1.h
+<span class="token operator">|</span>       <span class="token operator">|</span>-- external_header2.h
 <span class="token operator">|</span>-- build
 <span class="token operator">|</span>-- bin
-<span class="token operator">|</span>-- lib
+<span class="token operator">|</span>   <span class="token operator">|</span>-- myprogram  <span class="token punctuation">(</span>Executable<span class="token punctuation">)</span>
 <span class="token operator">|</span>-- docs
-<span class="token operator">|</span>-- .gitignore</code></pre></div>
+<span class="token operator">|</span>-- .gitignore
+<span class="token operator">|</span>-- build_and_test.sh</code></pre></div>
 <p>The <code class="language-text">build_and_test.sh</code> would be like below:</p>
 <div class="gatsby-highlight" data-language="shell"><pre class="language-shell"><code class="language-shell"><span class="token shebang important">#!/bin/bash</span>
 
@@ -146,6 +149,43 @@ cmake <span class="token parameter variable">--build</span> build
 <span class="token comment"># Run the main program (replace 'myprogram' with your actual executable name)</span>
 ./build/myprogram</code></pre></div>
 <p>Well, I guess I will need to use print as the debug solution then 😄.</p>
+<p>The CMakeLists.txt would be vital here, below is an example that includes multiple .cpp file linkage and external libraries.</p>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text"># CMakeLists.txt
+
+# Specify the minimum version of CMake required
+cmake_minimum_required(VERSION 3.10)
+
+# Project name
+project(MyProject)
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Include directories for project headers
+include_directories(include)
+
+# External library include directories
+include_directories(external/include)
+
+# Add source files in the src directory
+add_executable(myprogram
+    src/main.cpp
+    src/source1.cpp
+    src/source2.cpp
+)
+
+# Add external library source files if needed
+# add_library(external_lib STATIC external/lib/external_lib.cpp)
+
+# Link external libraries
+# target_link_libraries(myprogram external_lib)
+
+# Example if you have external libraries in the external directory
+add_library(external_lib STATIC external/lib/external_lib.cpp)
+
+# Link external libraries
+target_link_libraries(myprogram external_lib)</code></pre></div>
 <h2>Syntax</h2>
 <h3>head file</h3>
 <p>head file can be used for anything, but I think a better implementation is to couple it with a cpp file, which will be compiled into .o file, and later linked with the main.cpp program. So in hte .cpp program, there are two ways to include .h file:</p>
