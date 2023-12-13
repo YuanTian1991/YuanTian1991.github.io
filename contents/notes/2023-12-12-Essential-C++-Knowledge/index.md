@@ -162,28 +162,31 @@ Below is a typical C++ project strucuture.
 
 ```shell
 /project
-|-- build_and_test.sh
 |-- CMakeLists.txt
 |-- include
 |   |-- project_name
 |       |-- header1.h
 |       |-- header2.h
-|       |-- ...
 |-- src
 |   |-- main.cpp
 |   |-- source1.cpp
 |   |-- source2.cpp
-|   |-- ...
 |-- tests
 |   |-- test_main.cpp
 |   |-- test_source1.cpp
 |   |-- test_source2.cpp
-|   |-- ...
+|-- external
+|   |-- lib
+|   |   |-- external_lib.a
+|   |-- include
+|       |-- external_header1.h
+|       |-- external_header2.h
 |-- build
 |-- bin
-|-- lib
+|   |-- myprogram  (Executable)
 |-- docs
 |-- .gitignore
+|-- build_and_test.sh
 ```
 
 The `build_and_test.sh` would be like below:
@@ -208,6 +211,47 @@ cmake --build build
 ```
 
 Well, I guess I will need to use print as the debug solution then 😄.
+
+The CMakeLists.txt would be vital here, below is an example that includes multiple .cpp file linkage and external libraries.
+
+```
+# CMakeLists.txt
+
+# Specify the minimum version of CMake required
+cmake_minimum_required(VERSION 3.10)
+
+# Project name
+project(MyProject)
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Include directories for project headers
+include_directories(include)
+
+# External library include directories
+include_directories(external/include)
+
+# Add source files in the src directory
+add_executable(myprogram
+    src/main.cpp
+    src/source1.cpp
+    src/source2.cpp
+)
+
+# Add external library source files if needed
+# add_library(external_lib STATIC external/lib/external_lib.cpp)
+
+# Link external libraries
+# target_link_libraries(myprogram external_lib)
+
+# Example if you have external libraries in the external directory
+add_library(external_lib STATIC external/lib/external_lib.cpp)
+
+# Link external libraries
+target_link_libraries(myprogram external_lib)
+```
 
 ## Syntax
 
