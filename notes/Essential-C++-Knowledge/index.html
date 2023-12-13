@@ -57,4 +57,99 @@ cmake <span class="token parameter variable">-DCMAKE_INSTALL_PREFIX</span><span 
 <span class="token punctuation">}</span></code></pre></div>
 <p>Compile it as:</p>
 <div class="gatsby-highlight" data-language="shell"><pre class="language-shell"><code class="language-shell">g++ hello.cpp <span class="token parameter variable">-o</span> hello <span class="token parameter variable">-I</span> /path/to//compiled/bamtools/include/bamtools <span class="token parameter variable">-L</span> /path/to/compiled/bamtools/lib <span class="token parameter variable">-lbamtools</span></code></pre></div>
-<p>The final flag <code class="language-text">-lbamtools</code> means my <code class="language-text">hello.cpp</code> code will "link" with bamtools, so in the compile stage, the separately compiled third-party library - bamtools - will be linked togather with my code. Each third-party library will have it's own flag, mostly it should be like "-l[LibraryName]".</p></div></div></main><div style="padding-top:1em;padding-bottom:1em;text-align:center"><div class="MuiContainer-root MuiContainer-maxWidthLg" style="margin-bottom:1em;font-size:0.8em;cursor:pointer"><div id="revolvermap" align="center" class="wcustomhtml"></div></div><p variant="body2" color="textSecondary" align="center" style="font-size:0.8em">Copyright © <!-- -->Yuan Tian <!-- -->2023<!-- -->.</p></div></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/notes/Essential-C++-Knowledge";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-4998a6ec252986550b2d.js"],"app":["/app-439082533d3ba6cdbc24.js"],"component---src-pages-404-js":["/component---src-pages-404-js-65121c5ee4e014ad157c.js"],"component---src-pages-index-js":["/component---src-pages-index-js-f7c2713985b3c0cfb11d.js"],"component---src-pages-life-in-month-js":["/component---src-pages-life-in-month-js-410a1fdd9d415f9190e2.js"],"component---src-pages-page-2-js":["/component---src-pages-page-2-js-6f6e473080b1f2da79e4.js"],"component---src-pages-using-typescript-tsx":["/component---src-pages-using-typescript-tsx-0acc5c15ad353e74a1e2.js"],"component---src-templates-note-template-js":["/component---src-templates-note-template-js-ef46b5f0cec31044e94a.js"]};/*]]>*/</script><script src="/polyfill-4998a6ec252986550b2d.js" nomodule=""></script><script src="/component---src-templates-note-template-js-ef46b5f0cec31044e94a.js" async=""></script><script src="/commons-cbed0d71ce03c9298455.js" async=""></script><script src="/app-439082533d3ba6cdbc24.js" async=""></script><script src="/framework-15791b434983bf2dd9b7.js" async=""></script><script src="/webpack-runtime-a9a7b9f92ef0003137e8.js" async=""></script></body></html>
+<p>The final flag <code class="language-text">-lbamtools</code> means my <code class="language-text">hello.cpp</code> code will "link" with bamtools, so in the compile stage, the separately compiled third-party library - bamtools - will be linked togather with my code. Each third-party library will have it's own flag, mostly it should be like "-l[LibraryName]".</p>
+<h2>MakeFile vs CMakeFile.txt</h2>
+<p>This are compiled object file, which is not executable, and need later to be linked. Each .cpp file will be compiled into one .o file, and then linkage process will be applied to join them.</p>
+<p>Below is an example of MakeFile to compile them all:</p>
+<div class="gatsby-highlight" data-language="makefile"><pre class="language-makefile"><code class="language-makefile">CXX <span class="token operator">=</span> g++
+CXXFLAGS <span class="token operator">=</span> -std<span class="token operator">=</span>c++11 -Wall
+
+<span class="token comment"># List of source files</span>
+SRCS <span class="token operator">=</span> main.cpp math.cpp
+
+<span class="token comment"># Generate object file names from source file names</span>
+OBJS <span class="token operator">=</span> <span class="token variable">$</span><span class="token punctuation">(</span>SRCS<span class="token punctuation">:</span>.cpp<span class="token operator">=</span>.o<span class="token punctuation">)</span>
+
+<span class="token comment"># Executable name</span>
+TARGET <span class="token operator">=</span> myprogram
+
+<span class="token target symbol">all</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">(</span>TARGET<span class="token punctuation">)</span>
+
+<span class="token target symbol"><span class="token variable">$</span>(TARGET)</span><span class="token punctuation">:</span> <span class="token variable">$</span><span class="token punctuation">(</span>OBJS<span class="token punctuation">)</span>
+    <span class="token variable">$</span><span class="token punctuation">(</span>CXX<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>CXXFLAGS<span class="token punctuation">)</span> -o <span class="token variable">$@</span> <span class="token variable">$^</span>
+
+<span class="token comment"># Rule to generate object files</span>
+<span class="token target symbol">%.o</span><span class="token punctuation">:</span> %.cpp
+    <span class="token variable">$</span><span class="token punctuation">(</span>CXX<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>CXXFLAGS<span class="token punctuation">)</span> -c <span class="token variable">$&lt;</span> -o <span class="token variable">$@</span>
+
+<span class="token target symbol">clean</span><span class="token punctuation">:</span>
+    rm -f <span class="token variable">$</span><span class="token punctuation">(</span>OBJS<span class="token punctuation">)</span> <span class="token variable">$</span><span class="token punctuation">(</span>TARGET<span class="token punctuation">)</span></code></pre></div>
+<p>Below is an example of Cmake's CMakeLists.txt::</p>
+<div class="gatsby-highlight" data-language="cmakelists.txt"><pre class="language-cmakelists.txt"><code class="language-cmakelists.txt">cmake_minimum_required(VERSION 3.10)
+
+project(MyProgram)
+
+# Set the path to the C++ compiler (g++)
+set(CMAKE_CXX_COMPILER &quot;/path/to/g++&quot;)
+
+# Add your source files
+add_executable(myprogram main.cpp math.cpp)
+
+# Specify include directories
+target_include_directories(myprogram PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})</code></pre></div>
+<p>Then, the compile and run step is:</p>
+<div class="gatsby-highlight" data-language="shell"><pre class="language-shell"><code class="language-shell"><span class="token function">mkdir</span> build
+<span class="token builtin class-name">cd</span> build
+cmake <span class="token punctuation">..</span>
+<span class="token function">make</span></code></pre></div>
+<p><strong>In the above comparison, it looks like cmake have a significant advantage in doing this job.</strong></p>
+<h2>A typical C++ Project Structure</h2>
+<p>Below is a typical C++ project strucuture.</p>
+<div class="gatsby-highlight" data-language="shell"><pre class="language-shell"><code class="language-shell">/project
+<span class="token operator">|</span>-- build_and_test.sh
+<span class="token operator">|</span>-- CMakeLists.txt
+<span class="token operator">|</span>-- include
+<span class="token operator">|</span>   <span class="token operator">|</span>-- project_name
+<span class="token operator">|</span>       <span class="token operator">|</span>-- header1.h
+<span class="token operator">|</span>       <span class="token operator">|</span>-- header2.h
+<span class="token operator">|</span>       <span class="token operator">|</span>-- <span class="token punctuation">..</span>.
+<span class="token operator">|</span>-- src
+<span class="token operator">|</span>   <span class="token operator">|</span>-- main.cpp
+<span class="token operator">|</span>   <span class="token operator">|</span>-- source1.cpp
+<span class="token operator">|</span>   <span class="token operator">|</span>-- source2.cpp
+<span class="token operator">|</span>   <span class="token operator">|</span>-- <span class="token punctuation">..</span>.
+<span class="token operator">|</span>-- tests
+<span class="token operator">|</span>   <span class="token operator">|</span>-- test_main.cpp
+<span class="token operator">|</span>   <span class="token operator">|</span>-- test_source1.cpp
+<span class="token operator">|</span>   <span class="token operator">|</span>-- test_source2.cpp
+<span class="token operator">|</span>   <span class="token operator">|</span>-- <span class="token punctuation">..</span>.
+<span class="token operator">|</span>-- build
+<span class="token operator">|</span>-- bin
+<span class="token operator">|</span>-- lib
+<span class="token operator">|</span>-- docs
+<span class="token operator">|</span>-- .gitignore</code></pre></div>
+<p>The <code class="language-text">build_and_test.sh</code> would be like below:</p>
+<div class="gatsby-highlight" data-language="shell"><pre class="language-shell"><code class="language-shell"><span class="token shebang important">#!/bin/bash</span>
+
+<span class="token comment"># Create build directory if it doesn't exist</span>
+<span class="token function">mkdir</span> <span class="token parameter variable">-p</span> build
+
+<span class="token comment"># Run CMake to configure the project</span>
+cmake <span class="token parameter variable">-S</span> <span class="token builtin class-name">.</span> <span class="token parameter variable">-B</span> build
+
+<span class="token comment"># Build the project using make</span>
+cmake <span class="token parameter variable">--build</span> build
+
+<span class="token comment"># Run the tests (assuming you have a test executable)</span>
+./build/tests
+
+<span class="token comment"># Run the main program (replace 'myprogram' with your actual executable name)</span>
+./build/myprogram</code></pre></div>
+<p>Well, I guess I will need to use print as the debug solution then 😄.</p>
+<h2>Syntax</h2>
+<h3>head file</h3>
+<p>head file can be used for anything, but I think a better implementation is to couple it with a cpp file, which will be compiled into .o file, and later linked with the main.cpp program. So in hte .cpp program, there are two ways to include .h file:</p>
+<div class="gatsby-highlight" data-language="cpp"><pre class="language-cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;something.h></span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"something.h"</span></span></code></pre></div>
+<p>The angle bracket should be used for 3 situations: Standard Library Headers, External Library Headers, and Compiled Object Modules. The <code class="language-text">""</code> will be used to find header file in this exact location.</p></div></div></main><div style="padding-top:1em;padding-bottom:1em;text-align:center"><div class="MuiContainer-root MuiContainer-maxWidthLg" style="margin-bottom:1em;font-size:0.8em;cursor:pointer"><div id="revolvermap" align="center" class="wcustomhtml"></div></div><p variant="body2" color="textSecondary" align="center" style="font-size:0.8em">Copyright © <!-- -->Yuan Tian <!-- -->2023<!-- -->.</p></div></div></div></div><div id="gatsby-announcer" style="position:absolute;top:0;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0, 0, 0, 0);white-space:nowrap;border:0" aria-live="assertive" aria-atomic="true"></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.pagePath="/notes/Essential-C++-Knowledge";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"polyfill":["/polyfill-4998a6ec252986550b2d.js"],"app":["/app-439082533d3ba6cdbc24.js"],"component---src-pages-404-js":["/component---src-pages-404-js-65121c5ee4e014ad157c.js"],"component---src-pages-index-js":["/component---src-pages-index-js-f7c2713985b3c0cfb11d.js"],"component---src-pages-life-in-month-js":["/component---src-pages-life-in-month-js-410a1fdd9d415f9190e2.js"],"component---src-pages-page-2-js":["/component---src-pages-page-2-js-6f6e473080b1f2da79e4.js"],"component---src-pages-using-typescript-tsx":["/component---src-pages-using-typescript-tsx-0acc5c15ad353e74a1e2.js"],"component---src-templates-note-template-js":["/component---src-templates-note-template-js-ef46b5f0cec31044e94a.js"]};/*]]>*/</script><script src="/polyfill-4998a6ec252986550b2d.js" nomodule=""></script><script src="/component---src-templates-note-template-js-ef46b5f0cec31044e94a.js" async=""></script><script src="/commons-cbed0d71ce03c9298455.js" async=""></script><script src="/app-439082533d3ba6cdbc24.js" async=""></script><script src="/framework-15791b434983bf2dd9b7.js" async=""></script><script src="/webpack-runtime-a9a7b9f92ef0003137e8.js" async=""></script></body></html>
